@@ -1,0 +1,35 @@
+.options {
+    line-height: 4;
+    margin:1.5em;
+    position: relative;
+    color: #131313    ;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+.options:before {
+    position: absolute;
+    bottom: 0;
+    content: "";
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: #fff;
+    transition: all .3s;
+}
+.options:hover {
+    color: #fff;
+    font-weight: bold;
+}
+.isactive {
+    color: #131313;
+    font-weight: bold;
+}
+.options:hover::before {
+    width: 100%;  
+}
+.options::before {
+    left: 50%;
+}
+.options:hover::before{
+    left: 0;
+}

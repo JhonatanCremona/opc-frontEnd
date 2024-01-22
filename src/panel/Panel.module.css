@@ -1,0 +1,21 @@
+.titleBox {
+    margin-top: 120px;
+}
+.title {
+    font-size: 64px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    text-align: start;
+    line-height: 64px;
+}
+.n1{
+    color: #BDBDBD;
+    font-style: normal;
+    
+}
+.n2 {
+    color: #131313;
+    font-weight: 700;
+    font-style: normal;
+}

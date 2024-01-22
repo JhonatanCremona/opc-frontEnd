@@ -1,0 +1,36 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    height: 102px;
+}
+
+.listaIconos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100px;
+}
+
+.lista {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    border: 1px solid tomato;
+}
+.icon {
+    width: 1.7rem;
+    height: 1.7rem;
+    margin: auto;
+    color: #b3b3b3;
+    margin: 10px 12px 0px 12px ;
+}
+.icon:hover {
+    color: #fff;
+}
+

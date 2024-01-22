@@ -33,21 +33,26 @@ export const NavBar = () => {
         <>
             <nav className={Style.navbar}>
                 {/* ---------------Iconos----------------*/}
-                
-                <ul className={Style.lista}>
+                <ul className={Style.listaIconos}>
                     <li>
-                        <Link to={"/usuario"}>
-                            <User/>
-                        </Link>
-                        <Link to={"/notification"}>
-                            <Notification/>
-                        </Link>
+                            <Link to={"/usuario"}>
+                                <User/>
+                            </Link>
                     </li>
+
+                    <li>
+                            <Link to={"/notification"}>
+                                <Notification/>
+                            </Link>
+                    </li>
+                </ul>
+                <ul className={Style.lista}>
+                    
                     {
-                        opciones.map(({id, href, text}) => {
+                        opciones.map(({id, url, nombre}) => {
                             return (
                                 <li key={id}>
-                                    <NavLink to={href}>{text}</NavLink>
+                                    <NavLink to={url}>{nombre}</NavLink>
                                 </li>
                             )
                         })

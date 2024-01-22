@@ -32,7 +32,7 @@ export const NavBar = () => {
     return (
         <>
             <nav className={Style.navbar}>
-                {/* ---------------Logo----------------*/}
+                {/* ---------------Iconos----------------*/}
                 
                 <ul className={Style.lista}>
                     <li>
@@ -51,9 +51,9 @@ export const NavBar = () => {
                                 </li>
                             )
                         })
-                    }
-                    
+                    }  
                 </ul>
+                {/* ---------------Logo----------------*/}
                 <div id="title">
                     <Link className={Style.logo} to="/" > 
                         <img src={creminoxLogo} alt="" />

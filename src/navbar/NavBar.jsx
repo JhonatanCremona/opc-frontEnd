@@ -51,7 +51,7 @@ export const NavBar = () => {
                     {
                         opciones.map(({id, url, nombre}) => {
                             return (
-                                <li key={id}>
+                                <li key={id} className={Style.itemNav}>
                                     <NavLink to={url}>{nombre}</NavLink>
                                 </li>
                             )

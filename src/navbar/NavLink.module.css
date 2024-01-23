@@ -1,14 +1,14 @@
 .options {
     line-height: 4;
-    margin:0 1.5em;
+    color: black;
+    position: relative;
     height: 36px;
     font-size: 12px;
     color: #131313;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     text-decoration: none;
-    color: black;
-    position: relative;
+    margin:0 1.5em;
     padding: 5px 0;
 }
 .options:before {

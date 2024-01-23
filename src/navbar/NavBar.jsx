@@ -47,7 +47,6 @@ export const NavBar = () => {
                     </li>
                 </ul>
                 <ul className={Style.lista}>
-                    
                     {
                         opciones.map(({id, url, nombre}) => {
                             return (
@@ -61,7 +60,7 @@ export const NavBar = () => {
                 {/* ---------------Logo----------------*/}
                 <div id="title">
                     <Link className={Style.logo} to="/" > 
-                        <img src={creminoxLogo} alt="" />
+                        <img className={Style.logoImagen} src={creminoxLogo} alt="" />
                     </Link>
                 </div>
             </nav>

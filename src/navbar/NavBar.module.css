@@ -33,4 +33,7 @@
 .icon:hover {
     color: #fff;
 }
-
+.logoImagen {
+    height: 40px;
+    width: 150px;
+}

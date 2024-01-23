@@ -1,9 +1,15 @@
 {
     "EquiposTest": [
         {
-            "numero_equipo": 1,
+            "numero_equipo": 2,
             "nombre_equipo":  "ENFRIADOR 1",
             "estado": "PRE - OPERACIONAL",
+            "tiempo_transcurrido": "05:00hs"
+        },
+        {
+            "numero_equipo": 1,
+            "nombre_equipo":  "COCINA 1",
+            "estado": "OPERACIONAL",
             "tiempo_transcurrido": "05:00hs"
         }
     ]

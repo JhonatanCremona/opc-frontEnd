@@ -5,19 +5,19 @@ import Style from "./Panel.module.css";
 import { Equipos } from "../JSON/equipos.json"
 import { EquiposTest } from "../JSON/equipo-inactivo.json"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 export const Panel = () =>{
     const [equipos, setEquipos] = useState(Equipos);
-    console.log(equipos);
 
-    function transformData (equipo_online) {
+    const transformData  = (equipo_online) =>{
         equipo_online.map((online) => {
             if(online.estado !== "SIN OPERACION ") {
                 
                 equipos.forEach((equipo) => {
-                    if(equipo.nombre_equipo === online.nombre_equipo) {
+                    if(equipo.nombre_equipo === online.nombre_equipo
+                        && equipo.numero_equipo === online.numero_equipo) {
                         equipo.estado = online.estado;
                         equipo.tiempo_transcurrido = online.tiempo_transcurrido;
                     }
@@ -25,17 +25,10 @@ export const Panel = () =>{
             }
         })
     }
+        transformData(EquiposTest)
+        
 
-    useEffect(()=>{
-
-    },[]) 
-
-
-
-    transformData(EquiposTest)
-
-
-
+    
 
     return (
         <>
@@ -46,7 +39,7 @@ export const Panel = () =>{
 
             
             <section className={Style.equipos}>
-            { Equipos.map(( eqipos ) => {
+            { equipos.map(( eqipos ) => {
                 return (
                     <div className={Style.card} key={eqipos.numero_equipo}>
                         <section>

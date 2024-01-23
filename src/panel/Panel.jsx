@@ -1,9 +1,42 @@
 import { Arrow } from "../Icon/Icon";
+import { Link } from "react-router-dom"
 import Style from "./Panel.module.css";
 
+import { Equipos } from "../JSON/equipos.json"
+import { EquiposTest } from "../JSON/equipo-inactivo.json"
+
+import { useState } from "react";
 
 
 export const Panel = () =>{
+    const [equipos, setEquipos] = useState(Equipos);
+    console.log(equipos);
+
+    function transformData (equipo_online) {
+        equipo_online.map((online) => {
+            if(online.estado !== "SIN OPERACION ") {
+                
+                equipos.forEach((equipo) => {
+                    if(equipo.nombre_equipo === online.nombre_equipo) {
+                        equipo.estado = online.estado;
+                        equipo.tiempo_transcurrido = online.tiempo_transcurrido;
+                    }
+                })
+            }
+        })
+    }
+
+    useEffect(()=>{
+
+    },[]) 
+
+
+
+    transformData(EquiposTest)
+
+
+
+
     return (
         <>
             <div className={Style.titleBox}>
@@ -12,20 +45,34 @@ export const Panel = () =>{
             </div>
 
             
-            <div>
-                <section>
+            <section className={Style.equipos}>
+            { Equipos.map(( eqipos ) => {
+                return (
+                    <div className={Style.card} key={eqipos.numero_equipo}>
+                        <section>
+                            <img src="" alt="" />
+                        </section>
 
-                </section>
-
-                <section>
-                    <article>
-                        <h2>COCINA</h2>
-                        <h2>PRE - OPERACIONAL</h2>
-                        <p><span>Tiempo transcurrido:</span> {}</p>
-                    </article>
-                    <button>VER MAS DETALLES {<Arrow/>}</button>
-                </section>
-            </div>
+                        <section className={Style.cardDetails}>
+                            <article>
+                                <h2 
+                                    className={Style.titleEquipo}>
+                                    {eqipos.nombre_equipo}
+                                </h2>
+                                <h2 className={Style.titleEstado}> {eqipos.estado}</h2>
+                                <p className={Style.textTiempoTrans}><span>Tiempo transcurrido:</span> {eqipos.tiempo_transcurrido}</p>
+                            </article>
+                            <Link className={
+                                eqipos.nombre_equipo === "COCINA 1" 
+                                ? Style.buttonArrow + " " + Style.buttonCocina 
+                                : Style.buttonArrow + " " + Style.buttonEndriador
+                                }>VER MAS DETALLES {<Arrow/>}</Link>
+                        </section>
+                    </div>
+                )
+            })
+            }
+            </section>
         </>
     )
 } 

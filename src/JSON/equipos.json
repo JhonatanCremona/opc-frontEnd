@@ -4,6 +4,7 @@
             "numero_equipo": 1,
             "nombre_equipo":  "COCINA 1",
             "estado": "SIN OPERACION",
+            "receta":"Not null",
             "tiempo_transcurrido": "00:00hs"
         },
         {

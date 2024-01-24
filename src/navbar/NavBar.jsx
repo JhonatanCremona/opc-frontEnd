@@ -30,7 +30,7 @@ export const NavBar = () => {
         }
     ]
     return (
-        <>
+        <header className={Style.headernav}>
             <nav className={Style.navbar}>
                 {/* ---------------Iconos----------------*/}
                 <ul className={Style.listaIconos}>
@@ -64,6 +64,6 @@ export const NavBar = () => {
                     </Link>
                 </div>
             </nav>
-        </>
+        </header>
     )
 }

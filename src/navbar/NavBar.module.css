@@ -1,12 +1,19 @@
+
 .navbar {
     display: flex;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid black;
-    height: 102px;
+    height: 50px;
+    background-color: #fff;
+    z-index: 310;
 }
 
 .listaIconos {
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,6 +22,7 @@
     margin: 0px;
     padding: 0px;
     width: 100px;
+    padding-left: 124px;
 }
 
 .lista {
@@ -36,4 +44,5 @@
 .logoImagen {
     height: 40px;
     width: 150px;
+    padding-right: 124px;
 }

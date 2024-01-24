@@ -10,6 +10,7 @@
             "numero_equipo": 1,
             "nombre_equipo":  "COCINA 1",
             "estado": "OPERACIONAL",
+            "receta":"N°5 JAMON 5lbs",
             "tiempo_transcurrido": "05:00hs"
         }
     ]

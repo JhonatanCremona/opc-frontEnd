@@ -22,6 +22,8 @@
 
 .equipos {
     display: flex;
+    justify-content: space-between;
+    min-height: 1219px;
 }
 
 .card {
@@ -32,7 +34,8 @@
     position: relative;
     width: 502px;
     height: 765px;
-    margin: 30px;
+    margin-top: 60px;
+    margin-bottom: 30px;
 }
 
 .cardDetails{
@@ -44,6 +47,9 @@
     background: #262626;;
     height: 228px;
 }
+.textReceta {
+    display: block;
+}
 .titleEquipo, 
 .titleEstado,
 .textTiempoTrans {
@@ -52,18 +58,26 @@
     text-align: start;
     padding-left: 39px;
 }
+
 .titleEquipo {
     font-size: 20px;
 }
+
 .titleEstado {
     font-size: 32px;
     font-weight: 300;
     margin-bottom: 0;
     margin-top: 0;
 }
+.textRecetaNone {
+    display: none;
+}
+
+.textReceta,
 .textTiempoTrans {
-    color: #eee;
+    color: #EEE;
     font-size: 16px;
+    height: 38px;
 }
 .buttonArrow {
     display: flex;

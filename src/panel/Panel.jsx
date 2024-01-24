@@ -20,6 +20,7 @@ export const Panel = () =>{
                         && equipo.numero_equipo === online.numero_equipo) {
                         equipo.estado = online.estado;
                         equipo.tiempo_transcurrido = online.tiempo_transcurrido;
+                        equipo.receta = online.receta;
                     }
                 })
             }
@@ -27,9 +28,6 @@ export const Panel = () =>{
     }
         transformData(EquiposTest)
         
-
-    
-
     return (
         <>
             <div className={Style.titleBox}>
@@ -53,7 +51,11 @@ export const Panel = () =>{
                                     {eqipos.nombre_equipo}
                                 </h2>
                                 <h2 className={Style.titleEstado}> {eqipos.estado}</h2>
-                                <p className={Style.textTiempoTrans}><span>Tiempo transcurrido:</span> {eqipos.tiempo_transcurrido}</p>
+                                <p className={Style.textTiempoTrans}>
+                                    <span>Tiempo transcurrido:</span> {eqipos.tiempo_transcurrido}
+                                    <span className={eqipos.estado === "OPERACIONAL" ? Style.textReceta : Style.textRecetaNone}>{"RECETA: " + eqipos.receta}</span>
+                                </p>
+                                
                             </article>
                             <Link className={
                                 eqipos.nombre_equipo === "COCINA 1" 

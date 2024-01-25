@@ -1,5 +1,8 @@
 .titleBox {
     margin-top: 100px;
+    max-width: 1280px;
+    padding-left: 116px;
+    padding-right: 116px;
 }
 .title {
     font-size: 64px;
@@ -24,6 +27,9 @@
     display: flex;
     justify-content: space-between;
     min-height: 1219px;
+    max-width: 1280px;
+    padding-left: 116px;
+    padding-right: 116px;
 }
 
 .card {

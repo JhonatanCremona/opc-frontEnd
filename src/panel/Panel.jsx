@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import Style from "./Panel.module.css";
 
 import { Equipos } from "../JSON/equipos.json"
-import { EquiposTest } from "../JSON/equipo-inactivo.json"
 
 import { useState, useEffect } from "react";
 
@@ -11,22 +10,35 @@ import { useState, useEffect } from "react";
 export const Panel = () =>{
     const [equipos, setEquipos] = useState(Equipos);
 
+    const API_HOME = "http://192.168.0.85:5000/Home"
+
+    const [ data, setData ]= useState(null);
+
+    useEffect(()=>{
+        async function getData() {
+                 fetch(API_HOME)
+            .then(response => response.json())
+            .then(data => console.log(data))
+            }
+    },[]) 
+
+    
+
     const transformData  = (equipo_online) =>{
         equipo_online.map((online) => {
-            if(online.estado !== "SIN OPERACION ") {
+            if(online.ESTADO !== "SIN OPERACION ") {
                 
                 equipos.forEach((equipo) => {
-                    if(equipo.nombre_equipo === online.nombre_equipo
+                    if(equipo.NOMBRE_EQUIPO === online.NOMBRE_EQUIPO
                         && equipo.numero_equipo === online.numero_equipo) {
-                        equipo.estado = online.estado;
-                        equipo.tiempo_transcurrido = online.tiempo_transcurrido;
-                        equipo.receta = online.receta;
+                        equipo.ESTADO = online.ESTADO;
+                        equipo.TIEMPO_TRANSCURRIDO = online.TIEMPO_TRANSCURRIDO;
+                        equipo.NOMBRE_RECETA = online.NOMBRE_RECETA;
                     }
                 })
             }
         })
     }
-        transformData(EquiposTest)
         
     return (
         <>
@@ -37,7 +49,7 @@ export const Panel = () =>{
 
             
             <section className={Style.equipos}>
-            { equipos.map(( eqipos ) => {
+            { Equipos.map(( eqipos ) => {
                 return (
                     <div className={Style.card} key={eqipos.numero_equipo}>
                         <section>
@@ -48,17 +60,17 @@ export const Panel = () =>{
                             <article>
                                 <h2 
                                     className={Style.titleEquipo}>
-                                    {eqipos.nombre_equipo}
+                                    {eqipos.NOMBRE_EQUIPO}
                                 </h2>
-                                <h2 className={Style.titleEstado}> {eqipos.estado}</h2>
+                                <h2 className={Style.titleEstado}> {eqipos.ESTADO}</h2>
                                 <p className={Style.textTiempoTrans}>
-                                    <span>Tiempo transcurrido:</span> {eqipos.tiempo_transcurrido}
-                                    <span className={eqipos.estado === "OPERACIONAL" ? Style.textReceta : Style.textRecetaNone}>{"RECETA: " + eqipos.receta}</span>
+                                    <span>Tiempo transcurrido:</span> {eqipos.TIEMPO_TRANSCURRIDO}
+                                    <span className={eqipos.ESTADO === "OPERACIONAL" ? Style.textReceta : Style.textRecetaNone}>{"RECETA: " + eqipos.NOMBRE_RECETA}</span>
                                 </p>
                                 
                             </article>
                             <Link className={
-                                eqipos.nombre_equipo === "COCINA 1" 
+                                eqipos.NOMBRE_EQUIPO === "COCINA 1" 
                                 ? Style.buttonArrow + " " + Style.buttonCocina 
                                 : Style.buttonArrow + " " + Style.buttonEndriador
                                 }>VER MAS DETALLES {<Arrow/>}</Link>

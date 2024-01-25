@@ -4,6 +4,7 @@ import './App.css'
 
 import { Layout } from './Layout';
 import { Panel } from './panel/Panel';
+import { Footer } from './footer/Footer';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={ <Panel/> }/>
         </Route>
       </Routes>
+      <Footer/>
     </>
   )
 }

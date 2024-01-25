@@ -2,16 +2,21 @@
     "Equipos": [
         {
             "numero_equipo": 1,
-            "nombre_equipo":  "COCINA 1",
-            "estado": "SIN OPERACION",
-            "receta":"Not null",
-            "tiempo_transcurrido": "00:00hs"
+            "NOMBRE_EQUIPO":  "COCINA 1",
+            "ESTADO": "NO-OPERATIVO",
+            "NOMBRE_RECETA": "",
+            "NRO_RECETA": "",
+            "TIEMPO_TRANSCURRIDO": "00:00hs",
+            "NRO_TORRES": ""
         },
         {
             "numero_equipo": 2,
-            "nombre_equipo":  "ENFRIADOR 1",
-            "estado": "SIN OPERACION",
-            "tiempo_transcurrido": "00:00hs"
+            "NOMBRE_EQUIPO":  "ENFRIADOR 1",
+            "ESTADO": "NO-OPERATIVO",
+            "NOMBRE_RECETA": "",
+            "NRO_RECETA": "",
+            "TIEMPO_TRANSCURRIDO": "00:00hs",
+            "NRO_TORRES": ""
         }
     ]
 }

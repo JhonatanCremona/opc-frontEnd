@@ -12,4 +12,12 @@
 body{
   padding-left: 116px;
   padding-right: 116px;
+  height: 100vh;
+  margin: 0;
+}
+.scroll-down header{
+  transform: translate3d(0, -100%, 0);
+}
+.scroll-up header {
+  filter: drop-shadow(0 -10px 20px rgb(170,170,170));
 }

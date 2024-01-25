@@ -1,23 +1,25 @@
-
-.navbar {
-    display: flex;
-    width: 100%;
+.headernav {
     position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    z-index: 310;
+    transition: all 500ms ease-in-out;
+}
+.navbar {
+    display: flex;
+    width: 100%;
     align-items: center;
     justify-content: space-between;
     height: 50px;
     background-color: #fff;
-    z-index: 310;
+    
 }
 
 .listaIconos {
-    
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
     list-style: none;
     margin: 0px;
     padding: 0px;
@@ -29,7 +31,6 @@
     display: flex;
     list-style: none;
     align-items: center;
-    border: 1px solid tomato;
 }
 .icon {
     width: 1.7rem;
@@ -45,4 +46,7 @@
     height: 40px;
     width: 150px;
     padding-right: 124px;
+}
+.logoNav {
+    margin-left: 44px;
 }

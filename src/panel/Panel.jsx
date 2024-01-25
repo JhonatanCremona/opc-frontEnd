@@ -5,11 +5,13 @@ import Style from "./Panel.module.css";
 import { Equipos } from "../JSON/equipos.json"
 import { EquiposTest } from "../JSON/equipo-inactivo.json"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { PanelContext } from "../context/PanelContext";
 
 
 export const Panel = () =>{
-    const [equipos, setEquipos] = useState(Equipos);
+    const [ equipos, setEquipos] = useState(Equipos);
+    const { setUrlPanel } = useContext(PanelContext);
 
     const transformData  = (equipo_online) =>{
         equipo_online.map((online) => {
@@ -27,6 +29,10 @@ export const Panel = () =>{
         })
     }
         transformData(EquiposTest)
+
+    function saveRoute(url) {
+        console.log(url);
+    }
         
     return (
         <>
@@ -57,7 +63,10 @@ export const Panel = () =>{
                                 </p>
                                 
                             </article>
-                            <Link className={
+                            <Link 
+                            to={`/panel-control/${eqipos.nombre_equipo.replace(/\s+/g, '-')}`}
+                            onClick={setUrlPanel(`/panel-control/${eqipos.nombre_equipo.replace(/\s+/g, '-')}`)}
+                            className={
                                 eqipos.nombre_equipo === "COCINA 1" 
                                 ? Style.buttonArrow + " " + Style.buttonCocina 
                                 : Style.buttonArrow + " " + Style.buttonEndriador

@@ -1,8 +1,6 @@
 .titleBox {
     margin-top: 100px;
-    max-width: 1280px;
-    padding-left: 116px;
-    padding-right: 116px;
+    width: 100%;
 }
 .title {
     font-size: 64px;
@@ -11,11 +9,13 @@
     margin: 0;
     text-align: start;
     line-height: 64px;
+    
+    padding-left: 116px;
+    padding-right: 116px;
 }
 .n1{
     color: #BDBDBD;
     font-style: normal;
-    
 }
 .n2 {
     color: #131313;
@@ -26,8 +26,7 @@
 .equipos {
     display: flex;
     justify-content: space-between;
-    min-height: 1219px;
-    max-width: 1280px;
+   
     padding-left: 116px;
     padding-right: 116px;
 }
@@ -42,6 +41,16 @@
     height: 765px;
     margin-top: 60px;
     margin-bottom: 30px;
+}
+.imagen {
+
+}
+
+.imgEquipo {
+    position: absolute;
+    top: 0;
+    height: 75%;
+    width: 100%;
 }
 
 .cardDetails{

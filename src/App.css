@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
-#root {
-}
+
 .icn {
   width: 30px;
   height: 30px;
   color: #000;
 }
-body{
-  
+.scroll-down header{
+  transform: translate3d(0, -100%, 0);
 }
-footer {
+.scroll-up header {
+  filter: drop-shadow(0 -10px 20px rgb(170,170,170));
+}
+body {
+  width: 100%;
+  margin: 0px;
 }

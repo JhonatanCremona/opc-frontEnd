@@ -1,45 +1,59 @@
 import { Arrow } from "../Icon/Icon";
 import { Link } from "react-router-dom"
 import Style from "./Panel.module.css";
+import axios from "axios";
 
 import { Equipos } from "../JSON/equipos.json"
 
-import { useState, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
+import { PanelContext } from "../context/PanelContext";
+
+import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
+import Enfriador from "../IMG/Enfriador/ENTM-09-0001-rev01.png"
+
 
 
 export const Panel = () =>{
-    const [equipos, setEquipos] = useState(Equipos);
+    const API_HOME = "http://192.168.0.49:5000/Home";
+    let result = []
+    const [maquina , setMaquina] = useState([])
+ 
+      async function readApi(){
+         
+         try {
+            const response = await axios.get(API_HOME);
+            console.log(response);
+            result = response.data.Eqipos || [];
+            console.log(result);
+         } catch (error) {
+             console.error(error);
+             result = Equipos
+         }
+         console.log("Resultado final:", result);
+         return result;
+      }
+ 
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const apiData = await readApi();
+            setMaquina(apiData);
+            console.log(apiData);
+          } catch (error) {
+            console.error("Error al obtener datos:", error); // Puedes manejar el error actualizando el estado según sea necesario
+          }
+        };
+      
+        fetchData();
+      
+        const intervalId = setInterval(fetchData, 1000);
+        console.log(intervalId);
+      
+        return () => clearInterval(intervalId);
+      }, []);
 
-    const API_HOME = "http://192.168.0.85:5000/Home"
-
-    const [ data, setData ]= useState(null);
-
-    useEffect(()=>{
-        async function getData() {
-                 fetch(API_HOME)
-            .then(response => response.json())
-            .then(data => console.log(data))
-            }
-    },[]) 
-
-    
-
-    const transformData  = (equipo_online) =>{
-        equipo_online.map((online) => {
-            if(online.ESTADO !== "SIN OPERACION ") {
-                
-                equipos.forEach((equipo) => {
-                    if(equipo.NOMBRE_EQUIPO === online.NOMBRE_EQUIPO
-                        && equipo.numero_equipo === online.numero_equipo) {
-                        equipo.ESTADO = online.ESTADO;
-                        equipo.TIEMPO_TRANSCURRIDO = online.TIEMPO_TRANSCURRIDO;
-                        equipo.NOMBRE_RECETA = online.NOMBRE_RECETA;
-                    }
-                })
-            }
-        })
-    }
-        
+     
+ 
     return (
         <>
             <div className={Style.titleBox}>
@@ -49,11 +63,14 @@ export const Panel = () =>{
 
             
             <section className={Style.equipos}>
-            { Equipos.map(( eqipos ) => {
+            { maquina.map(( eqipos ) => {
                 return (
-                    <div className={Style.card} key={eqipos.numero_equipo}>
-                        <section>
-                            <img src="" alt="" />
+                    <div 
+                    className={Style.card} key={eqipos.numero_equipo || eqipos.ID}>
+                        <section className={Style.imagen}>
+                            <img 
+                            className={Style.imgEquipo}
+                            src={eqipos.NOMBRE_EQUIPO == "Cocina 1" ? Cocina : Enfriador} alt="" />
                         </section>
 
                         <section className={Style.cardDetails}>
@@ -65,12 +82,14 @@ export const Panel = () =>{
                                 <h2 className={Style.titleEstado}> {eqipos.ESTADO}</h2>
                                 <p className={Style.textTiempoTrans}>
                                     <span>Tiempo transcurrido:</span> {eqipos.TIEMPO_TRANSCURRIDO}
-                                    <span className={eqipos.ESTADO === "OPERACIONAL" ? Style.textReceta : Style.textRecetaNone}>{"RECETA: " + eqipos.NOMBRE_RECETA}</span>
+                                    <span className={eqipos.ESTADO === "OPERATIVO" ? Style.textReceta : Style.textRecetaNone}>{"RECETA: " + eqipos.NOMBRE_RECETA}</span>
                                 </p>
                                 
                             </article>
-                            <Link className={
-                                eqipos.NOMBRE_EQUIPO === "COCINA 1" 
+                            <Link 
+                            to={`/panel-control/${eqipos.NOMBRE_EQUIPO.replace(/\s+/g, '-')}`}
+                            className={
+                                eqipos.nombre_equipo === "Cocina 1" 
                                 ? Style.buttonArrow + " " + Style.buttonCocina 
                                 : Style.buttonArrow + " " + Style.buttonEndriador
                                 }>VER MAS DETALLES {<Arrow/>}</Link>

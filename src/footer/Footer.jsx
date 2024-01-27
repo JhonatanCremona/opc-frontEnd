@@ -8,7 +8,7 @@ import creminoxLogo from "../Icon/creminox-logo.png";
 export const Footer=() => {
     return (
         <footer className={Style.footer}>
-            <section>
+            <section className={Style.footerPart1}>
                 <figure>
                     <img src={creminoxLogo} alt="" />
                 </figure>
@@ -24,7 +24,8 @@ export const Footer=() => {
                     <img src={linkedin} alt="" />
                     <img src={youtube} alt="" />
                 </article>  
-            </section>    
+            </section>
+            <hr />    
             <section>
                 <p>© 2024 All Rights Reserved cremona inoxidable</p>    
             </section> 

@@ -3,5 +3,11 @@
     border: 1px solid tomato;
     margin: 0;
     padding: 0;
-    width: 100%;
+    bottom:0;
+
+}
+.footerPart1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
 }

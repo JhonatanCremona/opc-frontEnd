@@ -1,14 +1,20 @@
 {
     "Eqipos": [
-        {
-            "ESTADO": "NO-OPERATIVO",
-            "NRO_TORRES": "",
-            "TIEMPO_TRANSCURRIDO": ""
-        },
-        {
-            "ESTADO": "NO-OPERATIVO",
-            "NRO_TORRES": "",
-            "TIEMPO_TRANSCURRIDO": ""
-        }
+      {
+        "ESTADO": "OPERATIVO",
+        "ID": 1,
+        "NOMBRE_EQUIPO": "Cocina 1",
+        "NOMBRE_RECETA": "NULL",
+        "NRO_TORRES": "1",
+        "TIEMPO_TRANSCURRIDO": 27316890
+      },
+      {
+        "ESTADO": "OPERATIVO",
+        "ID": 1,
+        "NOMBRE_EQUIPO": "Cocina 1",
+        "NOMBRE_RECETA": "NULL",
+        "NRO_TORRES": "1",
+        "TIEMPO_TRANSCURRIDO": 27316890
+      }
     ]
-}
+  }

@@ -141,6 +141,7 @@ export const NavBar = () => {
                 {/* ---------------Logo----------------*/}
                 
             </nav>
+            
         </header>
     )
 }

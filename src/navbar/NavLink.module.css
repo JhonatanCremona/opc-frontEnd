@@ -3,14 +3,22 @@
     color: black;
     position: relative;
     height: 36px;
-    font-size: 12px;
+    font-size: 13px;
     color: #131313;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     text-decoration: none;
     margin:0 1.5em;
     padding: 5px 0;
-}
+        animation: enhance-li linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 200px;
+    }
+    
+   
+    
+
+
 .options:before {
     content: "";
   width: 100%;
@@ -22,10 +30,20 @@
   transform: scale(0);
   transform-origin: left;
   transition: all .3s;
+
 }
+
 .options:hover::before,
 .options:hover::after {
     transform: scale(1);
+    animation: enhance-hover linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 200px;
+}
+@keyframes enhance-hover {
+    to {
+        background-color: rgb(249, 245, 243);
+    }
 }
 .isactive {
     color: #131313;
@@ -42,4 +60,10 @@
     transform: scale(0);
     transform-origin: right;
     transition: all .3s;
+    
   }
+  @keyframes enhance-li {
+    to {
+        color: rgb(249, 245, 243);        ;
+    }
+}

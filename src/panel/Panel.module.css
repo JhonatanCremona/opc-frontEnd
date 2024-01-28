@@ -24,9 +24,19 @@
 }
 
 .equipos {
+    /*
     display: flex;
     justify-content: space-between;
    
+    padding-left: 116px;
+    padding-right: 116px;
+    */
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(502px, 1fr)
+    );
+    gap: 50px;
     padding-left: 116px;
     padding-right: 116px;
 }

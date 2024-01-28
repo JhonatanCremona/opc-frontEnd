@@ -9,25 +9,34 @@ export const Footer=() => {
     return (
         <footer className={Style.footer}>
             <section className={Style.footerPart1}>
-                <figure>
+                <figure className={Style.logoImagen}>
                     <img src={creminoxLogo} alt="" />
                 </figure>
-                <article>
-                    <h2 className={Style.title + " " + Style.n1}>CONTACTO</h2>
+                <article className={Style.lista}>
+                    <h2 className={Style.title + " " + Style.n1}>Contacto</h2>
                     <p className={Style.text}>
-                        <span><TELEFONO/>Teléfono:</span> 0000000000
-                        <span><EMAIL/>Email:</span> 
+                        <span className={Style.iconLista}><TELEFONO/>Teléfono:1126089412</span>
+                        <span className={Style.iconLista}><EMAIL/>Email:</span> 
                     </p>
                 </article>
-                <article >
-                    <h2>Social Media</h2>
-                    <img src={linkedin} alt="" />
-                    <img src={youtube} alt="" />
+                <article className={Style.lista}>
+                    <h2 className={Style.title}>Social Media</h2>
+                    <article className={Style.iconsRedes}>
+                        <figure className={Style.boxImagen}>
+                            <img 
+                            className={Style.imagen}
+                            src={linkedin} alt="" />
+                        </figure>
+                        <figure className={Style.boxImagen}>
+                            <img className={Style.imagen} src={youtube} alt="" />
+                        </figure>
+                        
+                    </article>
                 </article>  
             </section>
-            <hr />    
-            <section>
-                <p>© 2024 All Rights Reserved cremona inoxidable</p>    
+            <hr className={Style.Line}/>    
+            <section className={Style.footerPart2}>
+                <p className={Style.footerText}>© 2024 All Rights Reserved cremona inoxidable</p>    
             </section> 
         </footer>
     )

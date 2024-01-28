@@ -1,19 +1,31 @@
 .headernav {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 310;
     transition: all 500ms ease-in-out;
+    background: #fff;
+    animation: enhance-header linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 150px;
+
 }
+@keyframes enhance-header {
+    to {
+        background: #131313;
+        backdrop-filter: blur(5px);
+
+    }
+}
+
+
 .navbar {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: space-between;
     height: 50px;
-    background-color: #fff;
-    
 }
 
 .listaIconos {
@@ -23,7 +35,7 @@
     list-style: none;
     margin: 0px;
     padding: 0px;
-    width: 100px;
+    width: 70px;
     padding-left: 124px;
 }
 

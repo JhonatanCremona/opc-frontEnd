@@ -1,16 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 .icn {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   color: #000;
+  animation: enhance-li linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 200px;
 }
-.scroll-down header{
-  transform: translate3d(0, -100%, 0);
+@keyframes enhance-li {
+    to {
+        color: #fff;
+    }
 }
-.scroll-up header {
-  filter: drop-shadow(0 -10px 20px rgb(170,170,170));
-}
+
+
 body {
   width: 100%;
   margin: 0px;

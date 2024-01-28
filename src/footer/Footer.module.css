@@ -1,13 +1,137 @@
 .footer {
-    background-color: #262626;
-    border: 1px solid tomato;
+    background-color: #131313;
     margin: 0;
     padding: 0;
     bottom:0;
-
+    margin-top: 200px;
 }
 .footerPart1 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(200px, 1fr)
+    );
+    gap: 20px;
+    padding-left: 116px;
+    padding-right: 116px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
 
+.title {
+    color: rgb(249, 245, 243);
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.logoImagen,
+.lista {
+    height: auto;
+    width: 100%;
+    margin: 0px;
+}
+.logoImagen {
+    max-width: 150px;
+    margin: auto 0;
+}
+
+.lista .text {
+    display: flex;
+    flex-direction: column;
+}
+.lista .iconsRedes {
+    display: flex;
+    flex-direction: row;
+}
+.boxImagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 50%;
+    margin: 0;
+    margin-right: 20px;
+}
+
+.boxImagen {
+    position: relative;
+  
+  &::before {
+        content: "";
+        position: absolute;
+        top: 7%;
+        left: 7%;
+        width: 85%;
+        height: 85%;
+        opacity: 0.8;
+        border: 1px solid #1B1725;
+        border-radius: 50%;
+        transition: opacity 0.4s ease, transform 0.5s ease;
+      }
+}
+.boxImagen {
+    &:hover:before {
+        opacity: 0;
+        transform: scale(1.6);
+        cursor: pointer;
+      }
+    &:focus {
+        opacity: 0.85;
+      }
+}
+.imagen{
+    color: #fff;
+  }
+
+.boxImagen:hover .imagen {
+    
+    animation: 0.5s slide-icon cubic-bezier(0.694, 0.048, 0.335, 1.000) 0s;
+  }
+img {
+    width: 100%;
+}
+@keyframes slide-icon {
+    49% { 
+      transform: translateY(-20px); 
+      opacity:0;
+    }
+    50%{
+      transform: translateY(20px);
+    }
+    80%{
+      transform: translateY(0);
+      opacity:1;
+    }
+  }
+
+.iconLista {
+    color: #b3b3b3;
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.iconLista svg {
+    margin-top: auto;
+    margin-right: 10px;
+}
+.Line {
+    margin: 0px;
+    max-height: 0.5px;
+    border: 0.5px solid #b3b3b3;
+}
+.footerPart2 {
+
+}
+.footerText {
+    font-size: 12px;
+    color: #b3b3b3;
+    font-size: "Roboto";
+    text-align: center;
+    margin: 0;
+    padding: 10px;
 }

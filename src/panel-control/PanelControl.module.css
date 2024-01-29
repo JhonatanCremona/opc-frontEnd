@@ -1,0 +1,15 @@
+.boxDataTime {
+    border: 1px solid green;
+    padding: 2px;
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(100px, 1fr)
+    );
+}
+
+
+.dataTime {
+    border: 1px solid red;
+    background: #0B0B0B;
+}

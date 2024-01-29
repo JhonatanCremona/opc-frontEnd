@@ -1,0 +1,55 @@
+.dataTime {
+    background: #0B0B0B;
+    width: 200px;
+    height: 110px;
+    position: relative;
+}
+.titleDataTime {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.datos{
+    color: #D9D9D9;
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-left: 6px;
+    top: 10px;
+}
+.boxImagen {
+    width: 19px;
+    height: 16px;
+    border: 1px solid white;
+    margin-right: 6px;
+    top: 10px;
+}
+.Imagen {
+    width: 100%;
+}
+.dataComponent {
+    position: absolute;
+    top: 32px;
+    color: #EF8225;
+    font-family: Roboto;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 0;
+    margin-left:6px;
+    width: 97px;
+    height: 24px;
+    
+}
+.tipoData {
+    color: #D9D9D9;
+    font-family: Roboto;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

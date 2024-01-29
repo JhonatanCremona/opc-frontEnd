@@ -1,6 +1,7 @@
 .titleBox {
-    margin-top: 100px;
+    margin-top: 80px;
     width: 100%;
+    margin-bottom: 80px;
 }
 .title {
     font-size: 64px;
@@ -45,23 +46,45 @@
     background-color: #fff;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: 1px solid green;
+    border: 1px solid #131313;
     position: relative;
     width: 502px;
     height: 765px;
-    margin-top: 60px;
-    margin-bottom: 30px;
-}
-.imagen {
-
+    margin: 0px auto;
 }
 
 .imgEquipo {
     position: absolute;
     top: 0;
-    height: 75%;
+    margin-top: 30px;
     width: 100%;
 }
+
+.tagsContainer {
+    position: absolute;
+    top: 20px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background-color: #b3b3b3;
+}
+
+.tagsContainerOperativo {
+    background-color: #54C42D;
+}
+
+
+.tags {
+    font-family: "Roboto";
+    font-size: 10px !important;
+    font-weight: bold;
+    letter-spacing: 3.2px;
+    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+
+
 
 .cardDetails{
     border: 1px solid black;

@@ -23,7 +23,7 @@ export const Panel = () =>{
          try {
             const response = await axios.get(API_HOME);
             console.log(response);
-            result = response.data.Eqipos || [];
+            result = response.data.Equipos || [];
             console.log(result);
          } catch (error) {
              console.error(error);
@@ -66,11 +66,16 @@ export const Panel = () =>{
             { maquina.map(( eqipos ) => {
                 return (
                     <div 
-                    className={Style.card} key={eqipos.numero_equipo || eqipos.ID}>
+                    className={Style.card} 
+                    key={eqipos.numero_equipo || eqipos.ID}>
                         <section className={Style.imagen}>
                             <img 
                             className={Style.imgEquipo}
                             src={eqipos.NOMBRE_EQUIPO == "Cocina 1" ? Cocina : Enfriador} alt="" />
+                        </section>
+
+                        <section className={eqipos.ESTADO != "OPERACIONAL" ? Style.tagsContainer : Style.tagsContainerOperativo }>
+                            <p className={Style.tags}>{eqipos.ESTADO}</p>
                         </section>
 
                         <section className={Style.cardDetails}>
@@ -82,7 +87,9 @@ export const Panel = () =>{
                                 <h2 className={Style.titleEstado}> {eqipos.ESTADO}</h2>
                                 <p className={Style.textTiempoTrans}>
                                     <span>Tiempo transcurrido:</span> {eqipos.TIEMPO_TRANSCURRIDO}
-                                    <span className={eqipos.ESTADO === "OPERATIVO" ? Style.textReceta : Style.textRecetaNone}>{"RECETA: " + eqipos.NOMBRE_RECETA}</span>
+                                    <span className={
+                                        eqipos.ESTADO == "OPERACIONAL" ? Style.textReceta : Style.textRecetaNone
+                                    }>{"RECETA: " + eqipos.NOMBRE_RECETA}</span>
                                 </p>
                                 
                             </article>

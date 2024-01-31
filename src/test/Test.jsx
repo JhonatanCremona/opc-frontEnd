@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
-import axios from "axios";
 import { createChart, ColorType } from 'lightweight-charts';
+import { readApi } from "./updateData.js"; 
 
 import Style from "./Component.module.css"
 import temperatura from "../Icon/temperatura.png"
@@ -8,25 +8,47 @@ import temperatura from "../Icon/temperatura.png"
 //IMPORT JSON LOCAL DATA
 import { results } from "../JSON/jsonHistorico.json";
 
-const colors = {
-  backgroundColor: 'black',
-  lineColor:'#2962FF',
-  textColor:'white',
-  areaTopColor:'#2962FF',
-  areaBottomColor:'rgba(41, 98, 255, 0.28)',
-} 
 
 
 export const Test = () => {
-  let resultDataHistory = [];
-  const [data, setData] = useState([]);
+  
   const backgroundColor = "rgba(255, 255, 255, 0.1)";
   const textColor = "white";
   const lineColor= "#2962FF";
   const areaTopColor='#2962FF';
   const areaBottomColor='rgba(41, 98, 255, 0.28)'
   const chartContainerRef = useRef();
+
+  const chartRef = useRef(null);
+  const [data, setData] = useState([{value: 0.0}]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiData = await readApi("/opcua/readVariableBoolean/1");
+        console.log(apiData);
+        setData(data[0] = [apiData]);
+        console.log(data);
+
+        if (chartRef.current) {
+          const time = new Date().getTime();
+          const value = apiData.value;
+          chartRef.current.addBar({ time, value });
+        }
+
+      } catch (error) {
+        console.error("Error al obtener datos:", error); // Puedes manejar el error actualizando el estado según sea necesario
+      }
+    };
   
+    fetchData();
+  
+    const intervalId = setInterval(fetchData, 1000);
+    console.log(intervalId);
+  
+    return () => clearInterval(intervalId);
+  }, []);
 
 	useEffect(
 		() => {
@@ -66,20 +88,7 @@ export const Test = () => {
           width: '100%',
         },
       });
-      /*
-      // Configurar handleScroll para bloquear el zoom
-      const handleCrosshairMove = (param) => {
-        if (!param.point) {
-          return;
-        }
-  
-        // Mantén constante la escala de tiempo y precio
-        chart.timeScale().scrollToRealTime(param.time)
-      };
-  
-      // Suscribirse al evento de movimiento del puntero (crosshair)
-      chart.subscribeCrosshairMove(handleCrosshairMove);
-      */
+
       const newSeries = chart.addAreaSeries({
         lineColor,
         topColor: areaTopColor,
@@ -89,6 +98,7 @@ export const Test = () => {
       });
   
       newSeries.setData(results);
+      chartRef.current = chart;
   
       window.addEventListener('resize', handleResize);
   
@@ -98,16 +108,13 @@ export const Test = () => {
       };
 		},
 		[
-      results, 
-      colors.backgroundColor, 
-      colors.lineColor, 
-      colors.textColor, 
-      colors.areaTopColor, 
-      colors.areaBottomColor
+      backgroundColor, 
+      lineColor, 
+      textColor, 
+      areaTopColor, 
+      areaBottomColor
     ]
 	);
-
-
 
       return (
         <section className={Style.dataTime}>
@@ -117,8 +124,18 @@ export const Test = () => {
               <img className={Style.Imagen} src={temperatura} alt="" />  
             </div>
           </div>
-
-          <p className={Style.dataComponent}>22,45<span className={Style.tipoData}>°C</span></p>
+          
+          {
+            data.map((num, index) => {
+              console.log(num);
+              return (
+                  <p key={index} className={Style.dataComponent}>
+                    {num.value}
+                    <span className={Style.tipoData}>°C</span></p>
+              
+              )
+            })
+          }
           <section>
             <div
               ref={chartContainerRef}

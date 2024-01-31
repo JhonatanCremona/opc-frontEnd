@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Style from "./Footer.module.css"
 import { EMAIL, TELEFONO } from "../Icon/Icon"
 import linkedin from "../Icon/linkedin.png"

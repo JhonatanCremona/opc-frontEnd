@@ -1,0 +1,16 @@
+{
+    "NOMBRE_EQUIPO": "NULL",
+    "NOMBRE_RECETA": "NULL",
+    "NRO_PASOS": 70.5,
+    "NRO_RECETA": "NULL",
+    "componentes": {
+      "ESTADO": "1",
+      "NIVEL_AGUA": 70.5,
+      "TEMP_AGUA": "NULL",
+      "TEMP_CHILLER": "NULL",
+      "TEMP_INGRESO": "1",
+      "TEMP_PRODUCTO": "NULL",
+      "VAPOR_SERPENTINA": 70.5,
+      "VAPOR_VIVO": 70.5
+    }
+  }

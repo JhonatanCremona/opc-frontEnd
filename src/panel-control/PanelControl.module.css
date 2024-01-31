@@ -1,3 +1,49 @@
+.CabeceraPanelControl {
+    background-color: #1F1F1F; 
+    padding-left: 116px;
+    padding-right: 116px;
+    height: 1620px;
+}
+
+.titleBox {
+    margin-top: 80px;
+    width: 100%;
+    margin-bottom: 80px;
+}
+.title {
+    font-size: 64px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    text-align: start;
+    line-height: 64px;
+    
+   
+
+}
+.n1{
+    color: #BDBDBD;
+    font-style: normal;
+}
+.CocinaTitle {
+    color: #EF8225;
+    font-style: normal;
+}
+.Receta {
+    color: #D9D9D9;
+    font-family: Roboto;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 64px;
+}
+.n2 {
+    color: #131313;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
 .boxDataTime {
     border: 1px solid green;
     padding: 2px;
@@ -6,10 +52,34 @@
         auto-fit,
         minmax(100px, 1fr)
     );
+    grid-gap: 10px;
+    
 }
 
 
 .dataTime {
     border: 1px solid red;
     background: #0B0B0B;
+    border-radius: 15px;
+    padding: 22px;
+}
+.titleElement {
+    color: #D9D9D9;
+    font-family: Roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 0px;
+    margin-bottom: 42px;
+}
+
+.ElementSensor {
+    border: 1px solid yellow;
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(200px, 1fr)
+    );
+    gap: 10px;
 }

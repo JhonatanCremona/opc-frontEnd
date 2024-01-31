@@ -1,10 +1,9 @@
-import { useState } from "react"
 import { useParams } from "react-router"
 import Style from "./PanelControl.module.css"
+import { Test } from "../test/Test";
 
 export const PanelControl = () => {
     const { equipo } = useParams();
-    const { data, setData } = useState({});
 
 
 
@@ -22,16 +21,28 @@ export const PanelControl = () => {
                 </article>
             </nav>
 
-            <main>
+            <main className={Style.CabeceraPanelControl}>
                 <div className={Style.titleBox}>
-                    <h2 className={Style.title + " " + Style.n1}>COCINA 1</h2>
-                    <h3 className={Style.title + " " + Style.n2}>COCINAS & ENFRIADORES</h3>
+                    <h2 className={Style.title + " " + Style.CocinaTitle}>COCINA 1</h2>
+                    <h3 className={Style.title + " " + Style.Receta}>RECETA: SIN ASIGNAR</h3>
                 </div>
                 <section
                 className={Style.boxDataTime}
                 >
                     <section className={Style.dataTime}>
-                        <h2>Estado Equipo</h2>
+                        <h2 className={Style.titleElement}>Estado Equipo</h2>
+                        <section className={Style.ElementSensor}>
+                            <Test/>
+                            <Test/>
+                            <Test/>
+                            <Test/>
+                            <Test/>
+                            <Test/>
+                        </section>
+                    </section>
+
+                    <section className={Style.dataTime}>
+                        <h2 className={Style.titleElement}>Produccion en Ciclo</h2>
                         <section>
                             <article></article>
                             <article></article>
@@ -39,23 +50,7 @@ export const PanelControl = () => {
                         </section>
                     </section>
 
-                    <section className={Style.dataTime}>
-                        <h2>Produccion en Ciclo</h2>
-                        <section>
-                            <article></article>
-                            <article></article>
-                            <article></article>
-                        </section>
-                    </section>
-
-                    <section className={Style.dataTime}>
-                        <h2>Sector IO</h2>
-                        <section>
-                            <article></article>
-                            <article></article>
-                            <article></article>
-                        </section>
-                    </section>
+                    
                     
                 </section>
             </main>

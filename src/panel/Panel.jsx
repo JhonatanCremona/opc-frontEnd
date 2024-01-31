@@ -6,11 +6,9 @@ import axios from "axios";
 import { Equipos } from "../JSON/equipos.json"
 
 import { useState, useContext, useEffect } from "react";
-import { PanelContext } from "../context/PanelContext";
 
 import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
 import Enfriador from "../IMG/Enfriador/ENTM-09-0001-rev01.png"
-
 
 
 export const Panel = () =>{

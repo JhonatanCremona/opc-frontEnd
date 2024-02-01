@@ -27,7 +27,7 @@ export const SensorSinGrafico = ({ nSensor, value, imgSensor,tipo }) => {
                         transformDato(value) ? 
                         Style.valorDato + " " + Style.ValorDatoActive :
                         Style.valorDato + " " + Style.ValorDatoInactive }>
-                    {value}
+                    {parseFloat(parseFloat(value).toFixed(2))}
                     <span className={Style.tipoData}> { value !== "NULL" && tipo }</span>
              </p>      
 

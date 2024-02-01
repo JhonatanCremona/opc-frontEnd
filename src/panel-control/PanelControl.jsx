@@ -71,7 +71,8 @@ export const PanelControl = () => {
                     <section className={Style.dataTime}>
                         <h2 className={Style.titleElement}>Estado Equipo</h2>
                         <section className={Style.ElementSensor}>
-                        <SensorSinGrafico value={"02:00"} tipo={"hs"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
+                            
+                            <SensorSinGrafico value={"NULL"} tipo={"hs"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
                         </section>
                     </section>
 
@@ -81,7 +82,6 @@ export const PanelControl = () => {
                             <SensorSinGrafico value={"02:00"} tipo={"hs"}  nSensor={"Tiempo Transcurrido"} imgSensor={Reloj}/>
                             <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"}/>
                             <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"}/>
-
                         </section>
                     </section>
 

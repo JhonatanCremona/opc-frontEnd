@@ -1,6 +1,6 @@
 //Dependencias
 import { Link } from "react-router-dom"
-import { useState, useContext } from "react";
+import {  useContext } from "react";
 //Components
 import { NavLink } from "./NavLink";
 import { Notification, User } from "../Icon/Icon";
@@ -11,79 +11,7 @@ import { PanelContext } from "../context/PanelContext";
 
 
 export const NavBar = () => {
-    const [lastScroll, setLastScroll] = useState(0);
     const { urlPanel } = useContext(PanelContext);
-
-    console.log(urlPanel);
-    let ticking = false;
-    const body = document.body;
-
-    const updateScrollDir = () => {
-        const scrollY = window.scrollY || window.pageYOffSet;
-            if (scrollY <=0 ) {
-                body.classList.remove("scroll-up");
-            }
-            if (scrollY > lastScroll && !body.classList.contains("scroll-down")) {
-                body.classList.remove("scroll-up");
-                body.classList.add("scroll-down");
-            }
-            else if(scrollY < lastScroll && body.classList.contains("scroll-down")) {
-                body.classList.remove("scroll-down");
-                body.classList.add("scroll-up");
-            }
-            setLastScroll(scrollY);
-            ticking = false;
-
-    }
-    const onScroll = () => {
-        if (!ticking) {
-          window.requestAnimationFrame(updateScrollDir);
-          ticking = true;
-        }
-      };
-
-      window.addEventListener('scroll', onScroll);
-    
-    /*
-    useEffect(
-        () => {
-          let ticking = false;
-          const body = document.body;
-    
-          const updateScrollDir = () => {
-            const scrollY = window.scrollY || window.pageYOffSet;
-            if (scrollY <=0 ) {
-                body.classList.remove("scroll-up");
-            }
-            if (scrollY > lastScroll && !body.classList.contains("scroll-down")) {
-                body.classList.remove("scroll-up");
-                body.classList.add("scroll-down");
-            }
-            if(scrollY < lastScroll && body.classList.contains("scroll-down")) {
-                body.classList.remove("scroll-down");
-                body.classList.add("scroll-up");
-            }
-            setLastScroll(scrollY);
-            ticking = false;
-          };
-    
-          const onScroll = () => {
-            if (!ticking) {
-              window.requestAnimationFrame(updateScrollDir);
-              ticking = true;
-            }
-          };
-    
-          window.addEventListener('scroll', onScroll);
-    
-          return () => window.removeEventListener('scroll', onScroll);
-        },
-        [lastScroll],
-      );
-    */
-      
-
-    
     const opciones = [
         {
             id: 1,

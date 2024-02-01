@@ -1,27 +1,32 @@
 import { useParams } from "react-router"
 import axios from "axios";
-import { useEffect} from "react";
+import { useEffect, useState} from "react";
 import Reporte from "../JSON/Reporte.json"
 import Style from "./PanelControl.module.css"
 
 //Imagenes
+import ImagenAgua from "../Icon/el-ciclo-del-agua.png";
+import Reloj from "../Icon/reloj.png";
+
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Test } from "../test/Test";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
+import { SensorGrafico } from "../Components/sensores/SensorGrafico";
 
 export const PanelControl = () => {
-    const { equipo } = useParams();
     const datosPrueba= Reporte;
+    const [datos, setDatos] = useState({})
 
-    const API_HOME = "http://192.168.0.49:5000/Home";
+
+   const API_REPORTE = "http://192.168.0.95:5000/Reporte/Cocina1";
     let result = [];
  
     async function readApi(){
          
          try {
-            const response = await axios.get(API_HOME);
-            console.log(response);
-            result = response.data.Equipos || [];
+            const response = await axios.get(API_REPORTE);
+            console.log(response.data);
+            result = response.data || [];
             console.log(result);
          } catch (error) {
              console.error(error);
@@ -35,7 +40,7 @@ export const PanelControl = () => {
         const fetchData = async () => {
           try {
             const apiData = await readApi();
-            console.log(apiData);
+            setDatos(apiData);
           } catch (error) {
             console.error("Error al obtener datos:", error);
           }
@@ -43,12 +48,13 @@ export const PanelControl = () => {
       
         fetchData();
       
-        const intervalId = setInterval(fetchData, 1000);
+        const intervalId = setInterval(fetchData, 10000);
         console.log(intervalId);
       
         return () => clearInterval(intervalId);
       }, []);
-
+      
+      
 
     return (
         <div>
@@ -56,7 +62,7 @@ export const PanelControl = () => {
 
             <main className={Style.CabeceraPanelControl}>
                 <div className={Style.titleBox}>
-                    <h2 className={Style.title + " " + Style.CocinaTitle}>COCINA 1</h2>
+                    <h2 className={Style.title + " " + Style.CocinaTitle}>{datos.NOMBRE_EQUIPO}</h2>
                     <h3 className={Style.title + " " + Style.Receta}>RECETA: {datosPrueba.NOMBRE_RECETA}</h3>
                 </div>
                 <section
@@ -65,21 +71,17 @@ export const PanelControl = () => {
                     <section className={Style.dataTime}>
                         <h2 className={Style.titleElement}>Estado Equipo</h2>
                         <section className={Style.ElementSensor}>
-                            <Test value={datosPrueba.componentes.TEMP_INGRESO} nSensor={"TEMP. INGRESO"}/>
-                            <Test value={datosPrueba.componentes.TEMP_PRODUCTO} nSensor={"TEMP. PRODUCTO"}/>
-                            <Test value={datosPrueba.componentes.TEMP_AGUA} nSensor={"TEMP. AGUA"}/>
-                            <SensorSinGrafico value={datosPrueba.componentes.NIVEL_AGUA} nSensor={"NIVEL DE AGUA"}
-                            
-                            />
+                        <SensorSinGrafico value={"02:00"} tipo={"hs"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
                         </section>
                     </section>
 
                     <section className={Style.dataTime}>
                         <h2 className={Style.titleElement}>Ciclo activo</h2>
-                        <section>
-                            <article></article>
-                            <article></article>
-                            <article></article>
+                        <section className={Style.ElementSensor}>
+                            <SensorSinGrafico value={"02:00"} tipo={"hs"}  nSensor={"Tiempo Transcurrido"} imgSensor={Reloj}/>
+                            <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"}/>
+                            <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"}/>
+
                         </section>
                     </section>
 

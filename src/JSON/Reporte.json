@@ -1,16 +1,16 @@
 {
-    "NOMBRE_EQUIPO": "COCINA-1",
-    "NOMBRE_RECETA": "NULL",
-    "NRO_PASOS": 70.5,
-    "NRO_RECETA": "NULL",
-    "componentes": {
-      "ESTADO": "1",
-      "NIVEL_AGUA": 70.5,
-      "TEMP_AGUA": "NULL",
-      "TEMP_CHILLER": "NULL",
-      "TEMP_INGRESO": "1",
-      "TEMP_PRODUCTO": "NULL",
-      "VAPOR_SERPENTINA": 70.5,
-      "VAPOR_VIVO": 70.5
-    }
+  "NOMBRE_EQUIPO": "NULL",
+  "NOMBRE_RECETA": 0.021633315831422806,
+  "NRO_PASOS": 30.430862426757812,
+  "NRO_RECETA": 0.021633315831422806,
+  "componentes": {
+    "ESTADO": "NULL",
+    "NIVEL_AGUA": "NULL",
+    "TEMP_AGUA": "NULL",
+    "TEMP_CHILLER": "NULL",
+    "TEMP_INGRESO": "NULL",
+    "TEMP_PRODUCTO": "NULL",
+    "VAPOR_SERPENTINA": "NULL",
+    "VAPOR_VIVO": "NULL"
+  }
 }

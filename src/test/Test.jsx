@@ -10,7 +10,7 @@ import { results } from "../JSON/jsonHistorico.json";
 
 
 
-export const Test = () => {
+export const Test = ({ value, nSensor }) => {
   
   const backgroundColor = "rgba(255, 255, 255, 0.1)";
   const textColor = "white";
@@ -119,7 +119,7 @@ export const Test = () => {
       return (
         <section className={Style.dataTime}>
           <div className={Style.titleDataTime}>
-            <h3 className={Style.datos}>TEM. INGRESO</h3>
+            <h3 className={Style.datos}>{ nSensor }</h3>
             <div className={Style.boxImagen}>
               <img className={Style.Imagen} src={temperatura} alt="" />  
             </div>

@@ -1,12 +1,41 @@
+/*SE PUDE BOORRRAR*/
+
+.equipoNav {
+    background-color:#131313;
+    height: 200px !important;
+    border: 1px solid yellow;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+.boxImagen {
+    width: 200px;
+    background-color: #0B0B0B;
+    border: 1px solid violet;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Imagen {
+    width: 90%;
+}
+
+/*FIN    SE PUDE BOORRRAR*/
+
+main {
+    margin: 0;
+    padding: 0;
+}
+
 .CabeceraPanelControl {
     background-color: #1F1F1F; 
     padding-left: 116px;
     padding-right: 116px;
-    height: 1620px;
+
 }
 
 .titleBox {
-    margin-top: 80px;
+    padding-top: 80px;
     width: 100%;
     margin-bottom: 80px;
 }
@@ -27,6 +56,7 @@
     color: #EF8225;
     font-style: normal;
 }
+
 .Receta {
     color: #D9D9D9;
     font-family: Roboto;
@@ -35,22 +65,17 @@
     font-weight: 700;
     line-height: 64px;
 }
-.n2 {
-    color: #131313;
-    font-weight: 700;
-    font-style: normal;
-}
 
-
+/*ESTILOS COMPONENTES DE DATO TIME REAL*/
 .boxDataTime {
     border: 1px solid green;
     padding: 2px;
     display: grid;
     grid-template-columns: repeat(
-        auto-fit,
-        minmax(100px, 1fr)
+        auto-fiLL,
+        minmax(474px, 1fr)
     );
-    grid-gap: 10px;
+    gap: 20px;
     
 }
 
@@ -79,5 +104,7 @@
         auto-fit,
         minmax(200px, 1fr)
     );
-    gap: 10px;
+    gap: 15px;
+    max-width: 420px;
+
 }

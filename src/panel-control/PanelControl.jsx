@@ -2,22 +2,24 @@ import { useParams } from "react-router"
 import Style from "./PanelControl.module.css"
 import { Test } from "../test/Test";
 
+//Imagenes
+import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
+import Enfriador from "../IMG/Enfriador/ENTM-09-0001-rev01.png"
+
 export const PanelControl = () => {
     const { equipo } = useParams();
 
-
-
     console.log(equipo);
 
-
     return (
-        <>
-            <nav>
-                <article>
-                    <img src="" alt="" />
+        <div>
+            
+            <nav className={Style.equipoNav}>
+                <article className={Style.boxImagen}>
+                    <img className={Style.Imagen} src={Cocina} alt="Imagen Cocina" />
                 </article>
-                <article>
-                    <img src="" alt="" />
+                <article className={Style.boxImagen}>
+                    <img className={Style.Imagen} src={Enfriador} alt="Imagen Enfriador" />
                 </article>
             </nav>
 
@@ -42,7 +44,7 @@ export const PanelControl = () => {
                     </section>
 
                     <section className={Style.dataTime}>
-                        <h2 className={Style.titleElement}>Produccion en Ciclo</h2>
+                        <h2 className={Style.titleElement}>Ciclo activo</h2>
                         <section>
                             <article></article>
                             <article></article>
@@ -50,11 +52,18 @@ export const PanelControl = () => {
                         </section>
                     </section>
 
-                    
-                    
+                    <section className={Style.dataTime}>
+                        <h2 className={Style.titleElement}>Sector IO</h2>
+                        <section>
+                            <article></article>
+                            <article></article>
+                            <article></article>
+                        </section>
+                    </section>
+
                 </section>
             </main>
         
-        </>
+        </div>
     )
 }

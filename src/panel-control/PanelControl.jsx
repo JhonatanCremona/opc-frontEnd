@@ -76,13 +76,13 @@ export const PanelControl = () => {
                         <h2 className={Style.titleElement}>Estado Equipo</h2>
                         <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorGrafico value={datos.componentes.TEMP_INGRESO} tipo={"°C"} nSensor={"TEMP. INGRESO"} imgSensor={ImagenTemperatura}/>
-                            <SensorGrafico value={datos.componentes.TEMP_PRODUCTO} tipo={"°C"} nSensor={"TEMP. PRODUCTO"} imgSensor={ImagenTemperatura}/>
-                            <SensorGrafico value={datos.componentes.TEMP_AGUA} tipo={"°C"} nSensor={"TEMP. AGUA"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datosPrueba.componentes.TEMP_INGRESO} tipo={"°C"} nSensor={"TEMP. INGRESO"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datosPrueba.componentes.TEMP_PRODUCTO} tipo={"°C"} nSensor={"TEMP. PRODUCTO"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datosPrueba.componentes.TEMP_AGUA} tipo={"°C"} nSensor={"TEMP. AGUA"} imgSensor={ImagenTemperatura}/>
                             { datos.NOMBRE_EQUIPO !== "Cocina" && 
-                                <SensorGrafico value={datos.componentes.TEMP_CHILLER} nSensor={"TEMP. CHILLER"}/>
+                                <SensorGrafico value={datosPrueba.componentes.TEMP_CHILLER} nSensor={"TEMP. CHILLER"}/>
                             }
-                            <SensorSinGrafico value={datos.componentes.NIVEL_AGUA} tipo={"mm"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
+                            <SensorSinGrafico value={datosPrueba.componentes.NIVEL_AGUA} tipo={"mm"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
                         </section>
                     </section>
 
@@ -101,8 +101,8 @@ export const PanelControl = () => {
                         <h2 className={Style.titleElement}>Sector IO</h2>
                         <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorSinGrafico value={ datos.componentes.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} imgSensor={ImagenValvulaActiva}/>
-                            <SensorSinGrafico value={ datos.componentes.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} imgSensor={ImagenValvulaActiva}/>
+                            <SensorSinGrafico value={ datosPrueba.componentes.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} imgSensor={ImagenValvulaActiva}/>
+                            <SensorSinGrafico value={ datosPrueba.componentes.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} imgSensor={ImagenValvulaActiva}/>
                         </section>
                     </section>
 

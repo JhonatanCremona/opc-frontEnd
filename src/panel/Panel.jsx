@@ -19,7 +19,6 @@ export const Panel = () =>{
     const [maquina , setMaquina] = useState([])
  
       async function readApi(){
-         
          try {
             const response = await axios.get(API_HOME);
             console.log(response);
@@ -37,9 +36,7 @@ export const Panel = () =>{
         const fetchData = async () => {
           try {
             const apiData = await readApi();
-            console.log("LLEEEEEEGUE 2 FETCH");
-            setMaquina(Equipos);
-            console.log(apiData);
+            setMaquina(apiData);
           } catch (error) {
             console.error("Error al obtener datos:", error); 
           }
@@ -68,7 +65,7 @@ export const Panel = () =>{
                 return (
                     <div 
                     className={Style.card} 
-                    key={eqipos.numero_equipo || eqipos.ID}>
+                    key={eqipos.NOMBRE_EQUIPO || eqipos.ID}>
                         <section className={Style.imagen}>
                             <img 
                             className={Style.imgEquipo}

@@ -8,8 +8,6 @@ import temperatura from "../Icon/temperatura.png"
 //IMPORT JSON LOCAL DATA
 import { results } from "../JSON/jsonHistorico.json";
 
-
-
 export const Test = ({ value, nSensor }) => {
   
   const backgroundColor = "rgba(255, 255, 255, 0.1)";
@@ -28,7 +26,7 @@ export const Test = ({ value, nSensor }) => {
       try {
         const apiData = await readApi("/opcua/readVariableBoolean/1");
         console.log(apiData);
-        setData(data[0] = [apiData]);
+        setData([{ value: apiData.value }]);
         console.log(data);
 
         if (chartRef.current) {
@@ -108,6 +106,7 @@ export const Test = ({ value, nSensor }) => {
       };
 		},
 		[
+
       backgroundColor, 
       lineColor, 
       textColor, 
@@ -119,7 +118,7 @@ export const Test = ({ value, nSensor }) => {
       return (
         <section className={Style.dataTime}>
           <div className={Style.titleDataTime}>
-            <h3 className={Style.datos}>{ nSensor }</h3>
+            <h3 className={Style.datos}>{ "TEMP. INGRESO" }</h3>
             <div className={Style.boxImagen}>
               <img className={Style.Imagen} src={temperatura} alt="" />  
             </div>

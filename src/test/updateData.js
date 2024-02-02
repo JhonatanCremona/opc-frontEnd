@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //const BASE_URL = "http://192.168.0.95:5000";
-const BASE_URL = "http://localhost:5010"
+const BASE_URL = "http://localhost:5011"
 
 async function mapApiResults(results) {
   return results.map((objeto) => ({

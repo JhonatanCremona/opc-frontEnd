@@ -9,6 +9,11 @@ export const SensorSinGrafico = ({ nSensor, value, imgSensor,tipo }) => {
         if (value == "NULL"){
             return false;
         }
+        if (value) { 
+            console.log("LLEGUE");
+            return "Activo" } 
+        else if(!value) 
+            { return "Inactivo"; }
         if (parseFloat(parseFloat(value).toFixed(2)) > 0){
             return true;
         } else { return false; }
@@ -27,7 +32,7 @@ export const SensorSinGrafico = ({ nSensor, value, imgSensor,tipo }) => {
                         transformDato(value) ? 
                         Style.valorDato + " " + Style.ValorDatoActive :
                         Style.valorDato + " " + Style.ValorDatoInactive }>
-                    {parseFloat(parseFloat(value).toFixed(2))}
+                    {  !isNaN(parseFloat(parseFloat(value).toFixed(2))) ? parseFloat(parseFloat(value).toFixed(2)) : value }
                     <span className={Style.tipoData}> { value !== "NULL" && tipo }</span>
              </p>      
 

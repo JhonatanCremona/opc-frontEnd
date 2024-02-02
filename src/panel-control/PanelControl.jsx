@@ -1,6 +1,6 @@
 import { useParams } from "react-router"
 import axios from "axios";
-import { useEffect, useState} from "react";
+import { useContext, useEffect, useState} from "react";
 import Reporte from "../JSON/Reporte.json"
 import Style from "./PanelControl.module.css"
 
@@ -11,20 +11,22 @@ import ImagenValvulaActiva from "../Icon/valvulaActive.png";
 import ImagenTemperatura from "../Icon/temperatura.png";
 import ImagenRecetaActiva from "../Icon/recetas.png";
 
+//Components
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
 import { SensorGrafico } from "../Components/sensores/SensorGrafico";
+import { PanelContext } from "../context/PanelContext";
 
 export const PanelControl = () => {
     const datosPrueba= Reporte;
     const [datos, setDatos] = useState({})
+    const { urlPanel } = useContext(PanelContext)
 
-
+    /**/
    const API_REPORTE = "http://192.168.0.95:5000/Reporte/Cocina1";
     let result = [];
  
     async function readApi(){
-         
          try {
             const response = await axios.get(API_REPORTE);
             console.log(response.data);
@@ -55,7 +57,7 @@ export const PanelControl = () => {
       
         return () => clearInterval(intervalId);
       }, []);
-      
+      console.log("CONTEXTO_DATA: " + urlPanel);
       
 
     return (
@@ -64,8 +66,8 @@ export const PanelControl = () => {
 
             <main className={Style.CabeceraPanelControl}>
                 <div className={Style.titleBox}>
-                    <h2 className={Style.title + " " + Style.CocinaTitle}>{datosPrueba.NOMBRE_EQUIPO}</h2>
-                    <h3 className={Style.title + " " + Style.Receta}>RECETA: { datosPrueba.NRO_RECETA + " - " +  datosPrueba.NOMBRE_RECETA}</h3>
+                    <h2 className={Style.title + " " + Style.CocinaTitle}>{datos.NOMBRE_EQUIPO}</h2>
+                    <h3 className={Style.title + " " + Style.Receta}>RECETA: { datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA}</h3>
                 </div>
                 <section
                 className={Style.boxDataTime}
@@ -74,12 +76,13 @@ export const PanelControl = () => {
                         <h2 className={Style.titleElement}>Estado Equipo</h2>
                         <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorGrafico value={datosPrueba.componentes.TEMP_INGRESO} tipo={"°C"} nSensor={"TEMP. INGRESO"} imgSensor={ImagenTemperatura}/>
-                            <SensorGrafico value={datosPrueba.componentes.TEMP_PRODUCTO} tipo={"°C"} nSensor={"TEMP. PRODUCTO"} imgSensor={ImagenTemperatura}/>
-                            <SensorGrafico value={datosPrueba.componentes.TEMP_AGUA} tipo={"°C"} nSensor={"TEMP. AGUA"} imgSensor={ImagenTemperatura}/>
-
-
-                            <SensorSinGrafico value={"NULL"} tipo={"hs"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
+                            <SensorGrafico value={datos.componentes.TEMP_INGRESO} tipo={"°C"} nSensor={"TEMP. INGRESO"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datos.componentes.TEMP_PRODUCTO} tipo={"°C"} nSensor={"TEMP. PRODUCTO"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datos.componentes.TEMP_AGUA} tipo={"°C"} nSensor={"TEMP. AGUA"} imgSensor={ImagenTemperatura}/>
+                            { datos.NOMBRE_EQUIPO !== "Cocina" && 
+                                <SensorGrafico value={datos.componentes.TEMP_CHILLER} nSensor={"TEMP. CHILLER"}/>
+                            }
+                            <SensorSinGrafico value={datos.componentes.NIVEL_AGUA} tipo={"mm"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
                         </section>
                     </section>
 
@@ -88,8 +91,8 @@ export const PanelControl = () => {
                         <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
                         <section className={Style.ElementSensor +" "+Style.ElementSecond}>
                             <SensorSinGrafico value={"02:00"} tipo={"hs"}  nSensor={"Tiempo Transcurrido"} imgSensor={Reloj}/>
-                            <SensorSinGrafico value={ datosPrueba.NRO_PASOS }  nSensor={"N° Pasos"}/>
-                            <SensorSinGrafico value={ datosPrueba.NRO_RECETA } nSensor={"N° Receta"} imgSensor={ImagenRecetaActiva}/>
+                            <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"}/>
+                            <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"} imgSensor={ImagenRecetaActiva}/>
                             <SensorSinGrafico value={ "2"} nSensor={"N° Torres"}/>
                         </section>
                     </section>
@@ -98,8 +101,8 @@ export const PanelControl = () => {
                         <h2 className={Style.titleElement}>Sector IO</h2>
                         <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorSinGrafico value={ datosPrueba.componentes.VAPOR_VIVO } nSensor={"Vapor Vivo"} imgSensor={ImagenValvulaActiva}/>
-                            <SensorSinGrafico value={ datosPrueba.componentes.VAPOR_SERPENTINA} nSensor={"Vapor Serpentina"} imgSensor={ImagenValvulaActiva}/>
+                            <SensorSinGrafico value={ datos.componentes.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} imgSensor={ImagenValvulaActiva}/>
+                            <SensorSinGrafico value={ datos.componentes.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} imgSensor={ImagenValvulaActiva}/>
                         </section>
                     </section>
 

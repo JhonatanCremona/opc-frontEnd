@@ -7,8 +7,6 @@ import Style from "./SensorChart.module.css"
 //IMPORT JSON LOCAL DATA
 import { results } from "../../JSON/jsonHistorico.json";
 
-
-
 export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
   
   const backgroundColor = "rgba(255, 255, 255, 0.01)";
@@ -21,7 +19,7 @@ export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
   const chartRef = useRef(null);
   const [data, setData] = useState([{value: 0.0}]);
 
-
+/*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,6 +46,8 @@ export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
   
     return () => clearInterval(intervalId);
   }, []);
+
+  */
 
 	useEffect(
 		() => {
@@ -136,7 +136,7 @@ export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
             })
             */
           }
-          <p className={Style.dataComponent}>{value}<span className={Style.tipoData}>{tipo}</span></p>
+          <p className={Style.dataComponent}>{ parseFloat(parseFloat(value).toFixed(2)) }<span className={Style.tipoData}>{tipo}</span></p>
           <section>
             <div
               ref={chartContainerRef}

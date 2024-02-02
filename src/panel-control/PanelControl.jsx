@@ -25,6 +25,24 @@ export const PanelControl = () => {
     /**/
    const API_REPORTE = "http://192.168.0.95:5000/Reporte/Cocina1";
     let result = [];
+    function EstadoMaquina(value) {
+        switch (value) {
+            case 1:
+                return "Pre Operativo"
+            case 2:
+                return "OPERATIVO"
+            case 3:
+                return "PAUSA"
+            case 4:
+                return "INACTIVO"
+            case 5:
+                return "CANCELADO"
+            case 6:
+                return "FINALIZADO"
+            default:
+                return "Error"
+        }
+    }
  
     async function readApi(){
          try {
@@ -67,42 +85,44 @@ export const PanelControl = () => {
             <main className={Style.CabeceraPanelControl}>
                 <div className={Style.titleBox}>
                     <h2 className={Style.title + " " + Style.CocinaTitle}>{datos.NOMBRE_EQUIPO}</h2>
-                    <h3 className={Style.title + " " + Style.Receta}>RECETA: { datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA}</h3>
+                    <h3 className={Style.title + " " + Style.Receta}>RECETA: { datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA }</h3>
                 </div>
                 <section
                 className={Style.boxDataTime}
                 >
                     <section className={Style.dataTime}>
                         <h2 className={Style.titleElement}>Estado Equipo</h2>
-                        <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
+                        <h3 className={Style.subTitleElement}>{EstadoMaquina(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorGrafico value={datos.componentes.TEMP_INGRESO} tipo={"°C"} nSensor={"TEMP. INGRESO"} imgSensor={ImagenTemperatura}/>
-                            <SensorGrafico value={datos.componentes.TEMP_PRODUCTO} tipo={"°C"} nSensor={"TEMP. PRODUCTO"} imgSensor={ImagenTemperatura}/>
-                            <SensorGrafico value={datos.componentes.TEMP_AGUA} tipo={"°C"} nSensor={"TEMP. AGUA"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datos?.componentes?.TEMP_INGRESO} tipo={"°C"} nSensor={"TEMP. INGRESO"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datos?.componentes?.TEMP_PRODUCTO} tipo={"°C"} nSensor={"TEMP. PRODUCTO"} imgSensor={ImagenTemperatura}/>
+                            <SensorGrafico value={datos?.componentes?.TEMP_AGUA} tipo={"°C"} nSensor={"TEMP. AGUA"} imgSensor={ImagenTemperatura}/>
+
                             { datos.NOMBRE_EQUIPO !== "Cocina" && 
-                                <SensorGrafico value={datos.componentes.TEMP_CHILLER} nSensor={"TEMP. CHILLER"}/>
+                                <SensorGrafico value={datos?.componentes?.TEMP_CHILLER} nSensor={"TEMP. CHILLER"}/>
                             }
-                            <SensorSinGrafico value={datos.componentes.NIVEL_AGUA} tipo={"mm"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
+                            
+                            <SensorSinGrafico value={datos?.componentes?.NIVEL_AGUA} tipo={"mm"}  nSensor={"NIVEL DE AGUA"} imgSensor={ImagenAgua}/>
                         </section>
                     </section>
 
                     <section className={Style.dataTime}>
                         <h2 className={Style.titleElement}>Ciclo activo</h2>
-                        <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
+                        <h3 className={Style.subTitleElement}>{EstadoMaquina(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor +" "+Style.ElementSecond}>
-                            <SensorSinGrafico value={"02:00"} tipo={"hs"}  nSensor={"Tiempo Transcurrido"} imgSensor={Reloj}/>
+                            <SensorSinGrafico value={ datos.TIEMPO_TRANSCURRIDO } tipo={"hs"}  nSensor={"Tiempo Transcurrido"} imgSensor={Reloj}/>
                             <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"}/>
                             <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"} imgSensor={ImagenRecetaActiva}/>
-                            <SensorSinGrafico value={ "2"} nSensor={"N° Torres"}/>
+                            <SensorSinGrafico value={ "1"} nSensor={"N° Torres"}/>
                         </section>
                     </section>
 
                     <section className={Style.dataTime}>
                         <h2 className={Style.titleElement}>Sector IO</h2>
-                        <h3 className={Style.subTitleElement}>{datosPrueba.componentes.ESTADO}</h3>
+                        <h3 className={Style.subTitleElement}>{EstadoMaquina(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorSinGrafico value={ datos.componentes.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} imgSensor={ImagenValvulaActiva}/>
-                            <SensorSinGrafico value={ datos.componentes.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} imgSensor={ImagenValvulaActiva}/>
+                            <SensorSinGrafico value={ datos?.componentes?.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} imgSensor={ImagenValvulaActiva}/>
+                            <SensorSinGrafico value={ datos?.componentes?.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} imgSensor={ImagenValvulaActiva}/>
                         </section>
                     </section>
 

@@ -17,6 +17,25 @@ export const Panel = () =>{
     const API_HOME = "http://192.168.0.95:5000/Home";
     let result = []
     const [maquina , setMaquina] = useState([])
+
+    function EstadoMaquina(value) {
+        switch (value) {
+            case 1:
+                return "Pre Operativo"
+            case 2:
+                return "OPERATIVO"
+            case 3:
+                return "PAUSA"
+            case 4:
+                return "INACTIVO"
+            case 5:
+                return "CANCELADO"
+            case 6:
+                return "FINALIZADO"
+            default:
+                return "Error"
+        }
+    }
  
       async function readApi(){
          try {
@@ -69,11 +88,11 @@ export const Panel = () =>{
                         <section className={Style.imagen}>
                             <img 
                             className={Style.imgEquipo}
-                            src={eqipos.NOMBRE_EQUIPO == "COCINA 1" ? Cocina : Enfriador} alt="" />
+                            src={eqipos.NOMBRE_EQUIPO == "Cocina" ? Cocina : Enfriador} alt="" />
                         </section>
 
-                        <section className={eqipos.ESTADO != "OPERACIONAL" ? Style.tagsContainer : Style.tagsContainerOperativo }>
-                            <p className={Style.tags}>{eqipos.ESTADO}</p>
+                        <section className={EstadoMaquina(eqipos.ESTADO) != "OPERATIVO" ? Style.tagsContainer : Style.tagsContainerOperativo }>
+                            <p className={Style.tags}>{EstadoMaquina(eqipos.ESTADO) }</p>
                         </section>
 
                         <section className={Style.cardDetails}>
@@ -82,11 +101,13 @@ export const Panel = () =>{
                                     className={Style.titleEquipo}>
                                     {eqipos.NOMBRE_EQUIPO}
                                 </h2>
-                                <h2 className={Style.titleEstado}> {eqipos.ESTADO}</h2>
+
+                                <h2 className={Style.titleEstado}> { EstadoMaquina(eqipos.ESTADO) }</h2>
+
                                 <p className={Style.textTiempoTrans}>
                                     <span>Tiempo transcurrido:</span> {eqipos.TIEMPO_TRANSCURRIDO}
                                     <span className={
-                                        eqipos.ESTADO == "OPERACIONAL" ? Style.textReceta : Style.textRecetaNone
+                                        EstadoMaquina(eqipos.ESTADO) == "OPERATIVO" ? Style.textReceta : Style.textRecetaNone
                                     }>{"RECETA: " + eqipos.NRO_RECETA +"-"+ eqipos.NOMBRE_RECETA}</span>
                                     <span className={Style.textReceta}>{"N° TORRES:  " + eqipos.NRO_TORRES}</span>
                                 </p>
@@ -96,7 +117,7 @@ export const Panel = () =>{
                             to={`/panel-control/${eqipos.NOMBRE_EQUIPO.replace(/\s+/g, '-')}`}
                             onClick={setUrlPanel(`/panel-control/${eqipos.NOMBRE_EQUIPO.replace(/\s+/g, '-')}`)}
                             className={
-                                eqipos.NOMBRE_EQUIPO === "COCINA 1" 
+                                eqipos.NOMBRE_EQUIPO === "Cocina" 
                                 ? Style.buttonArrow + " " + Style.buttonCocina 
                                 : Style.buttonArrow + " " + Style.buttonEndriador
                                 }>VER MAS DETALLES {<Arrow/>}</Link>

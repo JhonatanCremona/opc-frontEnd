@@ -3,7 +3,6 @@ import { createChart, ColorType } from 'lightweight-charts';
 import { readApi } from "../../test/updateData"; 
 
 import Style from "./SensorChart.module.css"
-import temperatura from "../../Icon/temperatura.png"
 
 //IMPORT JSON LOCAL DATA
 import { results } from "../../JSON/jsonHistorico.json";
@@ -12,7 +11,7 @@ import { results } from "../../JSON/jsonHistorico.json";
 
 export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
   
-  const backgroundColor = "rgba(255, 255, 255, 0.1)";
+  const backgroundColor = "rgba(255, 255, 255, 0.01)";
   const textColor = "white";
   const lineColor= "#2962FF";
   const areaTopColor='#2962FF';
@@ -121,11 +120,11 @@ export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
           <div className={Style.titleDataTime}>
             <h3 className={Style.datos}>{ nSensor }</h3>
             <div className={Style.boxImagen}>
-              <img className={Style.Imagen} src={temperatura} alt="" />  
+              <img className={Style.Imagen} src={imgSensor} alt="" />  
             </div>
           </div>
           
-          {
+          {/*
             data.map((num, index) => {
               console.log(num);
               return (
@@ -135,7 +134,9 @@ export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
               
               )
             })
+            */
           }
+          <p className={Style.dataComponent}>{value}<span className={Style.tipoData}>{tipo}</span></p>
           <section>
             <div
               ref={chartContainerRef}

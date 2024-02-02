@@ -3,11 +3,11 @@
         {
             "numero_equipo": 1,
             "NOMBRE_EQUIPO":  "COCINA 1",
-            "ESTADO": "NO-OPERATIVO",
-            "NOMBRE_RECETA": "",
-            "NRO_RECETA": "",
+            "ESTADO": "OPERACIONAL",
+            "NOMBRE_RECETA": "JAMON 5LBS",
+            "NRO_RECETA": "5",
             "TIEMPO_TRANSCURRIDO": "00:00hs",
-            "NRO_TORRES": ""
+            "NRO_TORRES": "2"
         },
         {
             "numero_equipo": 2,
@@ -16,7 +16,7 @@
             "NOMBRE_RECETA": "",
             "NRO_RECETA": "",
             "TIEMPO_TRANSCURRIDO": "00:00hs",
-            "NRO_TORRES": ""
+            "NRO_TORRES": "0"
         }
     ]
 }

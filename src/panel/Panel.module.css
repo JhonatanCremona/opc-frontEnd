@@ -40,6 +40,7 @@
     gap: 50px;
     padding-left: 116px;
     padding-right: 116px;
+    margin-bottom: 70px;
 }
 
 .card {
@@ -70,6 +71,11 @@
 }
 
 .tagsContainerOperativo {
+    position: absolute;
+    top: 20px;
+    height: 30px;
+    display: flex;
+    align-items: center;
     background-color: #54C42D;
 }
 
@@ -132,8 +138,9 @@
     align-items: center;
     justify-content: flex-end;
     margin-right: 35px;
+    font-family: Roboto;
     font-size: 15px;
-    font-weight: 700px;
+    font-weight: bold;
     letter-spacing: 2.6px;
     text-decoration: none;
 }

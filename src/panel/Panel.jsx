@@ -1,18 +1,20 @@
 import { Arrow } from "../Icon/Icon";
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Style from "./Panel.module.css";
 import axios from "axios";
 
 import { Equipos } from "../JSON/equipos.json"
 
-import { useState, useContext, useEffect } from "react";
+import { useState,  useEffect, useContext } from "react";
 
 import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
 import Enfriador from "../IMG/Enfriador/ENTM-09-0001-rev01.png"
+import { PanelContext } from "../context/PanelContext";
 
 
 export const Panel = () =>{
-    const API_HOME = "http://192.168.0.49:5000/Home";
+    let { setUrlPanel } = useContext(PanelContext);
+    const API_HOME = "http://192.168.0.95:5000/Home";
     let result = []
     const [maquina , setMaquina] = useState([])
  
@@ -35,10 +37,11 @@ export const Panel = () =>{
         const fetchData = async () => {
           try {
             const apiData = await readApi();
-            setMaquina(apiData);
+            console.log("LLEEEEEEGUE 2 FETCH");
+            setMaquina(Equipos);
             console.log(apiData);
           } catch (error) {
-            console.error("Error al obtener datos:", error); // Puedes manejar el error actualizando el estado según sea necesario
+            console.error("Error al obtener datos:", error); 
           }
         };
       
@@ -69,7 +72,7 @@ export const Panel = () =>{
                         <section className={Style.imagen}>
                             <img 
                             className={Style.imgEquipo}
-                            src={eqipos.NOMBRE_EQUIPO == "Cocina 1" ? Cocina : Enfriador} alt="" />
+                            src={eqipos.NOMBRE_EQUIPO == "COCINA 1" ? Cocina : Enfriador} alt="" />
                         </section>
 
                         <section className={eqipos.ESTADO != "OPERACIONAL" ? Style.tagsContainer : Style.tagsContainerOperativo }>
@@ -87,14 +90,16 @@ export const Panel = () =>{
                                     <span>Tiempo transcurrido:</span> {eqipos.TIEMPO_TRANSCURRIDO}
                                     <span className={
                                         eqipos.ESTADO == "OPERACIONAL" ? Style.textReceta : Style.textRecetaNone
-                                    }>{"RECETA: " + eqipos.NOMBRE_RECETA}</span>
+                                    }>{"RECETA: " + eqipos.NRO_RECETA +"-"+ eqipos.NOMBRE_RECETA}</span>
+                                    <span className={Style.textReceta}>{"N° TORRES:  " + eqipos.NRO_TORRES}</span>
                                 </p>
                                 
                             </article>
                             <Link 
                             to={`/panel-control/${eqipos.NOMBRE_EQUIPO.replace(/\s+/g, '-')}`}
+                            onClick={setUrlPanel(`/panel-control/${eqipos.NOMBRE_EQUIPO.replace(/\s+/g, '-')}`)}
                             className={
-                                eqipos.nombre_equipo === "Cocina 1" 
+                                eqipos.NOMBRE_EQUIPO === "COCINA 1" 
                                 ? Style.buttonArrow + " " + Style.buttonCocina 
                                 : Style.buttonArrow + " " + Style.buttonEndriador
                                 }>VER MAS DETALLES {<Arrow/>}</Link>

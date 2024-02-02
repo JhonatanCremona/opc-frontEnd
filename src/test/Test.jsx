@@ -61,11 +61,7 @@ export const Test = ({ value, nSensor }) => {
         },
         width: chartContainerRef.current.clientWidth,
         height: 110,
-        grid: {
-          vertLines: { visible: false },
-          horzLines: { visible: false },
-        },
-        handleScale: false,
+        
       });
   
       // Ocultar valores en el eje X (tiempo)
@@ -95,7 +91,8 @@ export const Test = ({ value, nSensor }) => {
         lastValueVisible: false,
       });
   
-      newSeries.setData(results);
+      newSeries.setData([{ time: new Date().getTime(), value: data.value }]);
+     
       chartRef.current = chart;
   
       window.addEventListener('resize', handleResize);
@@ -106,7 +103,7 @@ export const Test = ({ value, nSensor }) => {
       };
 		},
 		[
-
+      data,
       backgroundColor, 
       lineColor, 
       textColor, 

@@ -3,7 +3,6 @@
     width: 200px;
     height: 110px;
     position: relative;
-    border: 1px solid green;
 }
 .titleDataTime {
     display: flex;
@@ -25,7 +24,6 @@
 .boxImagen {
     width: 19px;
     height: 16px;
-    border: 1px solid white;
     margin-right: 6px;
     top: 10px;
 }

@@ -10,7 +10,6 @@
 .boxImagen {
     width: 200px;
     background-color: #0B0B0B;
-    border: 1px solid violet;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +66,6 @@ main {
 
 /*ESTILOS COMPONENTES DE DATO TIME REAL*/
 .boxDataTime {
-    border: 1px solid green;
     padding: 2px;
     display: grid;
     padding-bottom: 70px;

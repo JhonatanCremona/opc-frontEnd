@@ -1,3 +1,6 @@
+
+
+
 export function tranformDataEquipo(data) {
     return data.map(item => {
         return {
@@ -15,3 +18,4 @@ export function tranformDataEquipo(data) {
         }
     })
 }
+

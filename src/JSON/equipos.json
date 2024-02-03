@@ -1,20 +1,18 @@
 {
     "Equipos": [
         {
-            "numero_equipo": 1,
+            "ID": 1,
             "NOMBRE_EQUIPO":  "COCINA 1",
-            "ESTADO": "OPERACIONAL",
-            "NOMBRE_RECETA": "JAMON 5LBS",
-            "NRO_RECETA": "5",
+            "ESTADO": "OPERATIVO",
+            "RECETA": "5 JAMON 5LBS",
             "TIEMPO_TRANSCURRIDO": "00:00hs",
             "NRO_TORRES": "2"
         },
         {
-            "numero_equipo": 2,
+            "ID": 2,
             "NOMBRE_EQUIPO":  "ENFRIADOR 1",
             "ESTADO": "NO-OPERATIVO",
-            "NOMBRE_RECETA": "",
-            "NRO_RECETA": "",
+            "RECETA": "5 JAMON 5LBS",
             "TIEMPO_TRANSCURRIDO": "00:00hs",
             "NRO_TORRES": "0"
         }

@@ -82,9 +82,7 @@ export const Panel = () =>{
             <section className={Style.equipos}>
             { maquina.map(( eqipos ) => {
                 return (
-                    <div 
-                    className={Style.card} 
-                    key={eqipos.NOMBRE_EQUIPO || eqipos.ID}>
+                    <div className={Style.card} key={eqipos.NOMBRE_EQUIPO || eqipos.ID}>
                         <section className={Style.imagen}>
                             <img 
                             className={Style.imgEquipo}

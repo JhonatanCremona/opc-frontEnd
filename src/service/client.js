@@ -97,3 +97,15 @@ export const getHistory = async (componente) => {
         throw error;
     }
 }
+
+
+export const getApiJavaHistorico = async () => {
+    try {
+        return await axios.get(
+            `http://localhost:5011/opcua/get-stored-sensor-value`
+        )
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

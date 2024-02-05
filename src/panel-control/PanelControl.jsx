@@ -18,7 +18,6 @@ import { SensorGrafico } from "../Components/sensores/SensorGrafico";
 import { PanelContext } from "../context/PanelContext";
 
 export const PanelControl = () => {
-    const datosPrueba= Reporte;
     const [datos, setDatos] = useState({})
     const { urlPanel } = useContext(PanelContext)
 

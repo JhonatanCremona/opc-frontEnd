@@ -1,11 +1,7 @@
 //Depending 
-import { useState, useEffect, forwardRef, createContext, useImperativeHandle, useLayoutEffect,useRef } from "react"
+import { useState, useEffect, forwardRef, useImperativeHandle, useLayoutEffect,useRef } from "react"
 import { createChart } from "lightweight-charts"
-
 import { getApiJavaHistorico } from "../service/client";
-
-
-const Context = createContext();
 
 //Component
 
@@ -23,18 +19,24 @@ export const Charts = forwardRef((_, ref) => {
   
       // Crear el gráfico
       const chartInstance = createChart(container, {
+        layout: {
+
+          fontSize:20
+        },
         width: container.clientWidth,
         height: 300,
+      });
+
+      chartInstance.timeScale().applyOptions({
+        timeVisible: true,
+        secondsVisible: false,
+        timeFormat: 'YYYY-MM-DD HH:mm:ss',
       });
   
       // Añadir una serie de líneas al gráfico
       const series = chartInstance.addLineSeries({
         priceScaleId: "right",
-
       });
-
-
-
       series.setData([
         { time: '2018-10-11', value: 52.89 },
         // ... (otros datos iniciales)
@@ -74,7 +76,7 @@ export const Charts = forwardRef((_, ref) => {
             const response = await getApiJavaHistorico(); // Reemplaza con la URL de tu API
             const datos = response.data;
             const formattedData = datos.map((item) => ({
-              time: item.time,
+              ...item,
               value: parseFloat(item.value),
             }));
             // Actualizar la serie con los datos de la API
@@ -99,7 +101,7 @@ export const Charts = forwardRef((_, ref) => {
         console.log(started);
         fetchData();
     
-        // Actualizar los datos cada 5 segundos (ajusta según sea necesario)
+        // Actualizar los datos cada 2 segundos (ajusta según sea necesario)
         const interval = setInterval(updateData, 2000);
     
         // Limpiar el intervalo cuando el componente se desmonta o cuando se detiene la actualización

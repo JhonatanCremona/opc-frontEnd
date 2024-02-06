@@ -1,6 +1,6 @@
 //Depending 
 import { useState, useEffect, forwardRef, useImperativeHandle, useLayoutEffect,useRef } from "react"
-import { createChart } from "lightweight-charts"
+import { createChart, ColorType } from "lightweight-charts"
 import { getApiJavaHistorico } from "../service/client";
 
 //Component
@@ -9,7 +9,6 @@ export const Charts = forwardRef((_, ref) => {
 
     const [chart, setChart] = useState(null);
     const [started, setStarted] = useState(false);
-    const currentDate = new Date();
     const series1 = useRef(null);
 
 
@@ -20,7 +19,6 @@ export const Charts = forwardRef((_, ref) => {
       // Crear el gráfico
       const chartInstance = createChart(container, {
         layout: {
-
           fontSize:20
         },
         width: container.clientWidth,
@@ -28,9 +26,18 @@ export const Charts = forwardRef((_, ref) => {
       });
 
       chartInstance.timeScale().applyOptions({
-        timeVisible: true,
+        timeVisible: false,
         secondsVisible: false,
-        timeFormat: 'YYYY-MM-DD HH:mm:ss',
+        tickMarkFormatter: (time, tickMarkType, locale) => {
+          const date = new Date(time); // No es necesario multiplicar por 1000, ya que los timestamps son en milisegundos
+          const formattedDate = date.toLocaleDateString(locale, {
+            month: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+          });
+          return formattedDate;
+        },
       });
   
       // Añadir una serie de líneas al gráfico
@@ -38,7 +45,7 @@ export const Charts = forwardRef((_, ref) => {
         priceScaleId: "right",
       });
       series.setData([
-        { time: '2018-10-11', value: 52.89 },
+        { time: '2024-02-06', value: 11.00 },
         // ... (otros datos iniciales)
       ]);
   
@@ -69,6 +76,8 @@ export const Charts = forwardRef((_, ref) => {
       }
     }, [started]); */
 
+
+
     useEffect(() => {
         // Función para obtener datos de la API
         const fetchData = async () => {
@@ -76,12 +85,12 @@ export const Charts = forwardRef((_, ref) => {
             const response = await getApiJavaHistorico(); // Reemplaza con la URL de tu API
             const datos = response.data;
             const formattedData = datos.map((item) => ({
-              ...item,
+              time: new Date(item.time).getTime(),
               value: parseFloat(item.value),
             }));
             // Actualizar la serie con los datos de la API
             console.log(
-              formattedData
+              formattedData[0].time
             );
             series1.current.setData(formattedData);
             console.log();

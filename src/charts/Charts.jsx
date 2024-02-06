@@ -28,7 +28,13 @@ export const Charts = forwardRef((_, ref) => {
       });
   
       // Añadir una serie de líneas al gráfico
-      const series = chartInstance.addLineSeries();
+      const series = chartInstance.addLineSeries({
+        priceScaleId: "right",
+
+      });
+
+
+
       series.setData([
         { time: '2018-10-11', value: 52.89 },
         // ... (otros datos iniciales)
@@ -65,16 +71,18 @@ export const Charts = forwardRef((_, ref) => {
         // Función para obtener datos de la API
         const fetchData = async () => {
           try {
-            console.log("llegue");
             const response = await getApiJavaHistorico(); // Reemplaza con la URL de tu API
-            console.log(response.data);
-            const datos = response.data.sort((a, b) => new Date(a.time) - new Date(b.time));
+            const datos = response.data;
             const formattedData = datos.map((item) => ({
-                time: new Date(item.time).toISOString().split('T')[0],
-                value: parseFloat(item.value)
+              time: item.time,
+              value: parseFloat(item.value),
             }));
             // Actualizar la serie con los datos de la API
+            console.log(
+              formattedData
+            );
             series1.current.setData(formattedData);
+            console.log();
           } catch (error) {
             console.error('Error al obtener datos de la API:', error);
           }
@@ -88,10 +96,11 @@ export const Charts = forwardRef((_, ref) => {
         };
     
         // Llamar a fetchData inmediatamente para obtener datos iniciales
+        console.log(started);
         fetchData();
     
         // Actualizar los datos cada 5 segundos (ajusta según sea necesario)
-        const interval = setInterval(updateData, 5000);
+        const interval = setInterval(updateData, 2000);
     
         // Limpiar el intervalo cuando el componente se desmonta o cuando se detiene la actualización
         return () => {

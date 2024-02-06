@@ -1,8 +1,8 @@
 //Depending 
 import { useState, useEffect, forwardRef, useImperativeHandle, useLayoutEffect,useRef } from "react"
-import { createChart, ColorType } from "lightweight-charts"
+import { createChart } from "lightweight-charts"
 import { getApiJavaHistorico } from "../service/client";
-
+import Style from "./Charts.module.css";
 //Component
 
 export const Charts = forwardRef((_, ref) => {
@@ -10,11 +10,51 @@ export const Charts = forwardRef((_, ref) => {
     const [chart, setChart] = useState(null);
     const [started, setStarted] = useState(false);
     const series1 = useRef(null);
+    const container = document.getElementById('container');
+    const toolTip = document.createElement('div');
+    const toolTipWidth = 96;
 
-
+    const handleMouseMove = () => {
+      const param = chart.timeScale().getVisibleRange();
   
+      if (
+        param.point === undefined ||
+        !param.time ||
+        param.point.x < 0 ||
+        param.point.x > container.clientWidth ||
+        param.point.y < 0 ||
+        param.point.y > container.clientHeight
+      ) {
+        toolTip.style.display = 'none';
+      } else {
+        const dateStr = param.time;
+        toolTip.style.display = 'block';
+        const data = param.seriesData.get(series1.current);
+        const price = data.value !== undefined ? data.value : data.close;
+        toolTip.innerHTML = `<div style="color: ${'rgba( 239, 83, 80, 1)'}">⬤ ABC Inc.</div><div style="font-size: 24px; margin: 4px 0px; color: ${'black'}">
+          ${Math.round(100 * price) / 100}
+          </div><div style="color: ${'black'}">
+          ${dateStr}
+          </div>`;
+  
+        let left = param.point.x;
+        const timeScaleWidth = chart.timeScale().width();
+        const priceScaleWidth = chart.priceScale('left').width();
+        const halfTooltipWidth = toolTipWidth / 2;
+        left += priceScaleWidth - halfTooltipWidth;
+        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth);
+        left = Math.max(left, priceScaleWidth);
+  
+        toolTip.style.left = left + 'px';
+        toolTip.style.top = 0 + 'px';
+      }
+    };
+  
+
+
     useLayoutEffect(() => {
       const container = document.getElementById('chart-container');
+      const tooltip = document.createElement('div');
   
       // Crear el gráfico
       const chartInstance = createChart(container, {
@@ -44,11 +84,19 @@ export const Charts = forwardRef((_, ref) => {
       const series = chartInstance.addLineSeries({
         priceScaleId: "right",
       });
+
+
       series.setData([
         { time: '2024-02-06', value: 11.00 },
         // ... (otros datos iniciales)
       ]);
   
+      // Añadir event listeners para manejar el tooltip
+      container.addEventListener('mousemove', handleMouseMove);
+      container.addEventListener('mouseleave', () => {
+        toolTip.style.display = 'none';
+      });
+
       setChart(chartInstance);
       series1.current = series;
   
@@ -56,6 +104,10 @@ export const Charts = forwardRef((_, ref) => {
         // Limpiar recursos cuando el componente se desmonta
         if (chartInstance) {
           chartInstance.remove();
+          container.removeEventListener('mousemove', handleMouseMove);
+          container.removeEventListener('mouseleave', () => {
+            toolTip.style.display = 'none';
+          });
         }
       };
     }, []);
@@ -75,8 +127,6 @@ export const Charts = forwardRef((_, ref) => {
         return () => clearInterval(interval);
       }
     }, [started]); */
-
-
 
     useEffect(() => {
         // Función para obtener datos de la API
@@ -105,6 +155,7 @@ export const Charts = forwardRef((_, ref) => {
             fetchData();
           }
         };
+        
     
         // Llamar a fetchData inmediatamente para obtener datos iniciales
         console.log(started);
@@ -119,6 +170,9 @@ export const Charts = forwardRef((_, ref) => {
         };
       }, [started]);
   
+      
+      
+
     useImperativeHandle(
       // Permitir al componente padre acceder al API del gráfico
       ref,
@@ -130,11 +184,12 @@ export const Charts = forwardRef((_, ref) => {
     );
   
     return (
-      <div>
+      <div className={Style.boxChart}>
         <button type="button" onClick={() => setStarted((prev) => !prev)}>
           {started ? 'Stop updating' : 'Start updating series'}
         </button>
         <div id="chart-container"></div>
+
       </div>
     );
   });

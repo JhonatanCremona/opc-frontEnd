@@ -10,52 +10,21 @@ export const Charts = forwardRef((_, ref) => {
     const [chart, setChart] = useState(null);
     const [started, setStarted] = useState(false);
     const series1 = useRef(null);
-    const container = document.getElementById('container');
     const toolTip = document.createElement('div');
-    const toolTipWidth = 96;
+    const toolTipWidth = 80;
+    const toolTipHeight = 80;
+    const toolTipMargin = 15;
 
-    const handleMouseMove = () => {
-      const param = chart.timeScale().getVisibleRange();
-  
-      if (
-        param.point === undefined ||
-        !param.time ||
-        param.point.x < 0 ||
-        param.point.x > container.clientWidth ||
-        param.point.y < 0 ||
-        param.point.y > container.clientHeight
-      ) {
-        toolTip.style.display = 'none';
-      } else {
-        const dateStr = param.time;
-        toolTip.style.display = 'block';
-        const data = param.seriesData.get(series1.current);
-        const price = data.value !== undefined ? data.value : data.close;
-        toolTip.innerHTML = `<div style="color: ${'rgba( 239, 83, 80, 1)'}">⬤ ABC Inc.</div><div style="font-size: 24px; margin: 4px 0px; color: ${'black'}">
-          ${Math.round(100 * price) / 100}
-          </div><div style="color: ${'black'}">
-          ${dateStr}
-          </div>`;
-  
-        let left = param.point.x;
-        const timeScaleWidth = chart.timeScale().width();
-        const priceScaleWidth = chart.priceScale('left').width();
-        const halfTooltipWidth = toolTipWidth / 2;
-        left += priceScaleWidth - halfTooltipWidth;
-        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth);
-        left = Math.max(left, priceScaleWidth);
-  
-        toolTip.style.left = left + 'px';
-        toolTip.style.top = 0 + 'px';
-      }
-    };
+    toolTip.style = `width: 96px; height: 90px; position: absolute; display: none; padding: 8px; box-sizing: border-box; font-size: 12px; text-align: left; z-index: 1000; top: 12px; left: 12px; pointer-events: none; border: 1px solid; border-radius: 2px;font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;`;
+    toolTip.style.background = 'white';
+    toolTip.style.color = 'black';
+    toolTip.style.borderColor = 'rgba( 38, 166, 154, 1)';
   
 
 
     useLayoutEffect(() => {
       const container = document.getElementById('chart-container');
-      const tooltip = document.createElement('div');
-  
+      container.appendChild(toolTip);
       // Crear el gráfico
       const chartInstance = createChart(container, {
         layout: {
@@ -69,7 +38,7 @@ export const Charts = forwardRef((_, ref) => {
         timeVisible: false,
         secondsVisible: false,
         tickMarkFormatter: (time, tickMarkType, locale) => {
-          const date = new Date(time); // No es necesario multiplicar por 1000, ya que los timestamps son en milisegundos
+          const date = new Date(time); 
           const formattedDate = date.toLocaleDateString(locale, {
             month: 'numeric',
             hour: 'numeric',
@@ -85,17 +54,57 @@ export const Charts = forwardRef((_, ref) => {
         priceScaleId: "right",
       });
 
+      chartInstance.subscribeCrosshairMove(param => {
+
+        console.log(param.time);
+            if (
+              param.point === undefined ||
+              !param.time ||
+              param.point.x < 0 ||
+              param.point.x > container.clientWidth ||
+              param.point.y < 0 ||
+              param.point.y > container.clientHeight
+            ) {
+              toolTip.style.display = 'block';
+            } else {
+              // time will be in the same format that we supplied to setData.
+              // thus it will be YYYY-MM-DD
+              const dateStr = new Date(param.time).toLocaleString() ;
+              console.log(dateStr);
+              toolTip.style.display = 'block';
+              console.log(series1);
+              const data = param.seriesData.get(series1.current);
+              console.log(data);
+
+              const price = data.value !== undefined ? data.value : data.close;
+              toolTip.innerHTML = `<div style="color: ${'rgba( 38, 166, 154, 1)'}">Sensor.</div>
+              <div style="font-size: 24px; margin: 4px 0px; color: ${'black'}">
+                ${Math.round(100 * price) / 100}
+                </div>
+                <div style="color: ${'black'}">
+                ${dateStr}
+                </div>`;
+          
+              const y = param.point.y;
+              let left = param.point.x + toolTipMargin;
+              if (left > container.clientWidth - toolTipWidth) {
+                left = param.point.x - toolTipMargin - toolTipWidth;
+              }
+          
+              let top = y + toolTipMargin;
+              if (top > container.clientHeight - toolTipHeight) {
+                top = y - toolTipHeight - toolTipMargin;
+              }
+              toolTip.style.left = left + 'px';
+            
+          }
+        })
 
       series.setData([
         { time: '2024-02-06', value: 11.00 },
         // ... (otros datos iniciales)
       ]);
   
-      // Añadir event listeners para manejar el tooltip
-      container.addEventListener('mousemove', handleMouseMove);
-      container.addEventListener('mouseleave', () => {
-        toolTip.style.display = 'none';
-      });
 
       setChart(chartInstance);
       series1.current = series;
@@ -104,10 +113,6 @@ export const Charts = forwardRef((_, ref) => {
         // Limpiar recursos cuando el componente se desmonta
         if (chartInstance) {
           chartInstance.remove();
-          container.removeEventListener('mousemove', handleMouseMove);
-          container.removeEventListener('mouseleave', () => {
-            toolTip.style.display = 'none';
-          });
         }
       };
     }, []);
@@ -128,12 +133,17 @@ export const Charts = forwardRef((_, ref) => {
       }
     }, [started]); */
 
+    
+
+
+
     useEffect(() => {
         // Función para obtener datos de la API
         const fetchData = async () => {
           try {
-            const response = await getApiJavaHistorico(); // Reemplaza con la URL de tu API
+            const response = await getApiJavaHistorico(); 
             const datos = response.data;
+            console.log(datos);
             const formattedData = datos.map((item) => ({
               time: new Date(item.time).getTime(),
               value: parseFloat(item.value),
@@ -143,7 +153,8 @@ export const Charts = forwardRef((_, ref) => {
               formattedData[0].time
             );
             series1.current.setData(formattedData);
-            console.log();
+            console.log(series1);
+            console.log(formattedData);
           } catch (error) {
             console.error('Error al obtener datos de la API:', error);
           }
@@ -155,7 +166,6 @@ export const Charts = forwardRef((_, ref) => {
             fetchData();
           }
         };
-        
     
         // Llamar a fetchData inmediatamente para obtener datos iniciales
         console.log(started);
@@ -188,7 +198,8 @@ export const Charts = forwardRef((_, ref) => {
         <button type="button" onClick={() => setStarted((prev) => !prev)}>
           {started ? 'Stop updating' : 'Start updating series'}
         </button>
-        <div id="chart-container"></div>
+        <div id="chart-container">
+        </div>
 
       </div>
     );

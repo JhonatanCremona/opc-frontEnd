@@ -14,7 +14,6 @@
     height: auto;
     min-height: 484px;
     max-width: 745px;
-    position: relative;
 }
 .c_title {
     display: flex;

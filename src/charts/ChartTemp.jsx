@@ -20,18 +20,47 @@ export const ChartTemp = forwardRef((_, ref) => {
     toolTip.style.color = 'black';
     toolTip.style.borderColor = 'rgba( 38, 166, 154, 1)';
   
-
+    const backgroundColor = "#000"
 
     useLayoutEffect(() => {
       const container = document.getElementById('chart-container');
       container.appendChild(toolTip);
       // Crear el gráfico
       const chartInstance = createChart(container, {
-        layout: {
-          fontSize:20
-        },
         width: 600,
         height: 300,
+        layout: {
+            textColor: '#d1d4dc',
+			background: '#000000',
+        },
+        rightPriceScale: {
+			scaleMargins: {
+				top: 0.3,
+				bottom: 0.25,
+			},
+		},
+		crosshair: {
+			vertLine: {
+				width: 4,
+				color: 'rgba(224, 227, 235, 0.1)',
+				style: 0,
+			},
+			horzLine: {
+				visible: false,
+				labelVisible: false,
+			},
+		},
+		grid: {
+			vertLines: {
+				color: 'rgba(42, 46, 57, 0)',
+			},
+			horzLines: {
+				color: 'rgba(42, 46, 57, 0)',
+			},
+		},
+		handleScroll: {
+			vertTouchDrag: false,
+		},
       });
 
       chartInstance.timeScale().applyOptions({
@@ -192,10 +221,6 @@ export const ChartTemp = forwardRef((_, ref) => {
     return (
         <div id="chart-container" style={
             {
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
                 height: '100%',
             }
         }>

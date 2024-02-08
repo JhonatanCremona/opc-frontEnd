@@ -30,21 +30,39 @@ export const Charts = forwardRef((_, ref) => {
         layout: {
           fontSize:20
         },
+
+        crosshair: {
+          mode: 1,
+          horzLine: {
+            visible: false,
+            labelVisible: false,
+            // Otras opciones para la línea horizontal
+          },
+          vertLine: {
+            visible: false,
+            labelVisible: false,
+            // Otras opciones para la línea vertical
+          },
+        },
         width: container.clientWidth,
         height: 300,
+        
       });
 
       chartInstance.timeScale().applyOptions({
         timeVisible: false,
         secondsVisible: false,
         tickMarkFormatter: (time, tickMarkType, locale) => {
+          console.log(time);
           const date = new Date(time); 
+          console.log(date);
           const formattedDate = date.toLocaleDateString(locale, {
             month: 'numeric',
             hour: 'numeric',
             minute: 'numeric',
             second: 'numeric',
           });
+          console.log(formattedDate);
           return formattedDate;
         },
       });
@@ -65,18 +83,19 @@ export const Charts = forwardRef((_, ref) => {
               param.point.y < 0 ||
               param.point.y > container.clientHeight
             ) {
-              toolTip.style.display = 'block';
+              toolTip.style.display = 'none';
             } else {
               // time will be in the same format that we supplied to setData.
               // thus it will be YYYY-MM-DD
               const dateStr = new Date(param.time).toLocaleString() ;
               console.log(dateStr);
               toolTip.style.display = 'block';
-              console.log(series1);
+              console.log(series1.current);
               const data = param.seriesData.get(series1.current);
               console.log(data);
 
               const price = data.value !== undefined ? data.value : data.close;
+              console.log(price);
               toolTip.innerHTML = `<div style="color: ${'rgba( 38, 166, 154, 1)'}">Sensor.</div>
               <div style="font-size: 24px; margin: 4px 0px; color: ${'black'}">
                 ${Math.round(100 * price) / 100}
@@ -101,7 +120,7 @@ export const Charts = forwardRef((_, ref) => {
         })
 
       series.setData([
-        { time: '2024-02-06', value: 11.00 },
+        { time: '2024-02-05', value: 11.00 },
         // ... (otros datos iniciales)
       ]);
   

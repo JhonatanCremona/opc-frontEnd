@@ -5,7 +5,7 @@ import { getApiJavaHistorico } from "../service/client";
 import Style from "./Charts.module.css";
 //Component
 
-export const Charts = forwardRef((_, ref) => {
+export const ChartTemp = forwardRef((_, ref) => {
 
     const [chart, setChart] = useState(null);
     const [started, setStarted] = useState(false);
@@ -30,7 +30,7 @@ export const Charts = forwardRef((_, ref) => {
         layout: {
           fontSize:20
         },
-        width: container.clientWidth,
+        width: 600,
         height: 300,
       });
 
@@ -190,15 +190,17 @@ export const Charts = forwardRef((_, ref) => {
     );
   
     return (
-      <div className={Style.boxChart}>
-        <button type="button" onClick={() => setStarted((prev) => !prev)}>
-          {started ? 'Stop updating' : 'Start updating series'}
-        </button>
-        <div id="chart-container">
+        <div id="chart-container" style={
+            {
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+            }
+        }>
         </div>
-
-      </div>
     );
   });
   
-  Charts.displayName = 'Charts';
+  ChartTemp.displayName = 'Charts';

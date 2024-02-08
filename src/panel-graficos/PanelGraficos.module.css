@@ -1,0 +1,33 @@
+.container {
+    min-height: 900px;
+    height: 100vh;
+    background-color: #000;
+    padding-left: 116px;
+    padding-right: 116px;
+    padding-top: 40px;
+}
+.c_chart {
+    border: 1px solid #434651;
+    background-color: black;
+    border-radius: 16px;
+    padding: 24px 20px;
+    height: auto;
+    min-height: 484px;
+    max-width: 745px;
+    position: relative;
+}
+.c_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.title {
+    font-family: "Roboto";
+    color: #fff;
+    text-align: start;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: normal;
+}

@@ -5,7 +5,7 @@ import { getApiJavaHistorico } from "../service/client";
 import Style from "./Charts.module.css";
 //Component
 
-export const Charts = forwardRef((_, ref) => {
+export const ChartTemp = forwardRef((_, ref) => {
 
     const [chart, setChart] = useState(null);
     const [started, setStarted] = useState(false);
@@ -20,49 +20,60 @@ export const Charts = forwardRef((_, ref) => {
     toolTip.style.color = 'black';
     toolTip.style.borderColor = 'rgba( 38, 166, 154, 1)';
   
-
+    const backgroundColor = "#000"
 
     useLayoutEffect(() => {
       const container = document.getElementById('chart-container');
       container.appendChild(toolTip);
       // Crear el gráfico
       const chartInstance = createChart(container, {
-        layout: {
-          fontSize:20
-        },
-
-        crosshair: {
-          mode: 1,
-          horzLine: {
-            visible: false,
-            labelVisible: false,
-            // Otras opciones para la línea horizontal
-          },
-          vertLine: {
-            visible: false,
-            labelVisible: false,
-            // Otras opciones para la línea vertical
-          },
-        },
-        width: container.clientWidth,
+        width: 600,
         height: 300,
-        
+        layout: {
+            textColor: '#d1d4dc',
+			background: '#000000',
+        },
+        rightPriceScale: {
+			scaleMargins: {
+				top: 0.3,
+				bottom: 0.25,
+			},
+		},
+		crosshair: {
+			vertLine: {
+				width: 4,
+				color: 'rgba(224, 227, 235, 0.1)',
+				style: 0,
+			},
+			horzLine: {
+				visible: false,
+				labelVisible: false,
+			},
+		},
+		grid: {
+			vertLines: {
+				color: 'rgba(42, 46, 57, 0)',
+			},
+			horzLines: {
+				color: 'rgba(42, 46, 57, 0)',
+			},
+		},
+		handleScroll: {
+			vertTouchDrag: false,
+		},
       });
 
       chartInstance.timeScale().applyOptions({
         timeVisible: false,
         secondsVisible: false,
         tickMarkFormatter: (time, tickMarkType, locale) => {
-          console.log(time);
           const date = new Date(time); 
-          console.log(date);
           const formattedDate = date.toLocaleDateString(locale, {
             month: 'numeric',
             hour: 'numeric',
             minute: 'numeric',
             second: 'numeric',
           });
-          console.log(formattedDate);
           return formattedDate;
         },
       });
@@ -90,12 +101,11 @@ export const Charts = forwardRef((_, ref) => {
               const dateStr = new Date(param.time).toLocaleString() ;
               console.log(dateStr);
               toolTip.style.display = 'block';
-              console.log(series1.current);
+              console.log(series1);
               const data = param.seriesData.get(series1.current);
               console.log(data);
 
               const price = data.value !== undefined ? data.value : data.close;
-              console.log(price);
               toolTip.innerHTML = `<div style="color: ${'rgba( 38, 166, 154, 1)'}">Sensor.</div>
               <div style="font-size: 24px; margin: 4px 0px; color: ${'black'}">
                 ${Math.round(100 * price) / 100}
@@ -120,7 +130,7 @@ export const Charts = forwardRef((_, ref) => {
         })
 
       series.setData([
-        { time: '2024-02-05', value: 11.00 },
+        { time: '2024-02-06', value: 11.00 },
         // ... (otros datos iniciales)
       ]);
   
@@ -209,15 +219,13 @@ export const Charts = forwardRef((_, ref) => {
     );
   
     return (
-      <div className={Style.boxChart}>
-        <button type="button" onClick={() => setStarted((prev) => !prev)}>
-          {started ? 'Stop updating' : 'Start updating series'}
-        </button>
-        <div id="chart-container">
+        <div id="chart-container" style={
+            {
+                height: '100%',
+            }
+        }>
         </div>
-
-      </div>
     );
   });
   
-  Charts.displayName = 'Charts';
+  ChartTemp.displayName = 'Charts';

@@ -9,6 +9,7 @@ import { Footer } from './footer/Footer';
 import { Test } from "./test/Test";
 import { Home } from './panel/Home';
 import { Charts } from './charts/Charts';
+import { PanelGraficos } from './panel-graficos/PanelGraficos';
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
           <Route path="/" element={ <Home/> }/>
           <Route path="/panel-control/:equipo" element={<PanelControl/>}/>
           <Route path='/panel-control/test' element={<Test/>}/>
-          <Route path='/graficos' element={<Charts/>}/>
+          <Route path='/graficos' element={<PanelGraficos/>}/>
         </Route>
       </Routes>
       <Footer/>

@@ -4,7 +4,7 @@ import { createChart } from "lightweight-charts"
 import {  getHistory } from "../service/client";
 //Component
 
-export const ChartTemp = forwardRef(({startAgua, setStartAgua },ref) => {
+export const ChartCompTemp = forwardRef(({startAgua, setStartAgua },ref) => {
 
     const [chart, setChart] = useState(null);
     // const [started, setStarted] = useState(true);
@@ -190,4 +190,4 @@ export const ChartTemp = forwardRef(({startAgua, setStartAgua },ref) => {
     );
   });
   
-  ChartTemp.displayName = 'Charts';
+  ChartCompTemp.displayName = 'Charts';

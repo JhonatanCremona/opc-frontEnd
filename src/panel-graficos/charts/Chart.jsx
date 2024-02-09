@@ -21,7 +21,6 @@ export const Chart = () => {
                 <ChartCompTemp 
                 startAgua ={ started } setStartAgua={ setStarted }
                 />
-
             </section>
         </>
     )

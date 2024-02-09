@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { ChartTemp } from "../charts/ChartTemp";
 import Style from "./PanelGraficos.module.css";
 
 export const PanelGraficos = () => {
+    const [startTempIngreso, setStartTempIngreso] = useState(true);
+    
+    
     return (
         <div className={Style.container}>
             
@@ -17,13 +21,13 @@ export const PanelGraficos = () => {
                 </article>
                 <nav>
                     <ul className={Style.list_option_temp}>
-                        <li>Temp. Producto</li>
-                        <li>Temp. Ingreso</li>
-                        <li>Temp. Agua</li>
-                        <li></li>
+                        <button onClick={() => setStartTempIngreso((prev) => !prev)}
+                        className={ startTempIngreso ? Style.list_button  + " " + Style.isActiveButton : Style.list_button } ><li className={Style.list_component}>Temp. Producto</li></button>
+                        <button className={Style.list_button}><li>Temp. Ingreso</li></button>
+                        <button className={Style.list_button}><li>Temp. Agua</li></button>
                     </ul>
                 </nav>
-                <ChartTemp />
+                <ChartTemp startIngreso ={ startTempIngreso }  />
             </section>
 
         </div>

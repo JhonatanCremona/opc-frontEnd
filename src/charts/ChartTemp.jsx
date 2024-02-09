@@ -5,10 +5,11 @@ import { getApiJavaHistorico } from "../service/client";
 import Style from "./Charts.module.css";
 //Component
 
-export const ChartTemp = forwardRef((_, ref) => {
+export const ChartTemp = forwardRef((props,ref) => {
+    console.log("Llegueee: ",props.startIngreso);
 
     const [chart, setChart] = useState(null);
-    const [started, setStarted] = useState(false);
+    const [started, setStarted] = useState(true);
     const series1 = useRef(null);
     const toolTip = document.createElement('div');
     const toolTipWidth = 80;
@@ -20,47 +21,46 @@ export const ChartTemp = forwardRef((_, ref) => {
     toolTip.style.color = 'black';
     toolTip.style.borderColor = 'rgba( 38, 166, 154, 1)';
   
-    const backgroundColor = "#000"
 
     useLayoutEffect(() => {
       const container = document.getElementById('chart-container');
       container.appendChild(toolTip);
       // Crear el gráfico
       const chartInstance = createChart(container, {
-        width: 600,
+        width: 740,
         height: 300,
         layout: {
             textColor: '#d1d4dc',
 			background: '#000000',
         },
         rightPriceScale: {
-			scaleMargins: {
-				top: 0.3,
-				bottom: 0.25,
-			},
-		},
-		crosshair: {
-			vertLine: {
-				width: 4,
-				color: 'rgba(224, 227, 235, 0.1)',
-				style: 0,
-			},
-			horzLine: {
-				visible: false,
-				labelVisible: false,
-			},
-		},
-		grid: {
-			vertLines: {
-				color: 'rgba(42, 46, 57, 0)',
-			},
-			horzLines: {
-				color: 'rgba(42, 46, 57, 0)',
-			},
-		},
-		handleScroll: {
-			vertTouchDrag: false,
-		},
+        scaleMargins: {
+          top: 0.3,
+          bottom: 0.25,
+        },
+        },
+        crosshair: {
+          vertLine: {
+            width: 4,
+            color: 'rgba(224, 227, 235, 0.1)',
+            style: 0,
+          },
+          horzLine: {
+            visible: false,
+            labelVisible: false,
+          },
+        },
+        grid: {
+          vertLines: {
+            color: 'rgba(42, 46, 57, 0)',
+          },
+          horzLines: {
+            color: 'rgba(42, 46, 57, 0)',
+          },
+        },
+        handleScroll: {
+          vertTouchDrag: false,
+        },
       });
 
       chartInstance.timeScale().applyOptions({
@@ -77,6 +77,9 @@ export const ChartTemp = forwardRef((_, ref) => {
           return formattedDate;
         },
       });
+      chartInstance.applyOptions({
+        
+      })
   
       // Añadir una serie de líneas al gráfico
       const series = chartInstance.addLineSeries({

@@ -1,12 +1,10 @@
 //Depending 
 import { useState, useEffect, forwardRef, useImperativeHandle, useLayoutEffect,useRef } from "react"
 import { createChart } from "lightweight-charts"
-import { getApiJavaHistorico, getHistory } from "../service/client";
-import Style from "./Charts.module.css";
+import {  getHistory } from "../service/client";
 //Component
 
-export const ChartTemp = forwardRef(({startIngreso, setStart, startAgua, setStartAgua },ref) => {
-    console.log("Llegueee: ",startIngreso);
+export const ChartTemp = forwardRef(({startAgua, setStartAgua },ref) => {
 
     const [chart, setChart] = useState(null);
     // const [started, setStarted] = useState(true);
@@ -32,7 +30,7 @@ export const ChartTemp = forwardRef(({startIngreso, setStart, startAgua, setStar
         height: 300,
         layout: {
             textColor: '#d1d4dc',
-			      background: '#000000',
+			background: '#000000',
         },
         rightPriceScale: {
         scaleMargins: {
@@ -78,13 +76,6 @@ export const ChartTemp = forwardRef(({startIngreso, setStart, startAgua, setStar
           return formattedDate;
         },
       });
-  
-      // Añadir una serie de líneas al gráfico
-      const series = chartInstance.addLineSeries({
-        priceScaleId: "right",
-        color: "red"
-      });
-
       const seriesparte = chartInstance.addLineSeries({
         priceScaleId: "left",
         color: "blue"
@@ -139,14 +130,7 @@ export const ChartTemp = forwardRef(({startIngreso, setStart, startAgua, setStar
           // ... (otros datos iniciales)
         ]);
 
-      series.setData([
-        { time: '2024-02-06', value: 11.00 },
-        // ... (otros datos iniciales)
-      ]);
-  
-
       setChart(chartInstance);
-      series1.current = series;
       series2.current = seriesparte;
   
       return () => {
@@ -156,64 +140,6 @@ export const ChartTemp = forwardRef(({startIngreso, setStart, startAgua, setStar
         }
       };
     }, []);
-  /*
-    useEffect(() => {
-      // Actualizar la serie de datos en tiempo real si está habilitada
-      if (started) {
-        const interval = setInterval(() => {
-          currentDate.setDate(currentDate.getDate() + 1);
-          const next = {
-            time: currentDate.toISOString().slice(0, 10),
-            value: 53 - 2 * Math.random(),
-          };
-          series1.current.update(next);
-        }, 1000);
-  
-        return () => clearInterval(interval);
-      }
-    }, [started]); */
-
-    useEffect(() => {
-        // Función para obtener datos de la API
-        const fetchData = async () => {
-          try {
-            const response = await getApiJavaHistorico(); 
-            const datos = response.data;
-            console.log(datos);
-            const formattedData = datos.map((item) => ({
-              time: new Date(item.time).getTime(),
-              value: parseFloat(item.value),
-            }));
-            // Actualizar la serie con los datos de la API
-            console.log(
-              formattedData[0].time
-            );
-            series1.current.setData(formattedData);
-            console.log(series1.current.setData(formattedData));
-          } catch (error) {
-            console.error('Error al obtener datos de la API:', error);
-          }
-        };
-    
-        // Actualizar la serie de datos en tiempo real si está habilitada
-        const updateData = () => {
-          if (startIngreso) {
-            fetchData();
-          }
-        };
-    
-        // Llamar a fetchData inmediatamente para obtener datos iniciales
-        console.log(startIngreso);
-        fetchData();
-    
-        // Actualizar los datos cada 2 segundos (ajusta según sea necesario)
-        const interval = setInterval(updateData, 2000);
-    
-        // Limpiar el intervalo cuando el componente se desmonta o cuando se detiene la actualización
-        return () => {
-          clearInterval(interval);
-        };
-      }, [startIngreso]);
 
       useEffect(() => {
         // Función para obtener datos de la API
@@ -248,8 +174,8 @@ export const ChartTemp = forwardRef(({startIngreso, setStart, startAgua, setStar
     useImperativeHandle(
       ref,
       () => ({
-        startUpdating: () => setStart(true),
-        stopUpdating: () => setStart(false),
+        startUpdating: () => setStartAgua(true),
+        stopUpdating: () => setStartAgua(false),
       }),
       []
     );

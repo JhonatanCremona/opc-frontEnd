@@ -1,9 +1,34 @@
 import Style from "../../panel-graficos/PanelGraficos.module.css";
 import { useState } from "react";
-import { ChartCompTemp } from "../../charts/ChartCompTemp" 
+
+//Component
+import { ChartCompTemp } from "../../charts/ChartCompTemp"
 
 export const Chart = () => {
-    const [ started, setStarted ] = useState(false)
+    const [ sensors, setSensors ] = useState([
+        {
+            id: 1,
+            name: "Temp. Ingreso",
+            estado: false
+        },
+        {
+            id: 2,
+            name: "Temp. Agua",
+            estado: false
+        },
+        {
+            id: 3,
+            name: "Temp. Producto",
+            estado: false
+        }
+    ])
+    function updateSensorState( idSensor) {
+        setSensors( (prevSensors) => {
+            return prevSensors.map((sensor) =>
+                sensor.id === idSensor ? { ...sensor, estado: !sensor.estado } : sensor
+            );
+        });
+    }       
     
     return (
         <>
@@ -14,13 +39,18 @@ export const Chart = () => {
                 </article>
                 <nav>
                     <ul className={Style.list_option_temp}>
-                        <button onClick={() => setStarted ((prev) => !prev)}
-                        className={started ? Style.list_button  + " " + Style.isActiveButton : Style.list_button }><li>Temp. Agua</li></button>
+                        {sensors.map( (sensor) => {
+                            return (
+                                <button key={sensor.id} onClick={() => updateSensorState(sensor.id) }
+                                className={sensor.estado ? Style.list_button  + " " + Style.isActiveButton : Style.list_button }><li>{sensor.name}</li></button>
+                            )
+                        })}
                     </ul>
+
                 </nav>
-                <ChartCompTemp 
-                startAgua ={ started } setStartAgua={ setStarted }
-                />
+                <section className={Style.c_chartSeries}>
+                    <ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors } />
+                </section>
             </section>
         </>
     )

@@ -9,7 +9,7 @@ export const ChartTemp = forwardRef((props,ref) => {
     console.log("Llegueee: ",props.startIngreso);
 
     const [chart, setChart] = useState(null);
-    const [started, setStarted] = useState(true);
+    const [started, setStarted] = useState(props.startIngreso);
     const series1 = useRef(null);
     const toolTip = document.createElement('div');
     const toolTipWidth = 80;

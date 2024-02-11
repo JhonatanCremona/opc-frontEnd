@@ -109,3 +109,20 @@ export const getApiJavaHistorico = async () => {
         throw error;
     }
 }
+
+export const getApiJavaHistoricoPrueba = async (series, suma) => {
+    try {
+        const response =  await axios.get(
+            `http://localhost:5011/opcua/get-stored-sensor-value`
+        )
+        console.log(response);
+        const formattedData = response.data.map((item) => ({
+            time: new Date(item.time).getTime(),
+            value: parseFloat(item.value) + suma,
+          }));
+        series.current.setData(formattedData);
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

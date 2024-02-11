@@ -1,16 +1,17 @@
 //Depending 
 import { useState, useEffect, forwardRef, useImperativeHandle, useLayoutEffect,useRef } from "react"
 import { createChart } from "lightweight-charts"
-import { getApiJavaHistorico } from "../service/client";
+import { getApiJavaHistorico, getHistory } from "../service/client";
 import Style from "./Charts.module.css";
 //Component
 
-export const ChartTemp = forwardRef((props,ref) => {
-    console.log("Llegueee: ",props.startIngreso);
+export const ChartTemp = forwardRef(({startIngreso, setStart, startAgua, setStartAgua },ref) => {
+    console.log("Llegueee: ",startIngreso);
 
     const [chart, setChart] = useState(null);
     const [started, setStarted] = useState(props.startIngreso);
     const series1 = useRef(null);
+    const series2 = useRef(null);
     const toolTip = document.createElement('div');
     const toolTipWidth = 80;
     const toolTipHeight = 80;
@@ -31,7 +32,7 @@ export const ChartTemp = forwardRef((props,ref) => {
         height: 300,
         layout: {
             textColor: '#d1d4dc',
-			background: '#000000',
+			      background: '#000000',
         },
         rightPriceScale: {
         scaleMargins: {
@@ -77,18 +78,19 @@ export const ChartTemp = forwardRef((props,ref) => {
           return formattedDate;
         },
       });
-      chartInstance.applyOptions({
-        
-      })
   
       // Añadir una serie de líneas al gráfico
       const series = chartInstance.addLineSeries({
         priceScaleId: "right",
+        color: "red"
+      });
+
+      const seriesparte = chartInstance.addLineSeries({
+        priceScaleId: "left",
+        color: "blue"
       });
 
       chartInstance.subscribeCrosshairMove(param => {
-
-        console.log(param.time);
             if (
               param.point === undefined ||
               !param.time ||
@@ -132,6 +134,11 @@ export const ChartTemp = forwardRef((props,ref) => {
           }
         })
 
+        seriesparte.setData([
+          { time: '2024-02-06', value: 55.00 },
+          // ... (otros datos iniciales)
+        ]);
+
       series.setData([
         { time: '2024-02-06', value: 11.00 },
         // ... (otros datos iniciales)
@@ -140,6 +147,7 @@ export const ChartTemp = forwardRef((props,ref) => {
 
       setChart(chartInstance);
       series1.current = series;
+      series2.current = seriesparte;
   
       return () => {
         // Limpiar recursos cuando el componente se desmonta
@@ -181,8 +189,7 @@ export const ChartTemp = forwardRef((props,ref) => {
               formattedData[0].time
             );
             series1.current.setData(formattedData);
-            console.log(series1);
-            console.log(formattedData);
+            console.log(series1.current.setData(formattedData));
           } catch (error) {
             console.error('Error al obtener datos de la API:', error);
           }
@@ -190,13 +197,13 @@ export const ChartTemp = forwardRef((props,ref) => {
     
         // Actualizar la serie de datos en tiempo real si está habilitada
         const updateData = () => {
-          if (started) {
+          if (startIngreso) {
             fetchData();
           }
         };
     
         // Llamar a fetchData inmediatamente para obtener datos iniciales
-        console.log(started);
+        console.log(startIngreso);
         fetchData();
     
         // Actualizar los datos cada 2 segundos (ajusta según sea necesario)
@@ -206,17 +213,43 @@ export const ChartTemp = forwardRef((props,ref) => {
         return () => {
           clearInterval(interval);
         };
-      }, [started]);
-  
-      
-      
+      }, [startIngreso]);
+
+      useEffect(() => {
+        // Función para obtener datos de la API
+        const fetchData = async () => {
+          try {
+            const responseSensorTem = await (await getHistory("TEMP_AGUA")).data.results
+            console.log(responseSensorTem);
+            const formattedData = responseSensorTem.map((item) => ({
+              time: new Date(item.time).getTime(),
+              value: parseFloat(item.value),
+            }));
+            console.log(formattedData);
+            console.log(series2);
+            series2.current.setData(formattedData);
+            console.log(series2.current.setData(formattedData));
+            
+          } catch (error) {
+            console.error('Error al obtener datos de la API:', error);
+          }
+        };
+        const updateData = () => { if (startAgua) { fetchData() }};
+        fetchData();
+    
+        const interval = setInterval(updateData, 2000);
+    
+        return () => {
+          clearInterval(interval);
+        };
+      }, [startAgua]);
+
 
     useImperativeHandle(
-      // Permitir al componente padre acceder al API del gráfico
       ref,
       () => ({
-        startUpdating: () => setStarted(true),
-        stopUpdating: () => setStarted(false),
+        startUpdating: () => setStart(true),
+        stopUpdating: () => setStart(false),
       }),
       []
     );

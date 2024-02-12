@@ -120,7 +120,9 @@ export const getApiJavaHistoricoPrueba = async (series, suma) => {
             time: new Date(item.time).getTime(),
             value: parseFloat(item.value) + suma,
           }));
+          console.log(formattedData);
         series.current.setData(formattedData);
+        //Experimental
     } catch (error) {
         console.log(error);
         throw error;

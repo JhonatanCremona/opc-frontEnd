@@ -19,6 +19,7 @@ export const SensorGrafico = ({ value, nSensor, imgSensor,tipo }) => {
   const chartRef = useRef(null);
   const [data, setData] = useState([{value: 0.0}]);
 
+
 /*
   useEffect(() => {
     const fetchData = async () => {

@@ -1,10 +1,10 @@
 import Style from "../../panel-graficos/PanelGraficos.module.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 //Component
 import { ChartCompTemp } from "../../charts/ChartCompTemp"
 
-export const Chart = () => {
+export const Card = () => {
     const [ sensors, setSensors ] = useState([
         {
             id: 1,
@@ -29,13 +29,12 @@ export const Chart = () => {
             );
         });
     }       
-    
+    const childRef = useRef();
     return (
         <>
             <section className={Style.c_chart}>
                 <article className={Style.c_title}>
                 <h2 className={Style.title}>Sensores de Temperatura</h2>
-                
                 </article>
                 <nav>
                     <ul className={Style.list_option_temp}>
@@ -46,10 +45,9 @@ export const Chart = () => {
                             )
                         })}
                     </ul>
-
                 </nav>
                 <section className={Style.c_chartSeries}>
-                    <ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors } />
+                    < ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors }  ref={childRef}/>
                 </section>
             </section>
         </>

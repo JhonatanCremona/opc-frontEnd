@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { ChartTemp } from "../charts/ChartTemp";
+//Depending on the
 import Style from "./PanelGraficos.module.css";
-import { Chart } from "./charts/Chart";
+//Component
+import { Card } from "./cardsCharts/Card";
+import { CardWater } from "./cardsCharts/CardWater";
 
 export const PanelGraficos = () => {
-    //const [startTempIngreso, setStartTempIngreso] = useState(false);
-    //const [ startAgua, setStartAgua] = useState(false); 
+    
     
     return (
         <div className={Style.container}>
-            < Chart/>
+            < Card />
+            < CardWater />
         </div>
     )
 }

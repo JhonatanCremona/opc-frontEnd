@@ -5,14 +5,16 @@
     padding-left: 116px;
     padding-right: 116px;
     padding-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 .c_chart {
     border: 1px solid #434651;
     background-color: black;
     border-radius: 16px;
     padding: 32px 40px;
-    height: auto;
-    min-height: 400px;
+    max-height: 410px;
     max-width: 745px;
 }
 .c_title {
@@ -40,6 +42,12 @@
     max-width: 450px;
     gap: 5px;
 }
+.list_option {
+    border: 1px solid #434651;
+    border-radius: 6px;
+    padding: 0 5px;
+}
+
 .list_button {
     border-radius: 6px;
     background-color: #000;
@@ -60,7 +68,7 @@
     color: white;
 }
 
-.list_option_temp li {
+ li {
     color: #d1d4dc;
     list-style: none;
     font-family: "Roboto", "Helvetica Neue";
@@ -69,7 +77,6 @@
 }
 
 .c_chartSeries {
-    border-top: 1px solid #434651;
     height: 300px;
     position: relative;
 }

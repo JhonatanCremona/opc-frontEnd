@@ -5,13 +5,12 @@ import {  getApiJavaHistoricoPrueba } from "../service/client";
 //Component
 
 export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsComponent },ref) => {
-
-
   const [chart, setChart] = useState(null);
-  // const [started, setStarted] = useState(true);
+
   const series1 = useRef(null);
   const series2 = useRef(null);
   const series3 = useRef(null);
+
   const toolTip = document.createElement('div');
   const toolTipWidth = 80;
   const toolTipHeight = 80;
@@ -175,7 +174,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsCompon
     };
   }, [sensorsComponent[0].estado])
 
-    useEffect(() => {
+  useEffect(() => {
       const updateData = () => {
         if (sensorsComponent[2].estado) {
           getApiJavaHistoricoPrueba(series3, 80)
@@ -203,18 +202,22 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsCompon
       };
     }, [sensorsComponent[1].estado])
 
+    const [test, setTest] = useState(false);
+    const toggleTest = () => {
+      console.log("ESTADO DEL TEST: ", test);
+      const updatedTest = !test;
+      setTest(updatedTest);
+      return updatedTest;
+    };
 
-
-
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      startUpdating: () => setStart(true),
-      stopUpdating: () => setStart(false),
-    }),
-    []
-  );
+    
+    useImperativeHandle(
+      ref,
+      () => ({
+        toggleTest
+      }),
+      [test]
+    );
     return (
         <div id="chart-container" style={
             {

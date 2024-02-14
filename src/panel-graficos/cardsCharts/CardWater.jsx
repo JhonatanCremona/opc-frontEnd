@@ -7,6 +7,8 @@ import { getApiJavaHistorico } from "../../service/client";
 import { ChartWaterLavel } from "../../charts/ChartWaterLevel";
 
 export const CardWater  = () => {
+    const equipo = "Cocina1"
+
     const [started, setStarted] = useState(false);
     const [initialData, setInitialData] = useState([]);
 

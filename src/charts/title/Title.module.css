@@ -1,0 +1,26 @@
+.titleBox {
+    padding-top: 80px;
+    width: 100%;
+    margin-bottom: 80px;
+}
+.title {
+    font-size: 64px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    text-align: start;
+    line-height: 64px;
+}
+.Receta {
+    color: #D9D9D9;
+    font-family: 'Roboto', sans-serif;
+    font-size: 64px;
+    font-style: normal;
+    
+    line-height: 64px;
+}
+.CocinaTitle {
+    color: #EF8225;
+    font-style: normal;
+    font-weight: 700;
+}

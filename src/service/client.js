@@ -87,16 +87,17 @@ export const getReportEnfriador = async () => {
         throw error;
     }
 }
-export const getHistory = async (componente) => {
+export const getHistory = async ( component, machine ) => {
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/Historico/Cocina1/${componente}`,
+            `${import.meta.env.VITE_API_BASE_URL}/Historico/${machine}/${component}`,
         )
     } catch (error) {
         console.log(error);
         throw error;
     }
 }
+
 
 
 export const getApiJavaHistorico = async () => {

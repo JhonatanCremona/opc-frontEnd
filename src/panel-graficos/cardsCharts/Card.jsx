@@ -5,10 +5,12 @@ import { useRef, useState } from "react";
 import { ChartCompTemp } from "../../charts/ChartCompTemp"
 
 export const Card = () => {
+
     const [ sensors, setSensors ] = useState([
         {
             id: 1,
             name: "Temp. Ingreso",
+            api:"TEMP_INGRESO",
             estado: false
         },
         {
@@ -30,6 +32,8 @@ export const Card = () => {
         });
     }       
     const childRef = useRef();
+
+
     return (
         <>
             <section className={Style.c_chart}>

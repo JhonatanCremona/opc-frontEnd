@@ -1,11 +1,13 @@
 //Depending 
-import { useState, useEffect, forwardRef, useImperativeHandle, useLayoutEffect,useRef } from "react"
+import { useState, useEffect, forwardRef, useLayoutEffect,useRef } from "react"
 import { createChart } from "lightweight-charts"
-import {  getApiJavaHistoricoPrueba } from "../service/client";
+import {  getApiJavaHistoricoPrueba, getHistory } from "../service/client";
 //Component
 
-export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsComponent },ref) => {
+export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
   const [chart, setChart] = useState(null);
+
+  //const machine = "Cocina1";
 
   const series1 = useRef(null);
   const series2 = useRef(null);
@@ -164,10 +166,12 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsCompon
   useEffect(() => {
     const updateData = () => {
       if (sensorsComponent[0].estado) {
+        //getHistory(sensorsComponent[0].api, machine)
         getApiJavaHistoricoPrueba(series1, 0)
       }
     }
     getApiJavaHistoricoPrueba(series1, 0);
+    //getHistory(sensorsComponent[0].api, machine);
     const interval = setInterval(updateData, 2000);
     return () => {
       clearInterval(interval);
@@ -178,6 +182,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsCompon
       const updateData = () => {
         if (sensorsComponent[2].estado) {
           getApiJavaHistoricoPrueba(series3, 80)
+          //getHistory(sensorsComponent[2].api, machine);
         } else {
           series3.current.setData([])
         }
@@ -192,6 +197,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsCompon
       const updateData = () => {
         if (sensorsComponent[1].estado) {
           getApiJavaHistoricoPrueba(series2, 40)
+          //getHistory(sensorsComponent[1].api, machine);
         } else {
           series2.current.setData([]);
         }
@@ -202,22 +208,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsCompon
       };
     }, [sensorsComponent[1].estado])
 
-    const [test, setTest] = useState(false);
-    const toggleTest = () => {
-      console.log("ESTADO DEL TEST: ", test);
-      const updatedTest = !test;
-      setTest(updatedTest);
-      return updatedTest;
-    };
 
-    
-    useImperativeHandle(
-      ref,
-      () => ({
-        toggleTest
-      }),
-      [test]
-    );
     return (
         <div id="chart-container" style={
             {
@@ -232,3 +223,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, updateSensorsCompon
   });
   
   ChartCompTemp.displayName = 'Charts';
+
+  ChartCompTemp.propTypes = {
+    sensorsComponent: IDBObjectStore
+  }

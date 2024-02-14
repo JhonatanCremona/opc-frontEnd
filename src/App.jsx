@@ -20,7 +20,7 @@ function App() {
           <Route path="/" element={ <Home/> }/>
           <Route path="/panel-control/:equipo" element={<PanelControl/>}/>
           <Route path='/panel-control/test' element={<Test/>}/>
-          <Route path='/graficos' element={<PanelGraficos/>}/>
+          <Route path='/panel-graficos/:equipo' element={<PanelGraficos/>}/>
         </Route>
       </Routes>
       <Footer/>

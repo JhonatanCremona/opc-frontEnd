@@ -11,7 +11,7 @@ import { PanelContext } from "../context/PanelContext";
 
 
 export const NavBar = () => {
-    const { urlPanel } = useContext(PanelContext);
+    const { urlPanel, urlPanelChart } = useContext(PanelContext);
     const opciones = [
         {
             id: 1,
@@ -26,7 +26,7 @@ export const NavBar = () => {
         {
             id: 3,
             nombre: "GRAFICOS",
-            url: "/graficos"
+            url: urlPanelChart
         },{
             id: 4,
             nombre: "CONTACTO",

@@ -6,6 +6,8 @@ export const ChartWaterLavel = forwardRef((props, ref) => {
     const seriesRef = useRef(null);
     const [chart, setChart] = useState(null);
 
+    const containerChart = props.container
+
     const toolTip = document.createElement("div");
     
     const StylesSeries = {
@@ -53,7 +55,7 @@ export const ChartWaterLavel = forwardRef((props, ref) => {
     }
 
     useLayoutEffect(( ) => {
-        const container = document.getElementById("container");
+        const container = document.getElementById(containerChart);
         container.appendChild(toolTip);
         const chartInstance = createChart(container, {
             ...chartLayoutOptions,
@@ -120,7 +122,7 @@ export const ChartWaterLavel = forwardRef((props, ref) => {
 
     return (
         <>
-            <div id="container" style={
+            <div id={containerChart} style={
                 {
                     position: "absolute",
                     width: "100%",

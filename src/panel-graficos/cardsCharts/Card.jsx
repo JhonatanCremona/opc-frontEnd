@@ -35,7 +35,6 @@ export const Card = () => {
 
 
     return (
-        <>
             <section className={Style.c_chart}>
                 <article className={Style.c_title}>
                 <h2 className={Style.title}>Sensores de Temperatura</h2>
@@ -54,6 +53,5 @@ export const Card = () => {
                     < ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors }  ref={childRef}/>
                 </section>
             </section>
-        </>
     )
 }

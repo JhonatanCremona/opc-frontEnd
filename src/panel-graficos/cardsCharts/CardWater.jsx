@@ -6,12 +6,15 @@ import { getApiJavaHistorico } from "../../service/client";
 //Component
 import { ChartWaterLavel } from "../../charts/ChartWaterLevel";
 
-export const CardWater  = () => {
+export const CardWater  = (props) => {
     const equipo = "Cocina1"
+
+    const { chartName } = props;
 
     const [started, setStarted] = useState(false);
     const [initialData, setInitialData] = useState([]);
 
+    
     useEffect(() => {
           const fetchDato = async () => {
             const response = (await getApiJavaHistorico()).data;
@@ -27,7 +30,7 @@ export const CardWater  = () => {
     return (
        <section className={Style.c_chart}>
                 <article className={Style.c_title}>
-                <h2 className={Style.title}>Nivel de Agua</h2>
+                <h2 className={Style.title}>{ props.component }</h2>
                 </article>
 
                 <nav>
@@ -39,9 +42,8 @@ export const CardWater  = () => {
                 </nav>
 
                 <section className={Style.c_chartSeries}>
-                    < ChartWaterLavel data = { initialData } load = {started}/>
+                    < ChartWaterLavel data = { initialData } load = {started} container={ chartName }/>
                 </section>
             </section>
-
     )
 }

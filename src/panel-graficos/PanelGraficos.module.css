@@ -1,17 +1,13 @@
 .container {
-    min-height: 900px;
-    height: 100vh;
     background-color: #000;
-    padding-left: 116px;
-    padding-right: 116px;
-    padding-top: 40px;
-    
+    padding: 40px 116px;
 }
 .container_chart {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
+
 .c_chart {
     border: 1px solid #434651;
     background-color: black;

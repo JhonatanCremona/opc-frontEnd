@@ -15,7 +15,7 @@ export const PanelGraficos = () => {
             <div className={Style.container_chart}>
                 < Card />
                 < CardWater component= {"Nivel de Agua"} chartName= { "container-nv-agua" }/>
-                < CardWater component= {"Otro componente"} chartName={ "container-otro" }/>
+                < CardWater component= {"Válvula"} chartName={ "container-otro" }/>
             </div>
         </div>
     )

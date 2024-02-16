@@ -36,11 +36,10 @@ export const CardWater  = (props) => {
                 <nav>
                 <ul className={Style.list_option}>
                     <button onClick={() => setStarted(current => !current)}
-                className={ started ? Style.list_button  + " " + Style.isActiveButton : Style.list_button }><li>Started live</li></button>
+                className={ started ? Style.list_button  + " " + Style.isActiveButton : Style.list_button }><li>Inicio</li></button>
                 </ul>
                     
                 </nav>
-
                 <section className={Style.c_chartSeries}>
                     < ChartWaterLavel data = { initialData } load = {started} container={ chartName }/>
                 </section>

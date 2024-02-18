@@ -18,7 +18,7 @@
 }
 .c_title {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     width: 100%;
 }
@@ -78,4 +78,53 @@
 .c_chartSeries {
     height: 300px;
     position: relative;
+}
+/*Component CHART unit*/
+.list_option_component {
+    border-radius: 6px;
+    width: 150px;
+    padding: 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form_date {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 60%;
+    gap: 4px;
+
+}
+.form_title {
+    color: #d1d4dc;
+    list-style: none;
+    font-family: "Roboto", "Helvetica Neue";
+    margin: 2px 0;
+    font-size: 14px;
+    grid-column-start: span 2;
+}
+.form_input_one, .form_input_two  {
+    border: 1px solid #434651;
+    background-color: #000;
+    border-radius: 6px;
+    color: #d1d4dc;
+    height: 30px;
+}
+.form_input_one::-webkit-calendar-picker-indicator {
+    position: absolute;
+    color: #d1d4dc;
+}
+
+.list_button_component{
+    border: 1px solid #434651;
+    border-radius: 6px;
+    background-color: #000;
+    padding:0px 11px;
+    margin-top: 0;
+    cursor: pointer;
+    height: 30px;
+    grid-column-start: 2;
+    grid-column-end: 3;
 }

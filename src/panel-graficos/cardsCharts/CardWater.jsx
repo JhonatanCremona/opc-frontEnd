@@ -1,48 +1,39 @@
 //Depending 
 import Style from "../PanelGraficos.module.css"
-import { useEffect,  useState } from "react";
-import { getApiJavaHistorico } from "../../service/client";
+import { useState } from "react";
 
 //Component
 import { ChartWaterLavel } from "../../charts/ChartWaterLevel";
 
-export const CardWater  = (props) => {
-    const equipo = "Cocina1"
-
-    const { chartName } = props;
+export const CardWater  = ({ chartName, component }) => {
+    //const equipo = "Cocina1"
 
     const [started, setStarted] = useState(false);
-    const [initialData, setInitialData] = useState([]);
-
-    
-    useEffect(() => {
-          const fetchDato = async () => {
-            const response = (await getApiJavaHistorico()).data;
-            const formattedData = response.map((item) => ({
-                time: new Date(item.time).getTime(),
-                value: parseFloat(item.value)
-              }))
-              setInitialData(formattedData);
-          }
-        fetchDato()
-    }, [])
-    
     return (
        <section className={Style.c_chart}>
                 <article className={Style.c_title}>
-                <h2 className={Style.title}>{ props.component }</h2>
+                    <h2 className={Style.title}>{ component }</h2>
+                    <p className={Style.form_title}> Filtrar por fecha</p>
                 </article>
 
                 <nav>
-                <ul className={Style.list_option}>
-                    <button onClick={() => setStarted(current => !current)}
-                className={ started ? Style.list_button  + " " + Style.isActiveButton : Style.list_button }><li>Inicio</li></button>
-                </ul>
-                    
+                    <ul className={Style.list_option_component}>
+                        <button onClick={() => setStarted(current => !current)} className={ started ? Style.list_button_component  + " " + Style.isActiveButton : Style.list_button_component }><li>Iniciar Lectura</li>
+                        </button>
+
+                        <form action="" className={Style.form_date}>
+                            <input className={ Style.form_input_one } type="date" name="date_start"/>
+                            <input className={ Style.form_input_two } type="date" name="date_end"/>
+                            <button className={ Style.list_button_component}><li>Buscar ➔</li></button>
+                        </form>
+
+                    </ul>
+
                 </nav>
+
                 <section className={Style.c_chartSeries}>
-                    < ChartWaterLavel data = { initialData } load = {started} container={ chartName }/>
+                    < ChartWaterLavel load = { started } chartName={ chartName } />
                 </section>
-            </section>
+        </section>
     )
 }

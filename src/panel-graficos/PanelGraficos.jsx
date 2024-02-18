@@ -4,10 +4,8 @@ import Style from "./PanelGraficos.module.css";
 import { Card } from "./cardsCharts/Card";
 import { CardWater } from "./cardsCharts/CardWater";
 import { Title } from "../charts/title/Title";
-import { useParams } from "react-router";
 
 export const PanelGraficos = () => {
-    console.log("RUTA ACTUAL: ", useParams);
     
     return (
         <div className={Style.container}>

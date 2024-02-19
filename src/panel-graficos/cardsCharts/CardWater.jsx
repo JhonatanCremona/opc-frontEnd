@@ -24,7 +24,7 @@ export const CardWater  = ({ chartName, component }) => {
                         <form action="" className={Style.form_date}>
                             <input className={ Style.form_input_one } type="date" name="date_start"/>
                             <input className={ Style.form_input_two } type="date" name="date_end"/>
-                            <button className={ Style.list_button_component}><li>Buscar ➔</li></button>
+                            <button className={ Style.list_button_component}><li>Buscar</li></button>
                         </form>
 
                     </ul>

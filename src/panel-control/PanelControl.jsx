@@ -16,6 +16,7 @@ import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
 import { SensorGrafico } from "../Components/sensores/SensorGrafico";
 import { PanelContext } from "../context/PanelContext";
+import { Productividad } from "./productividad/Productividad";
 
 export const PanelControl = () => {
     const [datos, setDatos] = useState({})
@@ -126,6 +127,8 @@ export const PanelControl = () => {
                     </section>
 
                 </section>
+                <Productividad />
+
             </main>
         
         </div>

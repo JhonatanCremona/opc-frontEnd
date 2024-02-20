@@ -4,24 +4,51 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
+
+.title , .sub_title {
+    font-family: "Roboto";
+    font-weight: bold;
+    color: #D9D9D9;
+    margin: 0;
+    font-size: 16px;
+}
+.title {
+    font-size: 24px;
+    margin-bottom: 1rem;
+}
+
 .prod_container {
     padding: 22px;
+    background-color: #131313;
+    border-radius: 15px;
 }
 
 .progress_bar_item {
-    margin-bottom: 2rem;
+    border: 1px solid tomato;
+    margin-bottom: 1rem;
+    color: #D9D9D9;
+    font-family: "Roboto";
+    font-weight:lighter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.value_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2;
+    width: 150px;
 }
 
 .item_label,
 .item_value {
+    font-family: "Roboto";
     font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.item_value {
     font-weight: 400;
+    color: #D9D9D9;
+    display: block;
+    border: 1px solid blue;
 }
 
 .item_bar {
@@ -30,6 +57,7 @@
     width: 100%;
     background-color: #000;
     border-radius: 4px;
+    border: 1px solid greenyellow;
 }
 
 .progress {
@@ -40,7 +68,29 @@
     width: 0;
     height: 1.5rem;
     margin: 0;
-    background-color: #f50045;
+    background-color: #3666CC;
     border-radius: 4px;
     transition: width 100ms ease;
+}
+.progress_bar {
+    
+}
+.list_receta_container {
+
+}
+.list_recetas {
+    border: 1px solid yellow;
+    height: 1.5rem;
+    display: flex;
+}
+.recetas {
+    border: 1px solid red;
+    display: inline-block;
+    height: 95%;
+}
+.box_list_receta {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    gap: 2px;
+    width: 100%;
 }

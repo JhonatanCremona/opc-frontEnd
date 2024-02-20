@@ -73,11 +73,9 @@ export const Productividad = () => {
                                 {
                                     promedio = Math.floor(receta/ dataJson.ciclos_correctos * 100) ;
                                     return (
-                                    <>
                                         <div className={Style.recetas} key={index} style={{width: `${promedio}%`}}>
                                     {receta}
                                     </div>
-                                    </>
                                     )
                                 }
                             })}
@@ -85,8 +83,13 @@ export const Productividad = () => {
                         <span className={Style.item_label}>100%</span>
                     </article>
                 </article>
-                
-                {" COMPONENTE "}
+                {dataJson.recetas.map((receta, index)=> {
+                    if (receta>0) return (
+                        <div key={index}>
+                            <span>{receta}</span>
+                        </div>
+                    )
+                })}
                 <hr />
                 <div>
                     <h3>15 <span>{"icon"}</span></h3>

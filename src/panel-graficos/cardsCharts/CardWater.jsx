@@ -5,7 +5,7 @@ import { useState } from "react";
 //Component
 import { ChartWaterLavel } from "../../charts/ChartWaterLevel";
 
-export const CardWater  = ({ chartName, component }) => {
+export const CardWater  = ({ chartName, component, urlComponent }) => {
     //const equipo = "Cocina1"
 
     const [started, setStarted] = useState(false);
@@ -32,7 +32,7 @@ export const CardWater  = ({ chartName, component }) => {
                 </nav>
 
                 <section className={Style.c_chartSeries}>
-                    < ChartWaterLavel load = { started } chartName={ chartName } />
+                    < ChartWaterLavel load = { started } chartName={ chartName } url={urlComponent} />
                 </section>
         </section>
     )

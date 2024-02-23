@@ -1,14 +1,17 @@
 import { createChart } from "lightweight-charts";
 import { forwardRef, useEffect, useLayoutEffect, useRef,useContext, useState } from "react";
-import { getApiJavaHistorico } from "../service/client";
+import { getHistory } from "../service/client";
 
 //Component
 import { PanelContext } from "../context/PanelContext";
 
-export const ChartWaterLavel = forwardRef(({ chartName, load }, ref) => {
+export const ChartWaterLavel = forwardRef(({ chartName, load, url }, ref) => {
 
     const seriesRef = useRef(null);
     const { StyleTooltip } = useContext(PanelContext);
+    const machine ="Cocina1";
+    const [maxValue, setMaxValue] = useState("");
+    const [minValue, setMinValue] = useState("");
 
     const StylesSeries = {
             baseValue: { type: 'price', price: 40 }, 
@@ -61,7 +64,7 @@ export const ChartWaterLavel = forwardRef(({ chartName, load }, ref) => {
 
     // CREATE LINE TEMPORAL 
     let minPriceLine = {
-          price: 0,
+          price: minValue,
           color: '#be1238',
           lineWidth: 2,
           lineStyle: 3,
@@ -69,7 +72,7 @@ export const ChartWaterLavel = forwardRef(({ chartName, load }, ref) => {
           title: 'Minimo Valor',
      };
     let maxPriceLine = {
-        price: 90,
+        price: maxValue,
         color: '#be1238',
         lineWidth: 2,
         lineStyle: 3,
@@ -95,7 +98,7 @@ export const ChartWaterLavel = forwardRef(({ chartName, load }, ref) => {
         const price = data.value !== undefined ? data.value : data.close;
         toolTip.innerHTML = `
           <div style="color: ${'rgba( 239, 83, 80, 1)'}">
-            ⬤ Nivel Agua.
+          ⬤${ url }
           </div>
           <div style="font-size: 24px; margin: 4px 0px; color: ${'white'}">
             ${Math.round(100 * price) / 100}
@@ -155,8 +158,9 @@ export const ChartWaterLavel = forwardRef(({ chartName, load }, ref) => {
 
         series.setData([]);
         seriesRef.current = series;
-        series.createPriceLine(minPriceLine);
-        series.createPriceLine(maxPriceLine);
+
+        //series.createPriceLine(minPriceLine);
+        //series.createPriceLine(maxPriceLine);
         
         chartInstance.subscribeCrosshairMove(param => {
           subScribeToolTip(param, container, seriesRef.current, StyleTooltip.sensor_water_level.sw_width, chartInstance);
@@ -169,19 +173,28 @@ export const ChartWaterLavel = forwardRef(({ chartName, load }, ref) => {
 
     },[])
     
-
+let contador = 0;
 
     useEffect(()=> {
         async function fetchData () {
-          console.log("Me ejecuteeeeee");
-            const response = ((await getApiJavaHistorico()).data)
-            const formatter = response.map((item)=> {
+            //const response = ((await getApiJavaHistorico()).data)
+            const response = await getHistory(url,machine)
+            const formatter = response.data.results.map((item)=> {
               return {
                 time: new Date(item.time).getTime(),
                 value: parseFloat(item.value)
             }
             })
-            console.log(formatter);
+            setMaxValue(parseFloat(response.data.MAX));
+            setMinValue(parseFloat(response.data.MIN));
+            if (maxValue > contador ) {
+              seriesRef.current.createPriceLine(maxPriceLine);
+              contador = maxValue;
+            } else {
+              seriesRef.current.remove(seriesRef.current.createPriceLine(maxPriceLine))
+            }
+            
+            seriesRef.current.createPriceLine(minPriceLine);
             return seriesRef.current.setData(formatter);
         } 
         fetchData()

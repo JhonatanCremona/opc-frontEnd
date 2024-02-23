@@ -1,13 +1,13 @@
 //Depending 
 import { useState, useEffect, forwardRef, useLayoutEffect,useRef } from "react"
 import { createChart } from "lightweight-charts"
-import {  getApiJavaHistoricoPrueba, getHistory } from "../service/client";
+import {  getApiJavaHistoricoPrueba, getHistory } from "../service/client.js";
 //Component
 
 export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
   const [chart, setChart] = useState(null);
 
-  //const machine = "Cocina1";
+  const machine = "Cocina1";
 
   const series1 = useRef(null);
   const series2 = useRef(null);
@@ -164,14 +164,19 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
   }, []);
 
   useEffect(() => {
-    const updateData = () => {
+    const updateData = async () => {
       if (sensorsComponent[0].estado) {
-        //getHistory(sensorsComponent[0].api, machine)
-        getApiJavaHistoricoPrueba(series1, 0)
+        const response = await getHistory(sensorsComponent[0].api, machine)
+        const formattedData = response.data.results.map((item) => ({
+          time: new Date(item.time).getTime(),
+          value: parseFloat(item.value)
+        }));
+        series1.current.setData(formattedData);
+        //getApiJavaHistoricoPrueba(series1, 0)
       }
     }
-    getApiJavaHistoricoPrueba(series1, 0);
-    //getHistory(sensorsComponent[0].api, machine);
+    //getApiJavaHistoricoPrueba(series1, 0);
+    getHistory(sensorsComponent[0].api, machine);
     const interval = setInterval(updateData, 2000);
     return () => {
       clearInterval(interval);
@@ -179,10 +184,15 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
   }, [sensorsComponent[0].estado])
 
   useEffect(() => {
-      const updateData = () => {
+      const updateData = async () => {
         if (sensorsComponent[2].estado) {
-          getApiJavaHistoricoPrueba(series3, 80)
-          //getHistory(sensorsComponent[2].api, machine);
+          //getApiJavaHistoricoPrueba(series3, 80)
+          const response = await getHistory(sensorsComponent[2].api, machine);
+          const formattedData = response.data.results.map((item) => ({
+            time: new Date(item.time).getTime(),
+            value: parseFloat(item.value) + 40
+          }));
+          series3.current.setData(formattedData);
         } else {
           series3.current.setData([])
         }
@@ -194,10 +204,15 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
     }, [sensorsComponent[2].estado])
 
     useEffect(() => {
-      const updateData = () => {
+      const updateData = async () => {
         if (sensorsComponent[1].estado) {
-          getApiJavaHistoricoPrueba(series2, 40)
-          //getHistory(sensorsComponent[1].api, machine);
+          //getApiJavaHistoricoPrueba(series2, 40)
+          const response = await getHistory(sensorsComponent[1].api, machine);
+          const formattedData = response.data.results.map((item) => ({
+            time: new Date(item.time).getTime(),
+            value: parseFloat(item.value)
+          }));
+          series2.current.setData(formattedData);
         } else {
           series2.current.setData([]);
         }

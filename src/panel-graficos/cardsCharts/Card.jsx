@@ -16,11 +16,13 @@ export const Card = () => {
         {
             id: 2,
             name: "Temp. Agua",
+            api:"TEMP_AGUA",
             estado: false
         },
         {
             id: 3,
             name: "Temp. Producto",
+            api:"TEMP_PRODUCTO",
             estado: false
         }
     ])

@@ -1,4 +1,4 @@
-import { useParams } from "react-router"
+
 import axios from "axios";
 import { useContext, useEffect, useState} from "react";
 import Reporte from "../JSON/Reporte.json"
@@ -128,7 +128,6 @@ export const PanelControl = () => {
 
                 </section>
                 <Productividad />
-
             </main>
         
         </div>

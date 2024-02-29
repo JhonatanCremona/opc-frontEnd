@@ -18,3 +18,7 @@ body {
   width: 100%;
   margin: 0px;
 }
+.react-datepicker__input-container {
+  max-width: 250px;
+  z-index: 9;
+}

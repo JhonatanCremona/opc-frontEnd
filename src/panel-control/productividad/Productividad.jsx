@@ -3,7 +3,6 @@ import Style from "./Productividad.module.css";
 import JsonProductividad from "../../JSON/productivad.json";
 import JsonListReceta from "../../JSON/productividad_list_receta.json";
 import iconCicloProduct from "../../Icon/ciclo-de-vida-del-producto.png";
-import { dateIcon } from "../../Icon/Icon";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,11 +18,9 @@ export const Productividad = () => {
     let promedio;
     const acumular = (acomulador, numero) =>  acomulador + numero;
     let totalProductos = dataJson.recetas.length > 0 ? dataJson.recetas.reduce(acumular) : 0;
-
-    console.log(totalProductos);
+    let produccionTotal = dataJson.pesototal / 1000;
 
     const ciclos_correctos = (dataJson.ciclos_correctos/ dataJson.ciclos_totales) * 100;
-    console.log(ciclos_correctos);
     
     function progress_bar() {
         var speed = 30;
@@ -53,6 +50,7 @@ export const Productividad = () => {
     useEffect(()=> {
         progress_bar();
     },[search])
+
     const startYear = 2021;
     const currentYear = new Date().getFullYear();
     const years = Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
@@ -86,8 +84,8 @@ export const Productividad = () => {
                         <div className={Style.progress } data-progress={ ciclos_correctos }></div>
                     </div>
                     <div className={Style.value_container}>
-                        <span className={Style.item_value}>{`0 %`}</span> 
-                        <span className={Style.item_label}>{` / ${dataJson.ciclos_totales}`}</span>
+                        <span className={Style.item_value}>{`0%`}</span> 
+                        <span className={Style.item_label}>{`/ ${dataJson.ciclos_totales}`}</span>
                     </div>
                 </article>
                 <article className={Style.progress_bar_item}>
@@ -118,7 +116,7 @@ export const Productividad = () => {
                                 }
                             })}
                         </div>
-                        <span className={Style.item_label}>{`100% `}</span>
+                        <span className={Style.item_label}>{`100% / ${totalProductos}`}</span>
                     </article>
                 </article>
 
@@ -152,7 +150,7 @@ export const Productividad = () => {
                         <p className={ Style.sub_title_production }>Ciclos realizados</p>
                     </div>
                     <div>
-                        <h3 className={Style.title_production }>{ `${totalProductos}` }</h3>
+                        <h3 className={Style.title_production }>{ `${produccionTotal} Tn` }</h3>
                         <p className={ Style.sub_title_production }>Produccion Total</p>
                     </div>
                 </section>

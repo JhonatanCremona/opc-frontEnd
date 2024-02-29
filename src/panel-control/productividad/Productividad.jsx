@@ -1,12 +1,26 @@
 import { useEffect, useState } from "react";
 import Style from "./Productividad.module.css";
-import JsonProductividad from "../../JSON/productivad.json"
+import JsonProductividad from "../../JSON/productivad.json";
+import JsonListReceta from "../../JSON/productividad_list_receta.json";
+import iconCicloProduct from "../../Icon/ciclo-de-vida-del-producto.png";
+import { dateIcon } from "../../Icon/Icon";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const Productividad = () => {
     const [search, setSerch] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const dataJson = JsonProductividad;
+    const { nombres_recetas } = JsonListReceta;
+
     let promedio;
+    const acumular = (acomulador, numero) =>  acomulador + numero;
+    let totalProductos = dataJson.recetas.length > 0 ? dataJson.recetas.reduce(acumular) : 0;
+
+    console.log(totalProductos);
 
     const ciclos_correctos = (dataJson.ciclos_correctos/ dataJson.ciclos_totales) * 100;
     console.log(ciclos_correctos);
@@ -39,7 +53,28 @@ export const Productividad = () => {
     useEffect(()=> {
         progress_bar();
     },[search])
+    const startYear = 2021;
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
+    const months = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+    ];
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+    };
 
     return (
         <section className={Style.box_component}>
@@ -73,40 +108,190 @@ export const Productividad = () => {
                                 {
                                     promedio = Math.floor(receta/ dataJson.ciclos_correctos * 100) ;
                                     return (
-                                        <div className={Style.recetas} key={index} style={{width: `${promedio}%`}}>
-                                    {receta}
+                                        <div className={Style.recetas} key={index} style={{
+                                            width: `${promedio}%`,
+                                            backgroundColor: nombres_recetas[index].color,
+                                            borderRadius: "6px",
+                                        }}>
                                     </div>
                                     )
                                 }
                             })}
                         </div>
-                        <span className={Style.item_label}>100%</span>
+                        <span className={Style.item_label}>{`100% `}</span>
                     </article>
                 </article>
-                {dataJson.recetas.map((receta, index)=> {
+
+                <div className={Style.box_list_name_receta}>
+                   {dataJson.recetas.map((receta, index)=> {
                     if (receta>0) return (
-                        <div key={index}>
-                            <span>{receta}</span>
-                        </div>
+                            <div key={index} className={Style.list_name_receta}>
+                                <div style={{
+                                    width: "6px",
+                                    height: "14px",
+                                    backgroundColor: nombres_recetas[index].color,
+                                    borderRadius: "3px",
+                                    }}>
+                                </div>
+                                <span className={Style.name_receta} >{` ${nombres_recetas[index].nombre} - ${receta}`}</span>
+                            </div>
                     )
-                })}
+                })} 
+                </div>
+                
                 <hr />
-                <div>
-                    <h3>15 <span>{"icon"}</span></h3>
-                    <p>Ciclos realizados</p>
-                </div>
-                <div>
-                    <h3>16,5 <span>{"icon"}</span></h3>
-                    <p>Produccion Total</p>
-                </div>
+
+                <section className={Style.box_results_production}>
+                    <div className={Style.box_title_production}>
+                        <div className={Style.box_title}>
+                            <h3 className={Style.title_production}>{`${dataJson.ciclos_totales}`} </h3>
+                            <figure className={Style.icon_ciclo}>
+                                <img  src={ iconCicloProduct } alt="" />
+                            </figure>
+                        </div>
+                        <p className={ Style.sub_title_production }>Ciclos realizados</p>
+                    </div>
+                    <div>
+                        <h3 className={Style.title_production }>{ `${totalProductos}` }</h3>
+                        <p className={ Style.sub_title_production }>Produccion Total</p>
+                    </div>
+                </section>
+
             </section>
             
             <section className={Style.prod_resumen_equipo}>
-                <h2>Resumen equipo</h2>
-                <form className={Style.form_date}>
-                    <input className={ Style.form_input_one } type="date" name="date_start"/>
-                    <input className={ Style.form_input_two } type="date" name="date_end"/>
-                    <button className={ Style.list_button_component}><li>Buscar</li></button>
+                <h2 className={Style.title}>Resumen equipo</h2>
+
+                <form className={Style.form_date} onSubmit={handleSubmit}>
+                <div className={Style.box_date}>
+                <DatePicker
+                    showIcon
+                    renderCustomHeader={({
+                        date,
+                        changeYear,
+                        changeMonth,
+                        decreaseMonth,
+                        increaseMonth,
+                        prevMonthButtonDisabled,
+                        nextMonthButtonDisabled,
+                      }) => (
+                        <div
+                          style={{
+                            margin: 10,
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                            {"<"}
+                          </button>
+                          <select
+                            value={date.getFullYear()}
+                            onChange={({ target: { value } }) => changeYear(value)}
+                          >
+                            {years.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                
+                          <select
+                            value={months[date.getMonth()]}
+                            onChange={({ target: { value } }) =>
+                              changeMonth(months.indexOf(value))
+                            }
+                          >
+                            {months.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                
+                          <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                            {">"}
+                          </button>
+                        </div>
+                      )}
+                    closeOnScroll={true}
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    className={`${Style.date_picker}`}
+                    isClearable
+                    placeholderText="Seleccione una Fecha Inicio"
+                    icon={
+                        <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 icn">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                        </svg>
+                    }
+                />
+                <DatePicker
+                    showIcon
+                    closeOnScroll={true}
+                    renderCustomHeader={({
+                        date,
+                        changeYear,
+                        changeMonth,
+                        decreaseMonth,
+                        increaseMonth,
+                        prevMonthButtonDisabled,
+                        nextMonthButtonDisabled,
+                      }) => (
+                        <div
+                          style={{
+                            margin: 10,
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                            {"<"}
+                          </button>
+                          <select
+                            value={date.getFullYear()}
+                            onChange={({ target: { value } }) => changeYear(value)}
+                          >
+                            {years.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                
+                          <select
+                            value={months[date.getMonth()]}
+                            onChange={({ target: { value } }) =>
+                              changeMonth(months.indexOf(value))
+                            }
+                          >
+                            {months.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                
+                          <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                            {">"}
+                          </button>
+                        </div>
+                      )}
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    className={`${Style.date_picker}`}
+                    isClearable
+                    placeholderText="Seleccione una Fecha Fin"
+                    icon={
+                        <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 icn">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                        </svg>
+                    }
+                />
+                </div>
+                    <button 
+                    className={ Style.button_component}>
+                        Buscar</button>
                 </form>
             </section>
 

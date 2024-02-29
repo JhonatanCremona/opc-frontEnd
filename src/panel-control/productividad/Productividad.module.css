@@ -2,6 +2,16 @@
     display: flex;
     gap: 20px;
     padding-bottom: 70px;
+    flex-direction: column-reverse;
+}
+@media (width > 1300px) {
+    .box_component {
+        flex-direction: row;
+    }
+    .prod_resumen_equipo {
+        width: 30%;
+    }
+
 }
 
 .title , .sub_title {
@@ -135,7 +145,6 @@
 }
 
 .prod_resumen_equipo {
-    width: 30%;
     padding: 22px;
     background-color: #131313;
     border-radius: 15px;
@@ -166,6 +175,9 @@
 }
 .box_date {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(200px, 1fr)
+        );
     gap: 10px;
 }

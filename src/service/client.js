@@ -4,7 +4,7 @@ const templateEquipos = {
     "Equipos": [
         {
             "ID": 1,
-            "NOMBRE_EQUIPO":  "Cocina",
+            "NOMBRE_EQUIPO":  "Cocina1",
             "ESTADO": "OPERATIVO",
             "RECETA": "5 JAMON 5LBS",
             "TIEMPO_TRANSCURRIDO": "00:00hs",
@@ -12,7 +12,7 @@ const templateEquipos = {
         },
         {
             "ID": 2,
-            "NOMBRE_EQUIPO":  "Enfriador",
+            "NOMBRE_EQUIPO":  "Enfriador1",
             "ESTADO": "INACTIVO",
             "RECETA": "5 JAMON 5LBS",
             "TIEMPO_TRANSCURRIDO": "00:00hs",

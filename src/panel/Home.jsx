@@ -20,7 +20,6 @@ export const Home = () => {
 
     useEffect(() => {
         const fetchData = async () => { setMachines(await transformDataMachine())};
-        //console.log(machines)
         fetchData();
         const intervalId = setInterval(fetchData, 10000);
         return () => clearInterval(intervalId);
@@ -62,12 +61,12 @@ export const Home = () => {
                             </article>
 
                             <Link 
-                                to={`/panel-control/${machine.NOMBRE_EQUIPO.replace(/\s+/g, '-')}`}
-                                onClick={setUrlPanel(`/panel-control/${machine.NOMBRE_EQUIPO.replace(/\s+/g, '-')}`)}
+                                to={`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
+                                onClick={() => setUrlPanel(`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`)}
                                 className={
-                                        machine.NOMBRE_EQUIPO === "Cocina" 
+                                        machine.NOMBRE_EQUIPO === "Cocina1" 
                                             ? Style.buttonArrow + " " + Style.buttonCocina 
-                                            : machine.NOMBRE_EQUIPO == "Enfriador"
+                                            : machine.NOMBRE_EQUIPO == "Enfriador1"
                                             ? Style.buttonArrow + " " + Style.buttonEndriador
                                             : ""
                                     }>VER MAS DETALLES {<Arrow/>}

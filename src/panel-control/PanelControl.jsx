@@ -1,8 +1,11 @@
-
+//Depending
 import axios from "axios";
-import { useContext, useEffect, useState} from "react";
-import Reporte from "../JSON/Reporte.json"
+import { useEffect, useState} from "react";
 import Style from "./PanelControl.module.css"
+import Reporte from "../JSON/Reporte.json"
+import ReporteEnfriador from "../JSON/ReporteEnfriador.json";
+import { useParams } from 'react-router-dom';
+
 
 //Imagenes
 import ImagenAgua from "../Icon/el-ciclo-del-agua.png";
@@ -15,12 +18,12 @@ import ImagenRecetaActiva from "../Icon/recetas.png";
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
 import { SensorGrafico } from "../Components/sensores/SensorGrafico";
-import { PanelContext } from "../context/PanelContext";
 import { Productividad } from "./productividad/Productividad";
 
 export const PanelControl = () => {
     const [datos, setDatos] = useState({})
-    const { urlPanel } = useContext(PanelContext)
+    let { equipo } = useParams();
+
 
     /**/
    const API_REPORTE = "http://192.168.0.95:5000/Reporte/Cocina1";
@@ -52,7 +55,8 @@ export const PanelControl = () => {
             console.log(result);
          } catch (error) {
              console.error(error);
-             result = Reporte
+             if (equipo == "Cocina1") result = Reporte;
+             if (equipo == "Enfriador1") result = ReporteEnfriador;
          }
          console.log("Resultado final:", result);
          return result;
@@ -75,7 +79,6 @@ export const PanelControl = () => {
       
         return () => clearInterval(intervalId);
       }, []);
-      console.log("CONTEXTO_DATA: " + urlPanel);
       
 
     return (

@@ -22,3 +22,6 @@ body {
   max-width: 250px;
   z-index: 9;
 }
+.react-datepicker-popper {
+  z-index: 12 !important;
+}

@@ -162,6 +162,7 @@ export const Productividad = () => {
 
                 <form className={Style.form_date} onSubmit={handleSubmit}>
                 <div className={Style.box_date}>
+                  <h2 className={Style.sub_title}>Fecha Inicio</h2>
                 <DatePicker
                     showIcon
                     renderCustomHeader={({
@@ -224,6 +225,7 @@ export const Productividad = () => {
                         </svg>
                     }
                 />
+                  <h2 className={Style.sub_title}>Fecha Fin</h2>
                 <DatePicker
                     showIcon
                     closeOnScroll={true}

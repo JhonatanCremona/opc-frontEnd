@@ -3,7 +3,7 @@ import { createContext,useState } from "react";
 export const PanelContext = createContext();
 
 export const PanelContextProvider = ({ children }) => {
-    const [urlPanel, setUrlPanel] = useState("/panel-control/COCINA-1");
+    const [urlPanel, setUrlPanel] = useState("/panel-control/Cocina1");
     const [urlPanelChart, setUrlPanelChart] = useState("/panel-graficos/COCINA-1");
 
     const StyleTooltip = {

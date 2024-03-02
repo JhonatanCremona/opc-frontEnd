@@ -48,37 +48,49 @@ export const PanelControl = () => {
     }
  
     async function readApi(){
+        console.log("ENTRE A LA FUNCION PARA LLAMAR A LA API");
          try {
             const response = await axios.get(API_REPORTE);
             console.log(response.data);
-            result = response.data || [];
-            console.log(result);
+            //result = response.data || [];
+            setDatos(response.data || {});
          } catch (error) {
              console.error(error);
-             if (equipo == "Cocina1") result = Reporte;
-             if (equipo == "Enfriador1") result = ReporteEnfriador;
+             //if (equipo == "Cocina1") result = Reporte;
+             //if (equipo == "Enfriador1") result = ReporteEnfriador;
+            setDatos(equipo === "Cocina1" ? Reporte : equipo === "Enfriador1" ? ReporteEnfriador : {});
          }
          console.log("Resultado final:", result);
          return result;
     }
  
-      useEffect(() => {
+    useEffect(() => {
+        let isFetching = false; // Variable para rastrear si hay una solicitud en curso
+      
         const fetchData = async () => {
-          try {
-            const apiData = await readApi();
-            setDatos(apiData);
-          } catch (error) {
-            console.error("Error al obtener datos:", error);
+          if (!isFetching) {
+            isFetching = true; // Marcar que hay una solicitud en curso
+            try {
+              await readApi();
+              // const apiData = await readApi();
+              // setDatos(apiData);
+            } catch (error) {
+              console.error("Error al obtener datos:", error);
+            } finally {
+              isFetching = false; // Marcar que la solicitud ha terminado
+            }
           }
+          // Esperar un segundo antes de la próxima solicitud
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          // Llama recursivamente para realizar la siguiente solicitud
+          fetchData();
         };
       
-        fetchData();
+        fetchData(); // Inicia el proceso
       
-        const intervalId = setInterval(fetchData, 1000);
-        console.log(intervalId);
-      
-        return () => clearInterval(intervalId);
-      }, []);
+        // No necesitas limpiar nada en este caso, así que la función de retorno puede estar vacía o puedes omitirla
+        // Solo agregarías una función de retorno si necesitaras limpiar recursos cuando el componente se desmonta
+      }, []); 
       
 
     return (

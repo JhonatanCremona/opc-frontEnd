@@ -30,7 +30,6 @@ export const NavEquipos = () => {
                 to= {`/panel-control/Enfriador1`} 
                 className={Style.boxImagen}>
                 <img className={Style.Imagen} src={Enfriador} alt="Imagen Enfriador" /> 
-                
             </Link> 
             <div className={equipo == "Enfriador1" ? Style.Box: Style.BoxInactive }></div>    
             </article> 

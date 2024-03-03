@@ -9,10 +9,19 @@ import { getReportMachine, valueStateMachine } from "../service/client";
 //Components
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Title } from "../charts/title/Title";
-import { ChartReportMachine } from "../charts/ChartReportMachine";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
 import { Productividad } from "./productividad/Productividad";
 import { CardComponentChart } from "./cardsComponent/CardComponentChart";
+
+import ImgValvula from "../Icon/valvulaActive.png";
+import ImgValvulaInactive from "../Icon/valvulaInactive.png";
+import ImgPasos from "../Icon/pasos.png";
+import ImgPasosInactive from "../Icon/pasosInactive.png";
+import ImgReloj from "../Icon/reloj.png";
+import ImgRelojInactive from "../Icon/relojInactive.png";
+import ImgReceta from "../Icon/recetas.png";
+import ImgRecetaInactive from "../Icon/recetasInactive.png";
+import ImgSensorAguar from "../Icon/el-ciclo-del-agua.png";
 
 export const ControlPanel = () => {
     const [datos, setDatos] = useState({})
@@ -26,7 +35,7 @@ export const ControlPanel = () => {
                 isFetching = true;
                 try {
                     const response = await getReportMachine(equipo);
-                    response.data.componentes.ESTADO = valueStateMachine(response.data.componentes.ESTADO);
+                    //response.data.componentes.ESTADO = valueStateMachine(response.data.componentes.ESTADO);
                     setDatos(response.data || {});
                 } catch (error) {
                     console.error("MENSAJE ERROR READAPI REPORT: ", error);
@@ -61,6 +70,8 @@ export const ControlPanel = () => {
                             { equipo !== "Cocina1" &&
                                 <CardComponentChart value={datos?.componentes?.TEMP_CHILLER} name_sensor={"TEMP. CHILLER"} tipo={"°C"} machine={equipo} />
                             }
+
+                            <SensorSinGrafico value={datos?.componentes?.NIVEL_AGUA} tipo={"mm"}  nSensor={"NIVEL DE AGUA"} img={ImgSensorAguar}/>
                         </section>
                     </article>
 
@@ -68,10 +79,11 @@ export const ControlPanel = () => {
                         <h2 className={Style.titleElement}>Ciclo activo</h2>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor +" "+Style.ElementSecond}>
-                            <SensorSinGrafico value={ datos.TIEMPO_TRANSCURRIDO } tipo={"hs"}  nSensor={"Tiempo Transcurrido"}/>
-                            <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"}/>
-                            <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"}/>
-                            <SensorSinGrafico value={ "1"} nSensor={"N° Torres"}/>
+                            <SensorSinGrafico value={ datos.TIEMPO_TRANSCURRIDO } tipo={"hs"}  nSensor={"Tiempo Transcurrido"} 
+                            img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgReloj : ImgRelojInactive }/>
+                            <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
+                            <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgReceta : ImgRecetaInactive }/>
+                            <SensorSinGrafico value={ "1"} nSensor={"N° Torres"} img={ImgSensorAguar}/>
                         </section>
                     </section>
 
@@ -79,8 +91,8 @@ export const ControlPanel = () => {
                         <h2 className={Style.titleElement}>Sector IO</h2>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorSinGrafico value={ datos?.componentes?.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} />
-                            <SensorSinGrafico value={ datos?.componentes?.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"}/>
+                            <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive}/>
+                            <SensorSinGrafico value={ datos?.componentes?.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} img={datos?.componentes?.VAPOR_VIVO ? ImgValvula : ImgValvulaInactive}/>
                         </section>
                     </section>
 

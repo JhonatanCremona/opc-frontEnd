@@ -1,20 +1,8 @@
 import Style from "./SensorNoneChart.module.css";
-//Imagen
-import ImgReloj from "../../Icon/reloj.png";
-import ImgRelojInactive from "../../Icon/relojInactive.png";
-import ImgValvula from "../../Icon/valvulaActive.png";
-import ImgValvulaInactive from "../../Icon/valvulaInactive.png";
-import ImgReceta from "../../Icon/recetas.png";
-import ImgRecetaInactive from "../../Icon/recetasInactive.png";
-import ImgPasos from "../../Icon/pasos.png";
-import ImgPasosInactive from "../../Icon/pasosInactive.png";
 
-
-
-export const SensorSinGrafico = ({ nSensor, value,tipo }) => {
+export const SensorSinGrafico = ({ nSensor, value, tipo, estado, img }) => {
 
     function transformDato(value) {
-        console.log(value);
         if (value == "NULL"){
             return false;
         }
@@ -33,7 +21,7 @@ export const SensorSinGrafico = ({ nSensor, value,tipo }) => {
             <div className={Style.titleDataTime}>
                 <h3 className={Style.datos}>{ nSensor }</h3>
                 <div className={Style.boxImagen}>
-                    <img className={Style.Imagen} src={""} alt="ImagenSensors" />  
+                    <img className={Style.Imagen} src={`${img}`} alt="ImagenSensors" />  
                 </div>
                 
             </div>

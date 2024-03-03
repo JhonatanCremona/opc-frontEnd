@@ -9,7 +9,7 @@ export const PanelGraficos = () => {
     
     return (
         <div className={Style.container}>
-            < Title title={"GRÁFICOS"} properties={"MAQUINA"} description={"COCINA 1"} />
+            < Title title={"GRÁFICOS"} properties={"MAQUINA"} description={"COCINA 1"} chart={true} />
             <div className={Style.container_chart}>
                 < Card />
                 < CardWater component= {"Nivel de Agua"} chartName= { "container-nv-agua" } urlComponent={"NIVEL_AGUA"}/>

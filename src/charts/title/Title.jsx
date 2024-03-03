@@ -3,6 +3,7 @@ import Style from "./Title.module.css";
 
 export const Title = (props) => {
     const { title, report, chart, properties, description } = props;
+    let titleEquipo = title || "MAQUINA";
     return (
         <div className={Style.titleBox}>
             { report && (
@@ -10,7 +11,7 @@ export const Title = (props) => {
                 <h2 className={title == "Cocina" ? 
                 `${Style.Cocina}` : 
                 `${Style.Enfriador}` 
-                }> {title} </h2>
+                }> {titleEquipo.toUpperCase()} </h2>
                 <h3 className={`${Style.title} ${Style.Receta}`}>{ properties + ": " +  description }</h3>
                 </>
             )}
@@ -18,10 +19,9 @@ export const Title = (props) => {
             { chart && (
                 <>
                 <h2 className={Style.title + " "+ Style.Receta }> {title} </h2>
-                <h3 className={Style.title + " " + Style.CocinaTitle}>{ props.properties + ": " +  props.description }</h3>
+                <h3 className={Style.title + " " + Style.CocinaTitle}>{ properties + ": " + description }</h3>
                 </>
             )}
-            
             
         </div>
     )

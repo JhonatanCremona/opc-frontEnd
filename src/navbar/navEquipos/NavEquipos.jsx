@@ -12,7 +12,6 @@ import { PanelContext } from "../../context/PanelContext";
 
 export const NavEquipos = () => {
     let { equipo } = useParams();
-    console.log(equipo);
 
     return (
         <nav className={Style.equipoNav}>

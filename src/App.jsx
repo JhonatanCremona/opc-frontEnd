@@ -8,6 +8,7 @@ import { PanelControl } from "./panel-control/PanelControl";
 import { Footer } from './footer/Footer';
 import { Home } from './panel/Home';
 import { PanelGraficos } from './panel-graficos/PanelGraficos';
+import { ControlPanel } from './panel-control/ControlPanel';
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <Layout/> }>
           <Route path="/" element={ <Home/> }/>
-          <Route path="/panel-control/:equipo" element={<PanelControl/>}/>
+          <Route path="/panel-control/:equipo" element={<ControlPanel/>}/>
           <Route path='/panel-graficos/:equipo' element={<PanelGraficos/>}/>
         </Route>
       </Routes>

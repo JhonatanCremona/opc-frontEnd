@@ -20,6 +20,7 @@ const templateEquipos = {
         }
     ]
 }
+
 export const valueStateMachine = (value) =>  {
         switch (value) {
             case 1:
@@ -65,6 +66,17 @@ export const getMachineHome =  async () => {
     }
 }
 
+export const getReportMachine = async (machine) => {
+    console.log("PARAMS ID EQUIPO EN CLIENT JS: ", machine);
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/Reporte/${machine}`,
+        )
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 
 
 export const getReportCocina = async () => {
@@ -87,6 +99,8 @@ export const getReportEnfriador = async () => {
         throw error;
     }
 }
+
+
 export const getHistory = async ( component, machine ) => {
     try {
         return await axios.get(

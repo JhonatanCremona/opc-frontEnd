@@ -83,13 +83,20 @@ main {
     }
 }
 
-
+/*BORRAR  L*/
 
 .dataTime {
     background: #131313;
     border-radius: 15px;
     padding: 22px;
 }
+
+.card_component_electrique {
+    background: #131313;
+    border-radius: 15px;
+    padding: 22px;
+}
+
 .dataTie:first-child {
 
 }
@@ -117,7 +124,13 @@ main {
     font-weight: 300;
     margin: 0px;
     margin-top: 5px;
+    color: #D9D9D9;
+}
+.card_cocina {
     color: #EF8225;
+}
+.card_enfriador {
+    color: #33A7FD;
 }
 
 

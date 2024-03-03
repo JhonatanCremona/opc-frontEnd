@@ -1,11 +1,10 @@
 //Depending
 import axios from "axios";
 import { useEffect, useState} from "react";
+import { useParams } from 'react-router-dom';
 import Style from "./PanelControl.module.css"
 import Reporte from "../JSON/Reporte.json"
 import ReporteEnfriador from "../JSON/ReporteEnfriador.json";
-import { useParams } from 'react-router-dom';
-
 
 //Imagenes
 import ImagenAgua from "../Icon/el-ciclo-del-agua.png";
@@ -25,7 +24,7 @@ export const PanelControl = () => {
     let { equipo } = useParams();
 
 
-    /**/
+
    const API_REPORTE = "http://192.168.0.95:5000/Reporte/Cocina1";
     let result = [];
     function EstadoMaquina(value) {
@@ -46,9 +45,10 @@ export const PanelControl = () => {
                 return "Error"
         }
     }
- 
+    
+    
+
     async function readApi(){
-        console.log("ENTRE A LA FUNCION PARA LLAMAR A LA API");
          try {
             const response = await axios.get(API_REPORTE);
             console.log(response.data);
@@ -63,13 +63,13 @@ export const PanelControl = () => {
          console.log("Resultado final:", result);
          return result;
     }
+    
  
     useEffect(() => {
-        let isFetching = false; // Variable para rastrear si hay una solicitud en curso
-      
+        let isFetching = false;
         const fetchData = async () => {
           if (!isFetching) {
-            isFetching = true; // Marcar que hay una solicitud en curso
+            isFetching = true;
             try {
               await readApi();
               // const apiData = await readApi();
@@ -87,9 +87,6 @@ export const PanelControl = () => {
         };
       
         fetchData(); // Inicia el proceso
-      
-        // No necesitas limpiar nada en este caso, así que la función de retorno puede estar vacía o puedes omitirla
-        // Solo agregarías una función de retorno si necesitaras limpiar recursos cuando el componente se desmonta
       }, []); 
       
 

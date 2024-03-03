@@ -18,6 +18,8 @@ export const Home = () => {
     const [machines , setMachines] = useState([])
     let { setUrlPanel } = useContext(PanelContext);
 
+
+
     useEffect(() => {
         const fetchData = async () => { setMachines(await transformDataMachine())};
         fetchData();

@@ -13,15 +13,24 @@
         color: #fff;
     }
 }
+.icn-button {
+  width: 17px;
+  color: #fff;
+  animation:none;
+}
 
 body {
   width: 100%;
   margin: 0px;
 }
 .react-datepicker__input-container {
-  max-width: 250px;
+  max-width: 240px;
   z-index: 9;
 }
 .react-datepicker-popper {
   z-index: 12 !important;
+}
+.react-datepicker__view-calendar-icon input {
+  padding: 6px 10px 5px 25px;
+  max-width: 158px;
 }

@@ -18,8 +18,8 @@
 }
 .c_title {
     display: flex;
-    align-items: flex-end;
     justify-content: space-between;
+    flex-direction: column;
     width: 100%;
 }
 .title {
@@ -87,15 +87,13 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
 }
-
+/*Component FORM NATIVE
 .form_date {
     display: grid;
     grid-template-columns: 1fr 1fr;
     max-width: 60%;
     gap: 4px;
-
 }
 .form_title {
     color: #d1d4dc;
@@ -136,8 +134,9 @@
     padding-top: 2px;
     cursor: pointer;
 }
-
+*/
 .list_button_component{
+    align-items: flex-end;
     border: 1px solid #434651;
     border-radius: 6px;
     background-color: #000;
@@ -147,4 +146,100 @@
     height: 30px;
     grid-column-start: 2;
     grid-column-end: 3;
+    max-width: max-content;
+}
+
+.form_date {
+    display: flex;
+    flex-direction: column;
+    border-inline-start: 1.5px solid #3D3D3D;
+    border-radius: 10px;
+    padding: 0 20px;
+    padding-bottom: 0;
+}
+.date_picker {
+    background-color: #131313;
+    border: 1px solid #3D3D3D;
+    color: #D9D9D9;
+    align-items: center;
+    border-radius: 6px;
+    padding-left: 30px !important;
+}
+.date_picker:focus {
+    border: 1px solid red;
+    outline: none;
+}
+.button_component {
+    font-family: "Roboto";
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    color: #d1d4dc;
+    border: 1px solid #434651;
+    border-radius: 6px;
+    background-color: #000;
+    padding: 0px 11px;
+    margin-top: 0;
+    cursor: pointer;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    max-width: max-content;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9;
+}
+
+.button_component:hover {
+    background-color: #434651;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.button_component:focus,
+.button_component.dark:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px #434651;
+}
+
+.button_component:hover:focus,
+.button_component:focus:not(:focus-visible),
+.button_component:hover:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: 0 0 0 4px #434651;
+}
+
+.button_component:hover:focus-visible {
+    box-shadow: 0 0 0 4px #434651;
+}
+
+.button_component:hover:active {
+    transform: scale(0.9);
+}
+.box_date {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(200px, 1fr)
+        );
+    gap: 10px;
+}
+.form_box_date {
+    display: flex;
+    gap: 8px;
+}
+.sub_title {
+    font-family: "Roboto";
+    font-weight:lighter;
+    color: #D9D9D9;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+}
+.form_box_buttom {
+    padding-top: 8px;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
 }

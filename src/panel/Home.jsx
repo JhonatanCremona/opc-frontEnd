@@ -22,10 +22,12 @@ export const Home = () => {
 
     useEffect(() => {
         const fetchData = async () => { setMachines(await transformDataMachine())};
+        console.log(machines)
         fetchData();
         const intervalId = setInterval(fetchData, 10000);
         return () => clearInterval(intervalId);
       }, []);
+    
 
     return (
         <>
@@ -66,9 +68,9 @@ export const Home = () => {
                                 to={`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
                                 onClick={() => setUrlPanel(`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`)}
                                 className={
-                                        machine.NOMBRE_EQUIPO === "Cocina1" 
+                                        machine.NOMBRE_EQUIPO === "Cocina" 
                                             ? Style.buttonArrow + " " + Style.buttonCocina 
-                                            : machine.NOMBRE_EQUIPO == "Enfriador1"
+                                            : machine.NOMBRE_EQUIPO == "Enfriador"
                                             ? Style.buttonArrow + " " + Style.buttonEndriador
                                             : ""
                                     }>VER MAS DETALLES {<Arrow/>}

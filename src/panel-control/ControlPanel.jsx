@@ -35,7 +35,7 @@ export const ControlPanel = () => {
                 isFetching = true;
                 try {
                     const response = await getReportMachine(equipo);
-                    //response.data.componentes.ESTADO = valueStateMachine(response.data.componentes.ESTADO);
+                    response.data.componentes.ESTADO = valueStateMachine(response.data.componentes.ESTADO);
                     setDatos(response.data || {});
                 } catch (error) {
                     console.error("MENSAJE ERROR READAPI REPORT: ", error);

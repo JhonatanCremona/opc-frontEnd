@@ -41,8 +41,9 @@ export const valueStateMachine = (value) =>  {
     }
 export const transformDataMachine = async () => {
     try {
-        const equipos = await getMachineHome().Equipos;
-        return equipos.map(({ NOMBRE_RECETA, NRO_RECETA, ...restoPropiedades }) => {
+        const equipos = await getMachineHome();
+        console.log(equipos.data.Equipos)
+        return equipos.data.Equipos.map(({ NOMBRE_RECETA, NRO_RECETA, ...restoPropiedades }) => {
             return {
                ...restoPropiedades,
                ESTADO: valueStateMachine(restoPropiedades.ESTADO),

@@ -11,11 +11,9 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export const Productividad = () => {
     const [search, setSerch] = useState(false);
-
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [dataJson, setDataJson] = useState(JsonProductividad);
-
     const { nombres_recetas } = JsonListReceta;
 
     let promedio;
@@ -51,6 +49,7 @@ export const Productividad = () => {
     }
 
     useEffect(()=> {
+      requestDataProductividad();
         progress_bar();
     },[search])
 
@@ -71,28 +70,33 @@ export const Productividad = () => {
         "Noviembre",
         "Diciembre",
     ];
-
-    const handleSubmit = (event) => {
-        event.preventDefault(); 
-    };
-    const requestDataProductividad = async (event) => {
-      event.preventDefault();
-      const fechaActual = new Date();
-      let responseApiProductividad
-      /* 
+/* 
        - EndFech and Fecha Start no debe de ser mayor a la fecha actual;
        - Debe de validarse 
 
        - Loanding component 
           Se debe de ejecutar la funcon con la fecha actual de un ciclo;
       */
-      if ( endDate == fechaActual && startDate == fechaActual ) {
-        responseApiProductividad = await getProductividad(startDate, endDate);
-        setDataJson(responseApiProductividad.data || {});
+    const handleSubmit = (event) => {
+        event.preventDefault(); 
+    };
+    const requestDataProductividad = async () => {
+      console.log("CLICK");
+      const fechaActual = new Date();
+      let responseApiProductividad = "";
+        
+      if ( endDate.getFullYear == fechaActual.getFullYear && startDate.getFullYear == fechaActual.getFullYear ) {
+        console.log("ENTRE AL METODO");
+        try {
+          responseApiProductividad = await getProductividad(startDate, endDate);
+          setDataJson(responseApiProductividad.data || {});
+        } catch (error) {
+          console.error(error);
+          setDataJson(JsonProductividad);
+        }
+        
       }
-      
-  }
-  
+    }
 
     return (
         <section className={Style.box_component}>
@@ -184,130 +188,130 @@ export const Productividad = () => {
                   <div className={Style.box_date}>
                   <h2 className={Style.sub_title}>Fecha Inicio</h2>
                   <DatePicker
-                      showIcon
-                      renderCustomHeader={({
-                          date,
-                          changeYear,
-                          changeMonth,
-                          decreaseMonth,
-                          increaseMonth,
-                          prevMonthButtonDisabled,
-                          nextMonthButtonDisabled,
-                        }) => (
-                          <div
-                            style={{
-                              margin: 10,
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                              {"<"}
-                            </button>
-                            <select
-                              value={date.getFullYear()}
-                              onChange={({ target: { value } }) => changeYear(value)}
-                            >
-                              {years.map((option) => (
-                                <option key={option} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                  
-                            <select
-                              value={months[date.getMonth()]}
-                              onChange={({ target: { value } }) =>
-                                changeMonth(months.indexOf(value))
-                              }
-                            >
-                              {months.map((option) => (
-                                <option key={option} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                  
-                            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                              {">"}
-                            </button>
-                          </div>
-                        )}
-                      closeOnScroll={true}
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date.toISOString().split('T')[0])}
-                      className={`${Style.date_picker}`}
-                      isClearable
-                      placeholderText="Seleccione una Fecha Inicio"
-                      icon={
-                          <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 icn">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                          </svg>
-                      }
-                  />
+                    showIcon
+                                    renderCustomHeader={({
+                                        date,
+                                        changeYear,
+                                        changeMonth,
+                                        decreaseMonth,
+                                        increaseMonth,
+                                        prevMonthButtonDisabled,
+                                        nextMonthButtonDisabled,
+                                        }) => (
+                                        <div
+                                            style={{
+                                            margin: 10,
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            }}
+                                        >
+                                            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                            {"<"}
+                                            </button>
+                                            <select
+                                            value={date.getFullYear()}
+                                            onChange={({ target: { value } }) => changeYear(value)}
+                                            >
+                                            {years.map((option) => (
+                                                <option key={option} value={option}>
+                                                {option}
+                                                </option>
+                                            ))}
+                                            </select>
+                                
+                                            <select
+                                            value={months[date.getMonth()]}
+                                            onChange={({ target: { value } }) =>
+                                                changeMonth(months.indexOf(value))
+                                            }
+                                            >
+                                            {months.map((option) => (
+                                                <option key={option} value={option}>
+                                                {option}
+                                                </option>
+                                            ))}
+                                            </select>
+                                
+                                            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                            {">"}
+                                            </button>
+                                        </div>
+                                        )}
+                                    closeOnScroll={true}
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    className={`${Style.date_picker}`}
+                                    isClearable
+                                    placeholderText="Seleccione una Fecha Inicio"
+                                    icon={
+                                        <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 icn">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                        </svg>
+                                    }
+                                />
                   <h2 className={Style.sub_title}>Fecha Fin</h2>
                   <DatePicker
-                      showIcon
-                      closeOnScroll={true}
-                      renderCustomHeader={({
-                          date,
-                          changeYear,
-                          changeMonth,
-                          decreaseMonth,
-                          increaseMonth,
-                          prevMonthButtonDisabled,
-                          nextMonthButtonDisabled,
-                        }) => (
-                          <div
-                            style={{
-                              margin: 10,
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                              {"<"}
-                            </button>
-                            <select
-                              value={date.getFullYear()}
-                              onChange={({ target: { value } }) => changeYear(value)}
-                            >
-                              {years.map((option) => (
-                                <option key={option} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                  
-                            <select
-                              value={months[date.getMonth()]}
-                              onChange={({ target: { value } }) =>
-                                changeMonth(months.indexOf(value))
-                              }
-                            >
-                              {months.map((option) => (
-                                <option key={option} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                  
-                            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                              {">"}
-                            </button>
-                          </div>
-                        )}
-                      selected={endDate}
-                      onChange={(date) => setEndDate(date.toISOString().split('T')[0])}
-                      className={`${Style.date_picker}`}
-                      isClearable
-                      placeholderText="Seleccione una Fecha Fin"
-                      icon={
-                          <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 icn">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                          </svg>
-                      }
-                  />
+                                        showIcon
+                                        closeOnScroll={true}
+                                        renderCustomHeader={({
+                                            date,
+                                            changeYear,
+                                            changeMonth,
+                                            decreaseMonth,
+                                            increaseMonth,
+                                            prevMonthButtonDisabled,
+                                            nextMonthButtonDisabled,
+                                            }) => (
+                                            <div
+                                                style={{
+                                                margin: 10,
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                }}
+                                            >
+                                                <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                                {"<"}
+                                                </button>
+                                                <select
+                                                value={date.getFullYear()}
+                                                onChange={({ target: { value } }) => changeYear(value)}
+                                                >
+                                                {years.map((option) => (
+                                                    <option key={option} value={option}>
+                                                    {option}
+                                                    </option>
+                                                ))}
+                                                </select>
+                                    
+                                                <select
+                                                value={months[date.getMonth()]}
+                                                onChange={({ target: { value } }) =>
+                                                    changeMonth(months.indexOf(value))
+                                                }
+                                                >
+                                                {months.map((option) => (
+                                                    <option key={option} value={option}>
+                                                    {option}
+                                                    </option>
+                                                ))}
+                                                </select>
+                                    
+                                                <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                                {">"}
+                                                </button>
+                                            </div>
+                                            )}
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        className={`${Style.date_picker}`}
+                                        isClearable
+                                        placeholderText="Seleccione una Fecha Fin"
+                                        icon={
+                                            <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 icn">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                            </svg>
+                                        }
+                                    />  
                   </div>
                   <button onClick={requestDataProductividad} className={ Style.button_component}>Buscar</button>
                 </form>

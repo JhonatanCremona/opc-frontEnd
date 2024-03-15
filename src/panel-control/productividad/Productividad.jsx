@@ -4,16 +4,18 @@ import Style from "./Productividad.module.css";
 import JsonProductividad from "../../JSON/productivad.json";
 import JsonListReceta from "../../JSON/productividad_list_receta.json";
 import iconCicloProduct from "../../Icon/ciclo-de-vida-del-producto.png";
+import { getProductividad } from "../../service/client";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export const Productividad = () => {
     const [search, setSerch] = useState(false);
+
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [dataJson, setDataJson] = useState(JsonProductividad);
 
-    const dataJson = JsonProductividad;
     const { nombres_recetas } = JsonListReceta;
 
     let promedio;
@@ -73,6 +75,24 @@ export const Productividad = () => {
     const handleSubmit = (event) => {
         event.preventDefault(); 
     };
+    const requestDataProductividad = async (event) => {
+      event.preventDefault();
+      const fechaActual = new Date();
+      let responseApiProductividad
+      /* 
+       - EndFech and Fecha Start no debe de ser mayor a la fecha actual;
+       - Debe de validarse 
+
+       - Loanding component 
+          Se debe de ejecutar la funcon con la fecha actual de un ciclo;
+      */
+      if ( endDate == fechaActual && startDate == fechaActual ) {
+        responseApiProductividad = await getProductividad(startDate, endDate);
+        setDataJson(responseApiProductividad.data || {});
+      }
+      
+  }
+  
 
     return (
         <section className={Style.box_component}>
@@ -215,7 +235,7 @@ export const Productividad = () => {
                         )}
                       closeOnScroll={true}
                       selected={startDate}
-                      onChange={(date) => setStartDate(date)}
+                      onChange={(date) => setStartDate(date.toISOString().split('T')[0])}
                       className={`${Style.date_picker}`}
                       isClearable
                       placeholderText="Seleccione una Fecha Inicio"
@@ -278,7 +298,7 @@ export const Productividad = () => {
                           </div>
                         )}
                       selected={endDate}
-                      onChange={(date) => setEndDate(date)}
+                      onChange={(date) => setEndDate(date.toISOString().split('T')[0])}
                       className={`${Style.date_picker}`}
                       isClearable
                       placeholderText="Seleccione una Fecha Fin"
@@ -289,7 +309,7 @@ export const Productividad = () => {
                       }
                   />
                   </div>
-                  <button className={ Style.button_component}>Buscar</button>
+                  <button onClick={requestDataProductividad} className={ Style.button_component}>Buscar</button>
                 </form>
             </section>
 

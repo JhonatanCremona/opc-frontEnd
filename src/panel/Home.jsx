@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import Style from "./Panel.module.css";
 import { useState,  useEffect, useContext } from "react";
 import { transformDataMachine } from "../service/client";
+import anime from "animejs";
 
 //Images
 import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
@@ -13,11 +14,28 @@ import { Arrow } from "../Icon/Icon";
 import { PanelContext } from "../context/PanelContext";
 
 //Component
+import "../charts/title/testing.css"
 
 export const Home = () => {
     const [machines , setMachines] = useState([])
     let { setUrlPanel } = useContext(PanelContext);
-
+    
+    function animationTitle(className) {
+        var textWrapper = document.querySelector(`.${className} .letters`);
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+        anime.timeline()
+        .add({
+            targets: `.${className} .letter`,
+            rotateY: [-90, 0],
+            duration: 2500,
+            delay: (el, i) => 45 * i
+        });
+    }
+    
+    useEffect(() => {
+        animationTitle("ml10-first");
+        animationTitle("ml10-second");
+    }, []);
 
 
     useEffect(() => {
@@ -32,9 +50,18 @@ export const Home = () => {
     return (
         <>
             <div className={Style.titleBox}>
-                <h2 className={Style.title + " " + Style.n1}>EQUIPOS</h2>
-                <h3 className={Style.title + " " + Style.n2}>COCINAS & ENFRIADORES</h3>
+                <h2 className={Style.title + " " + Style.n1 +" ml10 ml10-first"}>
+                <span className="text-wrapper">
+                        <span className="letters">EQUIPOS</span>
+                    </span>
+                </h2>
+                <h3 className={Style.title + " " + Style.n2 + " ml10 ml10-second"}>
+                <span className="text-wrapper">
+                        <span className="letters">COCINAS & ENFRIADORES</span>
+                    </span>
+                    </h3>
             </div>
+
             
             <section className={Style.equipos}>
             {machines.map ((machine) =>{
@@ -65,8 +92,8 @@ export const Home = () => {
                             </article>
 
                             <Link 
-                                to={`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
-                                onClick={() => setUrlPanel(`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`)}
+                                to={`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}1`}
+                                onClick={() => setUrlPanel(`/panel-control/${machine.NOMBRE_EQUIPO.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}1`)}
                                 className={
                                         machine.NOMBRE_EQUIPO === "Cocina" 
                                             ? Style.buttonArrow + " " + Style.buttonCocina 

@@ -40,6 +40,8 @@
     margin-left:6px;
     width: 97px;
     height: 24px;
+    display: flex;
+    gap:5px;
 }
 .ValorDatoInactive {
     color: #8C8C8C;

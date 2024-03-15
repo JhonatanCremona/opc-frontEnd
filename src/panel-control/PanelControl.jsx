@@ -16,7 +16,7 @@ import ImagenRecetaActiva from "../Icon/recetas.png";
 //Components
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
-import { SensorGrafico } from "../Components/sensores/SensorGrafico";
+import { SensorGrafico } from "../Components/delete/SensorGrafico";
 import { Productividad } from "./productividad/Productividad";
 
 export const PanelControl = () => {

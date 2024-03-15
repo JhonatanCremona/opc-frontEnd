@@ -43,7 +43,7 @@ export const ControlPanel = () => {
                 } finally {
                     isFetching = false;
                 }
-                await new Promise((resolve) => setTimeout(resolve,1000));
+                await new Promise((resolve) => setTimeout(resolve,100000));
             }
             fetchDataReporter();
         }
@@ -56,7 +56,8 @@ export const ControlPanel = () => {
         <>
             <NavEquipos/>
             <main className={Style.CabeceraPanelControl}>
-                <Title title={datos.NOMBRE_EQUIPO} properties={"RECETA"} description={ datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA } report={true} />
+                <Title title={ equipo } properties={"RECETA"} description={ datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA } report={true} />
+                
                 <section className={Style.boxDataTime}>
                     <article className={Style.card_component_electrique}>
                         <h2 className={Style.titleElement}>Estado Equipo</h2>
@@ -70,7 +71,6 @@ export const ControlPanel = () => {
                             { equipo !== "Cocina1" &&
                                 <CardComponentChart value={datos?.componentes?.TEMP_CHILLER} name_sensor={"TEMP. CHILLER"} tipo={"°C"} machine={equipo} />
                             }
-
                             <SensorSinGrafico value={datos?.componentes?.NIVEL_AGUA} tipo={"mm"}  nSensor={"NIVEL DE AGUA"} img={ImgSensorAguar}/>
                         </section>
                     </article>

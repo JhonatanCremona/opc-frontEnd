@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host
+    ports:
+      - "80:80"
+    restart: always
+    stdin_open: true
+    tty: true

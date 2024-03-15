@@ -114,6 +114,15 @@ export const getHistory = async ( component, machine ) => {
 }
 
 
+export const getProductividad = async (fechaStart, fechaEnd) => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/productividad/${fechaStart}/${fechaEnd}`
+        )
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export const getApiJavaHistorico = async () => {
     try {

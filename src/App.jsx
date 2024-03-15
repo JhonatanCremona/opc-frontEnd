@@ -4,7 +4,6 @@ import './App.css'
 //Components
 import { Layout } from './Layout';
 import { PanelContextProvider } from './context/PanelContext';
-import { PanelControl } from "./panel-control/PanelControl";
 import { Footer } from './footer/Footer';
 import { Home } from './panel/Home';
 import { PanelGraficos } from './panel-graficos/PanelGraficos';

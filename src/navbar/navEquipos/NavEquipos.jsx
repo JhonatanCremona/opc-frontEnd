@@ -17,7 +17,6 @@ export const NavEquipos = () => {
         <nav className={Style.equipoNav}>
             <article className={Style.ComponentImagen}>
                 <Link to= {`/panel-control/Cocina1`} className={Style.boxImagen}
-
                 >
                     <img className={Style.Imagen} src={Cocina} alt="Imagen Cocina" />    
                 </Link>

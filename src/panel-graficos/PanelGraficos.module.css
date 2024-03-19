@@ -154,8 +154,9 @@
     flex-direction: column;
     border-inline-start: 1.5px solid #3D3D3D;
     border-radius: 10px;
-    padding: 0 20px;
+    padding-left:20px;
     padding-bottom: 0;
+
 }
 .date_picker {
     background-color: #131313;

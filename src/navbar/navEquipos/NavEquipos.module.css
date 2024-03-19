@@ -18,13 +18,14 @@
 .Imagen {
     width: 91.9%;
 }
-.ComponentImagen {
 
-}
+
 .Box {
     height:6px;
     background-color: #fff;
+    box-shadow: 0 -5px 20px 5px rgba(255, 255, 255, 0.4);
     width: 200px;
+    transition: all .3s ease;
 }
 .BoxInactive {
     height:6px;

@@ -9,6 +9,9 @@ import { getProductividad } from "../../service/client";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+//Component
+import { Toaster } from 'sonner';
+
 export const Productividad = () => {
     const [search, setSerch] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
@@ -20,8 +23,7 @@ export const Productividad = () => {
     const acumular = (acomulador, numero) =>  acomulador + numero;
     let totalProductos = dataJson.recetas.length > 0 ? dataJson.recetas.reduce(acumular) : 0;
     let produccionTotal = dataJson.pesototal / 1000;
-
-    const ciclos_correctos = (dataJson.ciclos_correctos/ dataJson.ciclos_totales) * 100;
+    const [ ciclosCorrectos, setCiclosCorrectos ] = useState("");
     
     function progress_bar() {
         var speed = 30;
@@ -70,42 +72,40 @@ export const Productividad = () => {
         "Noviembre",
         "Diciembre",
     ];
-/* 
-       - EndFech and Fecha Start no debe de ser mayor a la fecha actual;
-       - Debe de validarse 
-
-       - Loanding component 
-          Se debe de ejecutar la funcon con la fecha actual de un ciclo;
-      */
     const handleSubmit = (event) => {
         event.preventDefault(); 
     };
     const requestDataProductividad = async () => {
-      console.log("CLICK");
-      const fechaActual = new Date();
-      let responseApiProductividad = "";
-        
-      if ( endDate.getFullYear == fechaActual.getFullYear && startDate.getFullYear == fechaActual.getFullYear ) {
-        console.log("ENTRE AL METODO");
-        try {
-          responseApiProductividad = await getProductividad(startDate, endDate);
-          setDataJson(responseApiProductividad.data || {});
-        } catch (error) {
-          console.error(error);
-          setDataJson(JsonProductividad);
+      console.log(startDate.toISOString().slice(0,10) + " " + endDate.toISOString().slice(0,10));
+        if ( startDate != null && endDate != null ) {
+            try {
+                const response = await getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
+                if (response.data.error == undefined) {
+                    console.log("NO EXISTEN DATOS PARA ESTE RANGO DE FECHAS");
+                   
+                }
+                if ( response.data.ciclos_correctos != undefined ) {
+                    setDataJson(response.data);
+                    console.log("GUARDE LOS DATOS:", dataJson);
+                    setCiclosCorrectos((dataJson.ciclos_correctos/ dataJson.ciclos_totales) * 100);
+                    setSerch(true);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
-        
-      }
+
     }
 
     return (
         <section className={Style.box_component}>
+            <Toaster position="top-right"/>
             <section className={Style.prod_container + " " + Style.progress_bar}>
                 <h2 className={Style.title}>Productividad</h2>
                 <article className={Style.progress_bar_item}>
                     <h3 className={Style.sub_title}>% CICLOS REALIZADOS CORRECTAMENTE</h3>
                     <div className={Style.item_bar}>
-                        <div className={Style.progress } data-progress={ ciclos_correctos }></div>
+                        <div className={Style.progress } data-progress={ ciclosCorrectos }></div>
                     </div>
                     <div className={Style.value_container}>
                         <span className={Style.item_value}>{`0%`}</span> 
@@ -115,7 +115,7 @@ export const Productividad = () => {
                 <article className={Style.progress_bar_item}>
                     <h3 className={Style.sub_title}>% USO DEL EQUIPO</h3>
                     <div className={Style.item_bar}>
-                        <div className={Style.progress } data-progress="60"></div>
+                        <div className={Style.progress } data-progress="23"></div>
                     </div>
                     <span className={Style.item_value}>{"0 %"}</span>
                 </article>

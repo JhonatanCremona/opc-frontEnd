@@ -31,6 +31,7 @@
     padding: 22px;
     background-color: #131313;
     border-radius: 15px;
+    min-width: 60%;
 }
 
 .progress_bar_item {
@@ -58,6 +59,7 @@
     color: #D9D9D9;
     display: block;
     margin-left: 10px;
+    text-wrap: nowrap;
 }
 
 .item_bar {

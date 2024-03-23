@@ -4,17 +4,17 @@ const templateEquipos = {
     "Equipos": [
         {
             "ID": 1,
-            "NOMBRE_EQUIPO":  "Cocina1",
-            "ESTADO": "OPERATIVO",
-            "RECETA": "5 JAMON 5LBS",
+            "NOMBRE_EQUIPO":  "Cocina",
+            "ESTADO": "INACTIVO",
+            "RECETA": "SIN RECETA ASIGNADA",
             "TIEMPO_TRANSCURRIDO": "00:00hs",
             "NRO_TORRES": "2"
         },
         {
             "ID": 2,
-            "NOMBRE_EQUIPO":  "Enfriador1",
+            "NOMBRE_EQUIPO":  "Enfriador",
             "ESTADO": "INACTIVO",
-            "RECETA": "5 JAMON 5LBS",
+            "RECETA": "SIN RECETA ASIGNADA",
             "TIEMPO_TRANSCURRIDO": "00:00hs",
             "NRO_TORRES": "0"
         }
@@ -117,7 +117,7 @@ export const getHistory = async ( component, machine ) => {
 export const getProductividad = async (fechaStart, fechaEnd) => {
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/productividad/${fechaStart}/${fechaEnd}`
+            `${import.meta.env.VITE_API_BASE_URL}/productividad/1/${fechaStart}/${fechaEnd}`
         )
     } catch (error) {
         console.error(error);

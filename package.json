@@ -18,7 +18,8 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.21.3",
     "react-router-dom": "^6.21.3",
-    "reveal.js": "^5.0.5"
+    "reveal.js": "^5.0.5",
+    "sonner": "^1.4.32"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

@@ -22,6 +22,7 @@ import ImgRelojInactive from "../Icon/relojInactive.png";
 import ImgReceta from "../Icon/recetas.png";
 import ImgRecetaInactive from "../Icon/recetasInactive.png";
 import ImgSensorAguar from "../Icon/el-ciclo-del-agua.png";
+import { Productivity } from "./productividad/Productivity";
 
 export const ControlPanel = () => {
     const [datos, setDatos] = useState({})
@@ -98,7 +99,7 @@ export const ControlPanel = () => {
 
 
                 </section>
-                <Productividad />
+                <Productivity />
             </main>
         </>
     )

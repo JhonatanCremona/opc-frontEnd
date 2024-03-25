@@ -10,30 +10,34 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 //Component
-import { Toaster } from 'sonner';
+import { Toaster, toast } from 'sonner';
 
-export const Productividad = () => {
-    const [search, setSerch] = useState(false);
+export const Productivity = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+
+
     const [dataJson, setDataJson] = useState(JsonProductividad);
     const { nombres_recetas } = JsonListReceta;
+    const [isLoading, setIsLoading] = useState(false);
 
-    let promedio;
+    const startYear = 2021;
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
+    const months = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",];
+
+    let totalProductos = 0;
+    let produccionTotal = 0;
+    let promedio = 0;
+    
     const acumular = (acomulador, numero) =>  acomulador + numero;
-    let totalProductos = dataJson.recetas.length > 0 ? dataJson.recetas.reduce(acumular) : 0;
-    let produccionTotal = dataJson.pesototal / 1000;
-    const [ ciclosCorrectos, setCiclosCorrectos ] = useState("");
-    
-    function progress_bar() {
-        var speed = 30;
-        var items = document.querySelectorAll(`.${Style.progress_bar} .${Style.progress_bar_item}`);
-        console.log(items);
-    
-        items.forEach(function (item) {
+
+    function progressBar() {
+        let speed = 30;
+        let items = document.querySelectorAll(`.${Style.progress_bar} .${Style.progress_bar_item}`);
+        items.forEach((item)=> {
             var progressBar = item.querySelector(`.${Style.progress}`);
             var itemValue = progressBar.dataset.progress;
-            console.log(itemValue);
             var i = 0;
             var value = item;
     
@@ -47,71 +51,74 @@ export const Productividad = () => {
                 }
                 i++;
             }, speed);
-        });
+        })
     }
 
-    useEffect(()=> {
-      requestDataProductividad();
-        progress_bar();
-    },[search])
+    const handleSubmit = async (event) => {
 
-    const startYear = 2021;
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
-    const months = [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre",
-    ];
-    const handleSubmit = (event) => {
-        event.preventDefault(); 
-    };
-    const requestDataProductividad = async () => {
-      console.log(startDate.toISOString().slice(0,10) + " " + endDate.toISOString().slice(0,10));
+        event.preventDefault();
+        setIsLoading(true);
         if ( startDate != null && endDate != null ) {
             try {
                 const response = await getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
-                if (response.data.error == undefined) {
+                console.log(response);
+                if ( response.data.error == undefined ) {
                     console.log("NO EXISTEN DATOS PARA ESTE RANGO DE FECHAS");
-                   
                 }
                 if ( response.data.ciclos_correctos != undefined ) {
+                    console.log("SOLICITUD EXITOSA DE DATOS BDD PRODUCTIVIDAD");
+                    totalProductos = response.data.recetas.length > 0 ? response.data.recetas.reduce(acumular) : 0;
+                    produccionTotal = response.data.pesoTotal / 1000;
                     setDataJson(response.data);
-                    console.log("GUARDE LOS DATOS:", dataJson);
-                    setCiclosCorrectos((dataJson.ciclos_correctos/ dataJson.ciclos_totales) * 100);
-                    setSerch(true);
+                    
+                    toast.promise(
+                        getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10)), {
+                        loading: "Cargando...",
+                        success: (data) => {
+                            console.log(data);
+                            progressBar();
+                            return `Carga exitosa`;
+                        },
+                        error:"Error",
+                        unstyled: true,
+                        classNames: {
+                            toast: 'bg-blue-400',
+                            title: 'text-red-400 text-2xl',
+                            description: 'text-red-400',
+                            actionButton: 'bg-zinc-400',
+                            cancelButton: 'bg-orange-400',
+                            closeButton: 'bg-lime-400',
+                          },
+                    });
+                    
                 }
             } catch (error) {
                 console.error(error);
+            } finally {
+                setIsLoading(false); 
             }
         }
-
     }
 
     return (
-        <section className={Style.box_component}>
-            <Toaster position="top-right"/>
+        <>
+            <section className={Style.box_component}>
+                
             <section className={Style.prod_container + " " + Style.progress_bar}>
+
                 <h2 className={Style.title}>Productividad</h2>
+
                 <article className={Style.progress_bar_item}>
                     <h3 className={Style.sub_title}>% CICLOS REALIZADOS CORRECTAMENTE</h3>
                     <div className={Style.item_bar}>
-                        <div className={Style.progress } data-progress={ ciclosCorrectos }></div>
+                        <div className={Style.progress } data-progress={ dataJson.ciclos_correctos }></div>
                     </div>
                     <div className={Style.value_container}>
                         <span className={Style.item_value}>{`0%`}</span> 
                         <span className={Style.item_label}>{`/ ${dataJson.ciclos_totales}`}</span>
                     </div>
                 </article>
+
                 <article className={Style.progress_bar_item}>
                     <h3 className={Style.sub_title}>% USO DEL EQUIPO</h3>
                     <div className={Style.item_bar}>
@@ -119,10 +126,11 @@ export const Productividad = () => {
                     </div>
                     <span className={Style.item_value}>{"0 %"}</span>
                 </article>
+
                 <hr />
+
                 <article className={ Style.list_receta_container}>
                     <h3 className={Style.sub_title}>% PRODUCTOS REALIZADOS</h3>
-
                     <article className={Style.box_list_receta}>
                         <div className={Style.list_recetas}>
                             {dataJson.recetas.map((receta, index)=> {
@@ -184,7 +192,7 @@ export const Productividad = () => {
             <section className={Style.prod_resumen_equipo}>
                 <h2 className={Style.title}>Resumen equipo</h2>
 
-                <form className={Style.form_date} onSubmit={handleSubmit}>
+                <form className={Style.form_date} onSubmit={handleSubmit} disabled={isLoading}>
                   <div className={Style.box_date}>
                   <h2 className={Style.sub_title}>Fecha Inicio</h2>
                   <DatePicker
@@ -313,10 +321,12 @@ export const Productividad = () => {
                                         }
                                     />  
                   </div>
-                  <button onClick={requestDataProductividad} className={ Style.button_component}>Buscar</button>
+                  <Toaster position="top-center" expand={true}/>
+                  <button  className={ Style.button_component} >Buscar</button>
                 </form>
             </section>
 
         </section>
+        </>
     )
 }

@@ -1,5 +1,5 @@
 //Depending
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Style from "./Productividad.module.css";
 import JsonProductividad from "../../JSON/productivad.json";
 import JsonListReceta from "../../JSON/productividad_list_receta.json";
@@ -62,15 +62,23 @@ export const Productivity = () => {
             try {
                 const response = await getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
                 console.log(response);
-                if ( response.data.error == undefined ) {
+                if ( response.data.error != undefined ) {
                     console.log("NO EXISTEN DATOS PARA ESTE RANGO DE FECHAS");
+                    toast.error('No se encontraron datos', {
+                        style: {
+                            background: "#131313",
+                            fontFamily:"Roboto",
+                            fontWeight: "lighter",
+                            color: "#B9B9B9",
+                            border: "1px solid #E82A31"
+                        }
+                    })
                 }
                 if ( response.data.ciclos_correctos != undefined ) {
                     console.log("SOLICITUD EXITOSA DE DATOS BDD PRODUCTIVIDAD");
                     totalProductos = response.data.recetas.length > 0 ? response.data.recetas.reduce(acumular) : 0;
                     produccionTotal = response.data.pesoTotal / 1000;
                     setDataJson(response.data);
-                    
                     toast.promise(
                         getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10)), {
                         loading: "Cargando...",
@@ -80,15 +88,14 @@ export const Productivity = () => {
                             return `Carga exitosa`;
                         },
                         error:"Error",
-                        unstyled: true,
-                        classNames: {
-                            toast: 'bg-blue-400',
-                            title: 'text-red-400 text-2xl',
-                            description: 'text-red-400',
-                            actionButton: 'bg-zinc-400',
-                            cancelButton: 'bg-orange-400',
-                            closeButton: 'bg-lime-400',
-                          },
+                        style: {
+                            fontFamily:"Roboto",
+                            fontWeight: "lighter",
+                            background: '#131313',
+                            color: 'white', 
+                            border: "1px solid #54C42D"
+                        },
+                        className:`` ,
                     });
                     
                 }
@@ -97,7 +104,19 @@ export const Productivity = () => {
             } finally {
                 setIsLoading(false); 
             }
-        }
+        } 
+        if (startDate == null && endDate == null) {
+            console.log("Debes de completar el formulario");
+            toast.info('Debes de completar el formulario', {
+                style: {
+                    background: "#131313",
+                    fontFamily:"Roboto",
+                    fontWeight: "lighter",
+                    color: "#B9B9B9",
+                    border: "1px solid #e9e600"
+                }
+            })
+        } 
     }
 
     return (
@@ -321,7 +340,7 @@ export const Productivity = () => {
                                         }
                                     />  
                   </div>
-                  <Toaster position="top-center" expand={true}/>
+                  <Toaster position="top-center" expand={true} />
                   <button  className={ Style.button_component} >Buscar</button>
                 </form>
             </section>

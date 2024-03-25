@@ -10,7 +10,6 @@ import { getReportMachine, valueStateMachine } from "../service/client";
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Title } from "../charts/title/Title";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
-import { Productividad } from "./productividad/Productividad";
 import { CardComponentChart } from "./cardsComponent/CardComponentChart";
 
 import ImgValvula from "../Icon/valvulaActive.png";

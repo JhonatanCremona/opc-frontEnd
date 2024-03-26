@@ -4,7 +4,7 @@ export const PanelContext = createContext();
 
 export const PanelContextProvider = ({ children }) => {
     const [urlPanel, setUrlPanel] = useState("/panel-control/Cocina1");
-    const [urlPanelChart, setUrlPanelChart] = useState("/panel-graficos/COCINA-1");
+    const [urlPanelChart, setUrlPanelChart] = useState("/panel-graficos/Cocina1");
 
     const StyleTooltip = {
         sensor_temperature: {

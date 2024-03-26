@@ -8,6 +8,7 @@ import { Footer } from './footer/Footer';
 import { Home } from './panel/Home';
 import { PanelGraficos } from './panel-graficos/PanelGraficos';
 import { ControlPanel } from './panel-control/ControlPanel';
+import { NotFoundPage } from "./not-found/404"
 
 function App() {
 
@@ -18,9 +19,10 @@ function App() {
           <Route path="/" element={ <Home/> }/>
           <Route path="/panel-control/:equipo" element={<ControlPanel/>}/>
           <Route path='/panel-graficos/:equipo' element={<PanelGraficos/>}/>
+          <Route path='*' element={ <NotFoundPage/> } />
         </Route>
-        <Route path='*' element={<h2>NOT FOUND</h2>} />
       </Routes>
+      
       <Footer/>
     </PanelContextProvider>
   )

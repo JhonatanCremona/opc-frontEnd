@@ -1,6 +1,6 @@
 //Depending on the
 import Style from "./PanelGraficos.module.css";
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 //Component
 import { Card } from "./cardsCharts/Card";
 import { CardWater } from "./cardsCharts/CardWater";
@@ -9,6 +9,9 @@ import { Title } from "../charts/title/Title";
 
 export const PanelGraficos = () => {
     let { equipo } = useParams();
+    if (equipo != "Cocina1" && equipo != "Enfriador1") {
+        return <Navigate to="/" />;
+    }
     
     return (
         <div className={Style.container}>

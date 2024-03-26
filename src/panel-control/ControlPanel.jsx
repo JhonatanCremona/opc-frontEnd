@@ -1,6 +1,6 @@
 //Depending
 import { useEffect, useState} from "react";
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Style from "./PanelControl.module.css"
 import ReporteCocina from "../JSON/Reporte.json"
 import ReporteEnfriador from "../JSON/ReporteEnfriador.json";
@@ -52,7 +52,9 @@ export const ControlPanel = () => {
         fetchDataReporter();
     },[]);
 
-    
+    if (equipo != "Cocina1" && equipo != "Enfriador1") {
+        return <Navigate to="/" />;
+    }
 
     return (
         <>

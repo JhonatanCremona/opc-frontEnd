@@ -59,7 +59,7 @@ export const transformDataMachine = async () => {
 export const getMachineHome =  async () => {
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/Home`,
+            `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_DATATIME}/Home`,
         )
     } catch (error) {
         console.log(" Mensaje: ", error);
@@ -71,7 +71,7 @@ export const getReportMachine = async (machine) => {
     console.log("PARAMS ID EQUIPO EN CLIENT JS: ", machine);
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/Reporte/${machine}`,
+            `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_DATATIME}/Reporte/${machine}`,
         )
     } catch (error) {
         console.log(error);
@@ -105,7 +105,7 @@ export const getReportEnfriador = async () => {
 export const getHistory = async ( component, machine ) => {
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/Historico/${machine}/${component}`,
+            `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/Historico/${machine}/${component}`,
         )
     } catch (error) {
         console.log(error);
@@ -117,12 +117,15 @@ export const getHistory = async ( component, machine ) => {
 export const getProductividad = async (fechaStart, fechaEnd) => {
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/productividad/1/${fechaStart}/${fechaEnd}`
+            `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/productividad/1/${fechaStart}/${fechaEnd}`
         )
     } catch (error) {
         console.error(error);
     }
 }
+
+
+
 
 export const getApiJavaHistorico = async () => {
     try {

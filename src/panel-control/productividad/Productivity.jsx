@@ -55,7 +55,6 @@ export const Productivity = () => {
     }
 
     const handleSubmit = async (event) => {
-
         event.preventDefault();
         setIsLoading(true);
         if ( startDate != null && endDate != null ) {

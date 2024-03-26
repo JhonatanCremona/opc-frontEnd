@@ -5,6 +5,7 @@ import Style from "./PanelControl.module.css"
 import ReporteCocina from "../JSON/Reporte.json"
 import ReporteEnfriador from "../JSON/ReporteEnfriador.json";
 import { getReportMachine, valueStateMachine } from "../service/client";
+import { Link } from "react-router-dom"
 
 //Components
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
@@ -22,6 +23,7 @@ import ImgReceta from "../Icon/recetas.png";
 import ImgRecetaInactive from "../Icon/recetasInactive.png";
 import ImgSensorAguar from "../Icon/el-ciclo-del-agua.png";
 import { Productivity } from "./productividad/Productivity";
+import { ArrowButton } from "../Icon/Icon";
 
 export const ControlPanel = () => {
     const [datos, setDatos] = useState({})
@@ -60,7 +62,13 @@ export const ControlPanel = () => {
                 
                 <section className={Style.boxDataTime}>
                     <article className={Style.card_component_electrique}>
-                        <h2 className={Style.titleElement}>Estado Equipo</h2>
+                        <div className={Style.flex_person}>
+                            <h2 className={Style.titleElement}>Estado Equipo</h2>
+                            <Link 
+                                to={`/panel-graficos/${equipo.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
+                                className={Style.card_button}>Ver graficos <ArrowButton />
+                            </Link>
+                        </div>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         
                         <section className={Style.ElementSensor}>
@@ -76,7 +84,13 @@ export const ControlPanel = () => {
                     </article>
 
                     <section className={Style.dataTime}>
+                    <div className={Style.flex_person}>
                         <h2 className={Style.titleElement}>Ciclo activo</h2>
+                            <Link 
+                                to={`/panel-graficos/${equipo.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
+                                className={Style.card_button} >Ver graficos <ArrowButton />
+                            </Link>
+                        </div>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor +" "+Style.ElementSecond}>
                             <SensorSinGrafico value={ datos.TIEMPO_TRANSCURRIDO } tipo={"hs"}  nSensor={"Tiempo Transcurrido"} 
@@ -88,7 +102,13 @@ export const ControlPanel = () => {
                     </section>
 
                     <section className={Style.dataTime}>
+                        <div className={Style.flex_person}>
                         <h2 className={Style.titleElement}>Sector IO</h2>
+                            <Link 
+                                to={`/panel-graficos/${equipo.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
+                                className={Style.card_button}>Ver graficos <ArrowButton />
+                            </Link>
+                        </div>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor}>
                             <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive}/>

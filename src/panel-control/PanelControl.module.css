@@ -147,3 +147,21 @@ main {
 .ElementSecond{
     max-width: 630px;
 }
+.flex_person{
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.card_button {
+    cursor: pointer;
+    background-color: #131313;
+    border: none;
+    color: #D9D9D9;
+    font-family: "Roboto", "Helvetica Neue";
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+}

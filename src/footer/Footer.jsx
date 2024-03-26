@@ -27,7 +27,7 @@ export const Footer=() => {
                             src={linkedin} alt="" />
                         </figure>
                         <figure className={Style.boxImagen}>
-                            <img className={Style.imagen} src={youtube} alt="" />
+                                <img className={Style.imagen} src={youtube} alt="" />
                         </figure>
                         
                     </article>

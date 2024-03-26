@@ -42,7 +42,7 @@ export const Home = () => {
         const fetchData = async () => { setMachines(await transformDataMachine())};
         console.log(machines)
         fetchData();
-        const intervalId = setInterval(fetchData, 10000);
+        const intervalId = setInterval(fetchData, 5000);
         return () => clearInterval(intervalId);
       }, []);
     

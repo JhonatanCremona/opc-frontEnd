@@ -45,7 +45,7 @@ export const ControlPanel = () => {
                 } finally {
                     isFetching = false;
                 }
-                await new Promise((resolve) => setTimeout(resolve,100000));
+                await new Promise((resolve) => setTimeout(resolve,5000));
             }
             fetchDataReporter();
         }

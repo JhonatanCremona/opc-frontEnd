@@ -16,19 +16,19 @@ export const NavEquipos = () => {
     return (
         <nav className={Style.equipoNav}>
             <article className={Style.ComponentImagen}>
-                <Link to= {`/panel-control/Cocina1`} className={Style.boxImagen}
+                <a href= {`/panel-control/Cocina1`} className={Style.boxImagen}
                 >
                     <img className={Style.Imagen} src={Cocina} alt="Imagen Cocina" />    
-                </Link>
+                </a>
                 <div className={equipo == "Cocina1" ? Style.Box : Style.BoxInactive}></div>
             </article>
             
             <article>
-            <Link 
-                to= {`/panel-control/Enfriador1`} 
+            <a 
+                href= {`/panel-control/Enfriador1`} 
                 className={Style.boxImagen}>
                 <img className={Style.Imagen} src={Enfriador} alt="Imagen Enfriador" /> 
-            </Link> 
+            </a> 
             <div className={equipo == "Enfriador1" ? Style.Box: Style.BoxInactive }></div>    
             </article> 
         </nav>        

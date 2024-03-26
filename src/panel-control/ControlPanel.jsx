@@ -117,8 +117,6 @@ export const ControlPanel = () => {
                             <SensorSinGrafico value={ datos?.componentes?.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} img={datos?.componentes?.VAPOR_VIVO ? ImgValvula : ImgValvulaInactive}/>
                         </section>
                     </section>
-
-
                 </section>
                 <Productivity />
             </main>

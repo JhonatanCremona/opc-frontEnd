@@ -16,6 +16,16 @@ export const SensorSinGrafico = ({ nSensor, value, tipo, estado, img }) => {
         } else { return false; }
     }
 
+    const valueResponse = (value, nSensor) => {
+        if (value == "0" && nSensor =="Tiempo Transcurrido") {
+            return "00:00"
+        }
+        if (!isNaN(parseFloat(parseFloat(value).toFixed(2)))) {
+            return parseFloat(parseFloat(value).toFixed(2))
+        }
+        return value;
+    }
+
     return (
         <section className={Style.dataTimeLive}>
             <div className={Style.titleDataTime}>
@@ -29,9 +39,9 @@ export const SensorSinGrafico = ({ nSensor, value, tipo, estado, img }) => {
                         transformDato(value) ? 
                         Style.valorDato + " " + Style.ValorDatoActive :
                         Style.valorDato + " " + Style.ValorDatoInactive }>
-                    {  !isNaN(parseFloat(parseFloat(value).toFixed(2))) ? parseFloat(parseFloat(value).toFixed(2)) : value }
+                    {  valueResponse( value, nSensor ) }
                     <span className={Style.tipoData}> { value !== "NULL" && tipo }</span>
-             </p>      
+             </p>      ?
         </section>
     )
 }

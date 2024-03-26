@@ -36,6 +36,7 @@ export const Home = () => {
         animationTitle("ml10-first");
         animationTitle("ml10-second");
     }, []);
+    
 
 
     useEffect(() => {
@@ -45,7 +46,7 @@ export const Home = () => {
         const intervalId = setInterval(fetchData, 5000);
         return () => clearInterval(intervalId);
       }, []);
-    
+    console.log(machines[0].TIEMPO_TRANSCURRIDO == "0 hs");
 
     return (
         <>
@@ -84,8 +85,8 @@ export const Home = () => {
                                 <h2 className={Style.titleEstado}> { machine.ESTADO }</h2>
 
                                 <p className={Style.textTiempoTrans}>
-                                    <span>Tiempo transcurrido: </span> 
-                                    { machine.TIEMPO_TRANSCURRIDO }
+                                    <span>Tiempo transcurrido: { machine.TIEMPO_TRANSCURRIDO == "0 hs" ? "00:00 hs" : machine.TIEMPO_TRANSCURRIDO }</span> 
+                                    
                                     { machine.ESTADO == "OPERATIVO" && <span className={Style.textReceta}> { `RECETA: ${machine.RECETA}` } </span>}
                                     <span className={Style.textReceta}>{`N° Torres: ${ machine.NRO_TORRES }`}</span>
                                 </p>

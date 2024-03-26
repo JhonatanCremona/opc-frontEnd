@@ -19,6 +19,7 @@ function App() {
           <Route path="/panel-control/:equipo" element={<ControlPanel/>}/>
           <Route path='/panel-graficos/:equipo' element={<PanelGraficos/>}/>
         </Route>
+        <Route path='*' element={<h2>NOT FOUND</h2>} />
       </Routes>
       <Footer/>
     </PanelContextProvider>

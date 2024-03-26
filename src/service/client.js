@@ -125,8 +125,6 @@ export const getProductividad = async (fechaStart, fechaEnd) => {
 }
 
 
-
-
 export const getApiJavaHistorico = async () => {
     try {
         return await axios.get(

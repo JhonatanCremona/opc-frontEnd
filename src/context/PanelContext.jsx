@@ -1,10 +1,17 @@
-import { createContext,useState } from "react";
+import { createContext,useState, useContext } from "react";
 
 export const PanelContext = createContext();
+export const useAuth = () => {
+    const auth = useContext(PanelContext)
+    return auth
+}
 
 export const PanelContextProvider = ({ children }) => {
     const [urlPanel, setUrlPanel] = useState("/panel-control/Cocina1");
     const [urlPanelChart, setUrlPanelChart] = useState("/panel-graficos/Cocina1");
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
+
 
     const StyleTooltip = {
         sensor_temperature: {
@@ -20,18 +27,14 @@ export const PanelContextProvider = ({ children }) => {
             sw_border:"rgba( 239, 83, 80, 1)",
             sw_width: "96px"
         }
-
     }
-
-
 
     return (
         <PanelContext.Provider value={ 
             {   
-
+                StyleTooltip,
                 urlPanel, setUrlPanel,
-                urlPanelChart,setUrlPanelChart,
-                StyleTooltip
+                urlPanelChart,setUrlPanelChart
             }
         }>
             {children}

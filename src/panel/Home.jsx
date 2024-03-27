@@ -46,7 +46,6 @@ export const Home = () => {
         const intervalId = setInterval(fetchData, 5000);
         return () => clearInterval(intervalId);
       }, []);
-    console.log(machines[0].TIEMPO_TRANSCURRIDO == "0 hs");
 
     return (
         <>

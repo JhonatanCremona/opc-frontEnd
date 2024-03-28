@@ -12,7 +12,9 @@ import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Title } from "../charts/title/Title";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
 import { CardComponentChart } from "./cardsComponent/CardComponentChart";
+import { Card } from "../panel-graficos/cardsCharts/Card";
 
+//Image Component
 import ImgValvula from "../Icon/valvulaActive.png";
 import ImgValvulaInactive from "../Icon/valvulaInactive.png";
 import ImgPasos from "../Icon/pasos.png";
@@ -63,6 +65,8 @@ export const ControlPanel = () => {
                 <Title title={ equipo } properties={"RECETA"} description={ datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA } report={true} />
                 
                 <section className={Style.boxDataTime}>
+                    < Card controlpanel={true} value={ datos?.componentes?.ESTADO }/>
+
                     <article className={Style.card_component_electrique}>
                         <div className={Style.flex_person}>
                             <h2 className={Style.titleElement}>Estado Equipo</h2>
@@ -100,11 +104,11 @@ export const ControlPanel = () => {
                             <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
                             <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgReceta : ImgRecetaInactive }/>
                             <SensorSinGrafico value={ "1"} nSensor={"N° Torres"} img={ImgSensorAguar}/>
-                            <SensorSinGrafico value={ datos.NRO_LOTE } nSensor={"N° de Lote"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
+                            <SensorSinGrafico value={ datos.LOTE } nSensor={"N° de Lote"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
                         </section>
                     </section>
 
-                    <section className={Style.dataTime}>
+                    <section className={`${Style.dataTime} ${Style.dateTimeSectorIO}` }>
                         <div className={Style.flex_person}>
                         <h2 className={Style.titleElement}>Sector IO</h2>
                             <Link 
@@ -115,9 +119,12 @@ export const ControlPanel = () => {
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor}>
                             { equipo == "Enfriador1" ? 
-                                <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Abierta" : "Cerrada"} nSensor={"Vapor Amoníaco"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive} /> :
+                                <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Abierta" : "Cerrada"} nSensor={"Válvula Amoníaco"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive} /> :
                               equipo == "Cocina1" ?  
-                                <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Abierta" : "Cerrada"} nSensor={"Vapor Serpentina"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive}/> :
+                              <>
+                              <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Abierta" : "Cerrada"} nSensor={"Vapor Serpentina"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive}/>
+                              <SensorSinGrafico value={datos?.componentes?.VAPOR_VIVO ? "Abierta" : "Cerrada"} nSensor={"Vapor Vivo"} img={datos?.componentes?.VAPOR_VIVO ? ImgValvula : ImgValvulaInactive}/>
+                              </> :
                                 {}
                             }
                         </section>

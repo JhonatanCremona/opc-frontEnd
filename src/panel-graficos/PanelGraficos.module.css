@@ -16,10 +16,16 @@
     max-height: 410px;
     max-width: 745px;
 }
+.c_chart_panel {
+    border: none;
+    background-color: #131313;
+    padding: 22px;
+}
+
 .c_title {
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
 }
 .title {
@@ -30,6 +36,28 @@
     font-weight: 600;
     line-height: normal;
     margin: 0;
+}
+.title_panel {
+    color: #D9D9D9;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+}
+.sub_title_panel {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0px;
+    margin-top: 5px;
+}
+.cocina {
+    color: #EF8225;
+}
+.enfriador {
+    color: #33A7FD;
 }
 
 .list_option_temp {

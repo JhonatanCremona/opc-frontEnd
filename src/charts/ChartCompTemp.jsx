@@ -4,7 +4,7 @@ import { createChart } from "lightweight-charts"
 import {  getApiJavaHistoricoPrueba, getHistory } from "../service/client.js";
 //Component
 
-export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
+export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
   const [chart, setChart] = useState(null);
 
   const machine = "Cocina1";
@@ -31,7 +31,10 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
       height: 300,
       layout: {
           textColor: '#d1d4dc',
-          background: '#000000',
+          background: {
+            type: "solid",
+            color: panel ? "#131313" : "#000000" 
+          }
       },
       rightPriceScale: {
       scaleMargins: {

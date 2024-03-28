@@ -18,6 +18,8 @@ export const Productivity = () => {
 
     const [dataJson, setDataJson] = useState(JsonProductividad);
     const { nombres_recetas } = JsonListReceta;
+    const [produccionTotal, setProduccionTotal] = useState(0);
+    const [usoTotalEquipo, setUsoTotalEquipo] = useState(0.0);
     const [isLoading, setIsLoading] = useState(false);
 
     const startYear = 2021;
@@ -26,7 +28,6 @@ export const Productivity = () => {
     const months = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",];
 
     let totalProductos = 0;
-    let produccionTotal = 0;
     let promedio = 0;
     
     const acumular = (acomulador, numero) =>  acomulador + numero;
@@ -78,11 +79,17 @@ export const Productivity = () => {
                 }
                 if ( response.data.ciclos_correctos != undefined ) {
                     console.log("SOLICITUD EXITOSA DE DATOS BDD PRODUCTIVIDAD");
-                    totalProductos = response.data.recetas.length > 0 ? response.data.recetas.reduce(acumular) : 0;
-                    console.log(totalProductos);
+                    //totalProductos = response.data.recetas.length > 0 ? response.data.recetas.reduce(acumular) : 0;
+                    //console.log(totalProductos);
+                    console.log(response.data.uso_equipo_op, " ", response.data.uso_equipo_pre);
+                    let suma = response.data.uso_equipo_op + response.data.uso_equipo_pre ;
+                    
+                    setUsoTotalEquipo(suma);
+                    console.log(usoTotalEquipo);
 
-                    produccionTotal = response.data.pesoTotal / 1000;
+                    setProduccionTotal(response.data.pesototal == undefined ? "0" : response.data.pesototal / 1000);
                     setDataJson(response.data);
+
                     toast.promise(
                         getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10)), {
                         loading: "Cargando...",
@@ -134,20 +141,32 @@ export const Productivity = () => {
                 <article className={Style.progress_bar_item}>
                     <h3 className={Style.sub_title}>% CICLOS REALIZADOS CORRECTAMENTE</h3>
                     <div className={Style.item_bar}>
-                        <div className={Style.progress } data-progress={ dataJson.ciclos_correctos / dataJson.ciclos_totales * 100 }></div>
+                        <div className={Style.progress } data-progress={ dataJson.ciclos_correctos / dataJson.ciclos_totales * 100 }>
+                            <tool-tip role="tooltip">{`Ciclo Correctos: ${dataJson.ciclos_correctos } / Ciclos Totales: ${dataJson.ciclos_totales})`}</tool-tip>
+                        </div>
                     </div>
                     <div className={Style.value_container}>
                         <span className={Style.item_value}>{`0%`}</span> 
-                        <span className={Style.item_label}>{`-(${dataJson.ciclos_correctos } / ${dataJson.ciclos_totales})`}</span>
+                        <span className={Style.item_label}></span>
                     </div>
                 </article>
 
                 <article className={Style.progress_bar_item}>
                     <h3 className={Style.sub_title}>% USO DEL EQUIPO</h3>
-                    <div className={Style.item_bar}>
-                        <div className={Style.progress } data-progress={ dataJson.uso_equipo * 100 }></div>
-                    </div>
-                    <span className={Style.item_value}>{"0 %"}</span>
+                    <article className={Style.box_list_usoequipo}> 
+                        <article className={ ` ${Style.item_bar} ${Style.bar_equipo_uso} `}>
+                            <div className={`${Style.bar_op} `} style={{
+                                width: `${dataJson.uso_equipo_op * 100 }%`,
+                            }}>
+                                <tool-tip role="tooltip"> Mensaje de prueba </tool-tip>
+                            </div>
+                            <div className={`${Style.bar_pre} `} style={{
+                                width: `${dataJson.uso_equipo_pre * 100 }%`,
+                            }}></div>
+                        </article>
+                        
+                        <span className={Style.item_value}>{"0 %"}</span>
+                    </article>
                 </article>
 
                 <hr />
@@ -159,7 +178,7 @@ export const Productivity = () => {
                             {dataJson.recetas.map((receta, index)=> {
                                 if (receta > 0 ) 
                                 {
-                                    promedio = Math.floor(receta/ dataJson.ciclos_correctos * 100) ;
+                                    promedio = Math.floor(receta / dataJson.ciclos_correctos * 100) ;
                                     return (
                                         <div className={Style.recetas} key={index} style={{
                                             width: `${promedio}%`,

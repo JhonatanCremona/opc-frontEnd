@@ -103,9 +103,10 @@ export const getReportEnfriador = async () => {
 
 
 export const getHistory = async ( component, machine ) => {
+    console.log(component, machine);
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/Historico/${machine}/${component}`,
+            `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_DATATIME}/Historico/${machine}/${component}`,
         )
     } catch (error) {
         console.log(error);

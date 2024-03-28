@@ -95,6 +95,33 @@
     display: inline-block;
     height: 95%;
 }
+.bar_equipo_uso {
+    display: flex;
+    flex-direction: row;
+    height: 1.5rem;
+    width: 100%;
+    background-color: #000;
+    border-radius: 4px;
+    border: 1px solid #3D3D3D;
+}
+.bar_op {
+    display: inline-block;
+    height: 95%;
+    border: 1px solid green;
+}
+.bar_pre {
+    display: inline-block;
+    height: 95%;
+    border: 1px solid yellow;
+}
+
+
+.box_list_usoequipo {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    gap: 2px;
+    width: 100%;
+}
 .box_list_receta {
     display: grid;
     grid-template-columns: 90% 10%;

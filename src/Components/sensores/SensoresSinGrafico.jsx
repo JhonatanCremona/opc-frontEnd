@@ -1,6 +1,8 @@
 import Style from "./SensorNoneChart.module.css";
+import { useParams } from "react-router-dom";
 
 export const SensorSinGrafico = ({ nSensor, value, tipo, estado, img }) => {
+    let { equipo } = useParams();
 
     function transformDato(value) {
         if (value == "NULL"){

@@ -16,7 +16,6 @@ export const Productivity = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
-
     const [dataJson, setDataJson] = useState(JsonProductividad);
     const { nombres_recetas } = JsonListReceta;
     const [isLoading, setIsLoading] = useState(false);
@@ -31,21 +30,25 @@ export const Productivity = () => {
     let promedio = 0;
     
     const acumular = (acomulador, numero) =>  acomulador + numero;
-
     function progressBar() {
         let speed = 30;
         let items = document.querySelectorAll(`.${Style.progress_bar} .${Style.progress_bar_item}`);
         items.forEach((item)=> {
             var progressBar = item.querySelector(`.${Style.progress}`);
+            console.log(progressBar);
             var itemValue = progressBar.dataset.progress;
+            console.log(itemValue);
             var i = 0;
             var value = item;
+            console.log(value);
     
             var count = setInterval(function () {
                 if (i <= itemValue) {
                     var iStr = i.toString();
+                    console.log(iStr);
                     progressBar.style.width = iStr + '%';
                     value.querySelector(`.${Style.item_value}`).innerHTML = iStr + '%';
+                    console.log(value.querySelector(`.${Style.item_value}`).innerHTML = iStr + '%');
                 } else {
                     clearInterval(count);
                 }
@@ -76,6 +79,8 @@ export const Productivity = () => {
                 if ( response.data.ciclos_correctos != undefined ) {
                     console.log("SOLICITUD EXITOSA DE DATOS BDD PRODUCTIVIDAD");
                     totalProductos = response.data.recetas.length > 0 ? response.data.recetas.reduce(acumular) : 0;
+                    console.log(totalProductos);
+
                     produccionTotal = response.data.pesoTotal / 1000;
                     setDataJson(response.data);
                     toast.promise(
@@ -129,11 +134,11 @@ export const Productivity = () => {
                 <article className={Style.progress_bar_item}>
                     <h3 className={Style.sub_title}>% CICLOS REALIZADOS CORRECTAMENTE</h3>
                     <div className={Style.item_bar}>
-                        <div className={Style.progress } data-progress={ dataJson.ciclos_correctos }></div>
+                        <div className={Style.progress } data-progress={ dataJson.ciclos_correctos / dataJson.ciclos_totales * 100 }></div>
                     </div>
                     <div className={Style.value_container}>
                         <span className={Style.item_value}>{`0%`}</span> 
-                        <span className={Style.item_label}>{`/ ${dataJson.ciclos_totales}`}</span>
+                        <span className={Style.item_label}>{`-(${dataJson.ciclos_correctos } / ${dataJson.ciclos_totales})`}</span>
                     </div>
                 </article>
 

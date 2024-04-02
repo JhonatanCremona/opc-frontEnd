@@ -1,5 +1,5 @@
 //Depending
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Style from "./Productividad.module.css";
 import JsonProductividad from "../../JSON/productivad.json";
 import JsonListReceta from "../../JSON/productividad_list_receta.json";
@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 //Component
 import { Toaster, toast } from 'sonner';
+import { data } from "autoprefixer";
 
 export const Productivity = () => {
     const [startDate, setStartDate] = useState(new Date());
@@ -30,26 +31,30 @@ export const Productivity = () => {
     let totalProductos = 0;
     let promedio = 0;
     
-    const acumular = (acomulador, numero) =>  acomulador + numero;
-    function progressBar() {
+    //const acumular = (acomulador, numero) =>  acomulador + numero;
+    const convertirDecimalAHoraMinutos =(decimal)=> {
+        let horas = Math.floor(decimal);
+        let minutos = Math.round((decimal - horas) * 60);
+        return horas.toString().padStart(2, '0') + ':' + minutos.toString().padStart(2, '0');
+    }
+    function progressBar(data) {
         let speed = 30;
         let items = document.querySelectorAll(`.${Style.progress_bar} .${Style.progress_bar_item}`);
         items.forEach((item)=> {
             var progressBar = item.querySelector(`.${Style.progress}`);
-            console.log(progressBar);
             var itemValue = progressBar.dataset.progress;
+            console.log("Data Progress 1: " + (data.uso_equipo_op + data.uso_equipo_pre));
+            console.log("Data Progress 2: " + (data.ciclos_correctos / data.ciclos_totales * 100) );
+
             console.log(itemValue);
             var i = 0;
             var value = item;
-            console.log(value);
     
             var count = setInterval(function () {
                 if (i <= itemValue) {
                     var iStr = i.toString();
-                    console.log(iStr);
-                    progressBar.style.width = iStr + '%';
-                    value.querySelector(`.${Style.item_value}`).innerHTML = iStr + '%';
-                    console.log(value.querySelector(`.${Style.item_value}`).innerHTML = iStr + '%');
+                    progressBar.style.width = iStr >= 100 ? 100 + "%" : iStr + '%';
+                    value.querySelector(`.${Style.item_value}`).innerHTML = iStr > 100 ? convertirDecimalAHoraMinutos(data.uso_equipo_op + data.uso_equipo_pre) + " hs" : iStr + '%';
                 } else {
                     clearInterval(count);
                 }
@@ -57,65 +62,71 @@ export const Productivity = () => {
             }, speed);
         })
     }
+    useEffect(()=>{
+        if (isLoading) {
+            progressBar(dataJson)
+        }
+    },[isLoading])
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
         if ( startDate != null && endDate != null ) {
             try {
-                const response = await getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
-                console.log(response);
-                if ( response.data.error != undefined ) {
-                    console.log("NO EXISTEN DATOS PARA ESTE RANGO DE FECHAS");
-                    toast.error('No se encontraron datos', {
-                        style: {
-                            background: "#131313",
-                            fontFamily:"Roboto",
-                            fontWeight: "lighter",
-                            color: "#B9B9B9",
-                            border: "1px solid #E82A31"
+                const responsePromise = getProductividad(startDate.toISOString().slice(0, 10), endDate.toISOString().slice(0, 10));
+                toast.promise(responsePromise, {
+                    loading: "Cargando...",
+                    success: (data) => {
+                        if (data.data.error !== undefined) {
+                            return toast.error('No se encontraron datos', {
+                                style: {
+                                    background: "#131313",
+                                    fontFamily:"Roboto",
+                                    fontWeight: "lighter",
+                                    color: "#B9B9B9",
+                                    border: "1px solid #E82A31"
+                                }
+                            });
                         }
-                    })
-                }
-                if ( response.data.ciclos_correctos != undefined ) {
-                    console.log("SOLICITUD EXITOSA DE DATOS BDD PRODUCTIVIDAD");
-                    //totalProductos = response.data.recetas.length > 0 ? response.data.recetas.reduce(acumular) : 0;
-                    //console.log(totalProductos);
-                    console.log(response.data.uso_equipo_op, " ", response.data.uso_equipo_pre);
-                    let suma = response.data.uso_equipo_op + response.data.uso_equipo_pre ;
-                    
-                    setUsoTotalEquipo(suma);
-                    console.log(usoTotalEquipo);
+                        if (data.data.ciclos_correctos !== undefined) {
+                            let suma = data.data.uso_equipo_op + data.data.uso_equipo_pre;
+                            setUsoTotalEquipo(suma * 100);
+                            setProduccionTotal(data.data.pesototal == undefined ? "0": data.data.pesototal / 1000);
+                            setDataJson(data.data);
+                            setIsLoading(true);
+                            progressBar(data.data); 
+                        }
+                        return `Carga exitosa a la BDD`;
+                    },
+                    error: "Error: Sin conexion a la BDD",
+                    style: {
+                        fontFamily: "Roboto",
+                        fontWeight: "lighter",
+                        background: '#131313',
+                        color: 'white',
+                        border: "1px solid #54C42D",
+                    },
+                    className: ``,
+                });
 
-                    setProduccionTotal(response.data.pesototal == undefined ? "0" : response.data.pesototal / 1000);
-                    setDataJson(response.data);
-
-                    toast.promise(
-                        getProductividad(startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10)), {
-                        loading: "Cargando...",
-                        success: (data) => {
-                            console.log(data);
-                            progressBar();
-                            return `Carga exitosa`;
-                        },
-                        error:"Error",
-                        style: {
-                            fontFamily:"Roboto",
-                            fontWeight: "lighter",
-                            background: '#131313',
-                            color: 'white', 
-                            border: "1px solid #54C42D"
-                        },
-                        className:`` ,
-                    });
-                    
-                }
+               
             } catch (error) {
-                console.error(error);
+                console.error("ERROR AL CONECTARSE CON LA BDD", error);
+                toast.error('ERROR DE CONEXION: BDD', {
+                    style: {
+                        background: "#131313",
+                        fontFamily:"Roboto",
+                        fontWeight: "lighter",
+                        color: "#B9B9B9",
+                        border: "1px solid #E82A31"
+                    }
+                })
             } finally {
                 setIsLoading(false); 
             }
-        } 
+        }
+        
         if (startDate == null && endDate == null) {
             console.log("Debes de completar el formulario");
             toast.info('Debes de completar el formulario', {
@@ -151,22 +162,27 @@ export const Productivity = () => {
                     </div>
                 </article>
 
-                <article className={Style.progress_bar_item}>
-                    <h3 className={Style.sub_title}>% USO DEL EQUIPO</h3>
-                    <article className={Style.box_list_usoequipo}> 
-                        <article className={ ` ${Style.item_bar} ${Style.bar_equipo_uso} `}>
+                <article className={ Style.progress_bar_item }>
+                    <h3 className={ Style.sub_title }>% USO DEL EQUIPO</h3>
+                    <article className={ ` ${Style.item_bar} ` } > 
+                        <article className={ ` ${Style.progress} ${Style.bar_equipo_uso} `} data-progress={ (dataJson.uso_equipo_op + dataJson.uso_equipo_pre) * 100} >
                             <div className={`${Style.bar_op} `} style={{
                                 width: `${dataJson.uso_equipo_op * 100 }%`,
                             }}>
-                                <tool-tip role="tooltip"> Mensaje de prueba </tool-tip>
+                                <tool-tip role="tooltip"> {`Cantidad horas en modo Operativo: ${convertirDecimalAHoraMinutos(dataJson.uso_equipo_op)} hs`} </tool-tip>
                             </div>
                             <div className={`${Style.bar_pre} `} style={{
                                 width: `${dataJson.uso_equipo_pre * 100 }%`,
-                            }}></div>
+                            }}>
+                                <tool-tip role="tooltip"> {`Cantidad horas en modo PreOperativo: ${convertirDecimalAHoraMinutos(dataJson.uso_equipo_pre)} hs`} </tool-tip>
+                            </div>
                         </article>
-                        
-                        <span className={Style.item_value}>{"0 %"}</span>
-                    </article>
+                    </article>    
+
+                    <div className={Style.value_container}>
+                        <span className={Style.item_value}>{`0%`}</span> 
+                        <span className={`${Style.item_label}`}></span>
+                    </div>
                 </article>
 
                 <hr />
@@ -176,9 +192,10 @@ export const Productivity = () => {
                     <article className={Style.box_list_receta}>
                         <div className={Style.list_recetas}>
                             {dataJson.recetas.map((receta, index)=> {
-                                if (receta > 0 ) 
+                                totalProductos+= receta.valor;
+                                if (receta.valor > 0 ) 
                                 {
-                                    promedio = Math.floor(receta / dataJson.ciclos_correctos * 100) ;
+                                    promedio = Math.floor(receta.valor / dataJson.ciclos_correctos * 100) ;
                                     return (
                                         <div className={Style.recetas} key={index} style={{
                                             width: `${promedio}%`,
@@ -190,13 +207,14 @@ export const Productivity = () => {
                                 }
                             })}
                         </div>
-                        <span className={Style.item_label}>{`100% / ${totalProductos}`}</span>
+                        <span className={Style.item_label}>{`${totalProductos || ""}`}</span>
                     </article>
                 </article>
 
                 <div className={Style.box_list_name_receta}>
                    {dataJson.recetas.map((receta, index)=> {
-                    if (receta>0) return (
+                    if (receta.valor > 0) 
+                    return (
                             <div key={index} className={Style.list_name_receta}>
                                 <div style={{
                                     width: "6px",
@@ -205,7 +223,7 @@ export const Productivity = () => {
                                     borderRadius: "3px",
                                     }}>
                                 </div>
-                                <span className={Style.name_receta} >{` ${nombres_recetas[index].nombre} - ${receta}`}</span>
+                                <span className={Style.name_receta} >{` ${receta.nombre} - ${Math.floor(receta.valor / dataJson.ciclos_correctos * 100)}% (${receta.valor}/${dataJson.ciclos_correctos})`}</span>
                             </div>
                     )
                 })} 

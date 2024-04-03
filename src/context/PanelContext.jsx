@@ -9,6 +9,7 @@ export const useAuth = () => {
 export const PanelContextProvider = ({ children }) => {
     const [urlPanel, setUrlPanel] = useState("/panel-control/Cocina1");
     const [urlPanelChart, setUrlPanelChart] = useState("/panel-graficos/Cocina1");
+    const [ciclo, setCiclo] = useState(0);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     
 
@@ -29,12 +30,61 @@ export const PanelContextProvider = ({ children }) => {
         }
     }
 
+    const ChartLayoutOptions = () => {
+        return {
+            height:300,
+            layout: {
+                textColor: '#d1d4dc',
+                background: '#000000',
+            },
+            rightPriceScale: {
+            scaleMargins: {
+              top: 0.3,
+              bottom: 0.25,
+            },
+            },
+            crosshair: {
+              vertLine: {
+                width: 4,
+                color: 'rgba(224, 227, 235, 0.1)',
+                style: 0,
+              },
+              horzLine: {
+                visible: false,
+                labelVisible: false,
+              },
+            },
+            grid: {
+              vertLines: {
+                color: 'rgba(42, 46, 57, 0)',
+              },
+              horzLines: {
+                color: 'rgba(42, 46, 57, 0)',
+              },
+            }
+        }
+    }
+    const StyleSeriesBase = {
+        baseValue: { type: 'price', price: 40 }, 
+
+            topLineColor: 'rgba( 38, 166, 154, 1)', 
+            topFillColor1: 'rgba( 38, 166, 154, 0.28)', 
+            topFillColor2: 'rgba( 38, 166, 154, 0.05)', 
+
+            bottomLineColor: 'rgba( 239, 83, 80, 1)', 
+            bottomFillColor1: 'rgba( 239, 83, 80, 0.05)', 
+            bottomFillColor2: 'rgba( 239, 83, 80, 0.28)'
+    }
+
     return (
         <PanelContext.Provider value={ 
             {   
                 StyleTooltip,
                 urlPanel, setUrlPanel,
-                urlPanelChart,setUrlPanelChart
+                urlPanelChart,setUrlPanelChart,
+                ciclo, setCiclo,
+                StyleSeriesBase,
+                ChartLayoutOptions,
             }
         }>
             {children}

@@ -204,7 +204,7 @@ export const Productivity = () => {
                                 }
                             })}
                         </div>
-                        <span className={Style.item_label}>{`${totalProductos || ""}`}</span>
+                        <span className={Style.item_label}>{``}</span>
                     </article>
                 </article>
 

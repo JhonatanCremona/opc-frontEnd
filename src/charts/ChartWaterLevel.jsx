@@ -1,15 +1,19 @@
 import { createChart } from "lightweight-charts";
 import { forwardRef, useEffect, useLayoutEffect, useRef,useContext, useState } from "react";
-import { getHistory } from "../service/client";
+import { getHistory,getDataComponent } from "../service/client";
 
 //Component
 import { PanelContext } from "../context/PanelContext";
 
-export const ChartWaterLavel = forwardRef(({ chartName, load, url,idCiclo }, ref) => {
+export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, ref) => {
     console.log(idCiclo);
+    console.log(url);
 
     const seriesRef = useRef(null);
-    const { StyleTooltip } = useContext(PanelContext);
+    const { StyleTooltip, ciclo } = useContext(PanelContext);
+
+    console.log("Acceder al id Ciclo desde un context: ", ciclo);
+
     const machine ="Cocina1";
     const [maxValue, setMaxValue] = useState("");
     const [minValue, setMinValue] = useState("");
@@ -130,8 +134,10 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url,idCiclo }, ref
             title: 'Máximo',
           });
     }
+    
 
     useLayoutEffect(( ) => {
+
         const container = document.getElementById(chartName);
         container.appendChild(toolTip);
         const chartInstance = createChart(container, {
@@ -173,9 +179,28 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url,idCiclo }, ref
           };
 
     },[])
+    useEffect(()=> {
+      console.log("ME EJECUTE DESDE EL PANEL " + ciclo);
+      const fetchDataHistorico = async() => {
+        try {
+          const apiData = await getDataComponent(url, ciclo);
+          console.log(apiData.data.data);
+          const formatter = apiData.data.data.map((item)=> {
+            console.log(item);
+            return {
+              time: new Date(item[1]).getTime(),
+              value: parseFloat(item[0])
+          }});
+          console.log(formatter);
+          return seriesRef.current.setData(formatter);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      fetchDataHistorico();
+    }, [ciclo])
     
-let contador = 0;
-
+    let contador = 0;
     useEffect(()=> {
         async function fetchData () {
             //const response = ((await getApiJavaHistorico()).data)

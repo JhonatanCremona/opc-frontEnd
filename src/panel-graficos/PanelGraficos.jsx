@@ -1,7 +1,7 @@
 //Depending on the
 import Style from "./PanelGraficos.module.css";
 import { Navigate, useParams } from 'react-router-dom';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { SearchIcon,DownloadReportIcon } from "../Icon/Icon";
@@ -13,6 +13,7 @@ import { Title } from "../charts/title/Title";
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Modals } from "../Modals/Modals";
 import { ChartWaterLavel } from "../charts/ChartWaterLevel";
+import { PanelContext } from "../context/PanelContext";
 
 
 export const PanelGraficos = () => {
@@ -22,6 +23,7 @@ export const PanelGraficos = () => {
     const [dataCiclos, setListDataCiclos] = useState([{}]);
     const [ cicloId, setIdCiclo ] = useState(0);
 
+    let { setCiclo } = useContext(PanelContext);
     let { equipo } = useParams();
     if (equipo != "Cocina1" && equipo != "Enfriador1") { return <Navigate to="/" />;}
 
@@ -32,6 +34,7 @@ export const PanelGraficos = () => {
     const handleSubmitCiclo = async (idCiclo)=>{
         setEstadoModalOne(false);
         setIdCiclo(idCiclo);
+        setCiclo(idCiclo);
         console.log(idCiclo);
         console.log(await getDataComponent("TEMP_AGUA", idCiclo));
     }
@@ -227,11 +230,9 @@ export const PanelGraficos = () => {
                         </Modals>
                 </section>
                 <section className={`${Style.c_chart_component}`}>
-                    < CardWater component= {"Temp. Agua"} chartName={ "container-otro3" } urlComponent={"TEMP_AGUA"} >
-                        <section className={Style.c_chartSeries}>
-                            < ChartWaterLavel load = { false } chartName={ "container-otro3" } url={"TEMP_AGUA"} idCiclo={cicloId} />
-                        </section>
-                    </CardWater>
+                    < CardWater component= {"Temp. Producto"} chartName={ "container-otro2" } urlComponent={"TEMP_PRODUCTO"} numeroCiclo={cicloId} />
+                    < CardWater component= {"Temp. Agua"} chartName={ "container-otro3" } urlComponent={"TEMP_AGUA"} numeroCiclo={cicloId} />
+                    < CardWater component= {"Nivel de Agua "} chartName={ "container-otro4" } urlComponent={"NIVEL_AGUA"} numeroCiclo={cicloId} />
                 </section>
             </div>
         </div>

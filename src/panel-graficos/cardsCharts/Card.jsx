@@ -66,9 +66,9 @@ export const Card = ({ controlpanel, value }) => {
 
 
     return (
-            <section className={Style.c_chart}>
+            <section className={ `${Style.c_chart} ${Style.c_chart_width}`}>
                 <article className={Style.c_title}>
-                <h2 className={Style.title}>Sensores de Temperatura</h2>
+                <h2 className={Style.title}>Temperaturas en tiempo real</h2>
                 </article>
                 <nav>
                     <ul className={Style.list_option_temp}>

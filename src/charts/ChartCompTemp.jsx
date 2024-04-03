@@ -28,7 +28,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
     container.appendChild(toolTip);
     // Crear el gráfico
     const chartInstance = createChart(container, {
-      height: 300,
+      height: panel ? 300 : 400,
       layout: {
           textColor: '#d1d4dc',
           background: {
@@ -220,7 +220,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
           series2.current.setData([]);
         }
       }
-      const interval = setInterval(updateData, 2000);
+      const interval = setInterval(updateData, 5000);
       return () => {
         clearInterval(interval);
       };

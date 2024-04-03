@@ -124,6 +124,22 @@ export const getProductividad = async (fechaStart, fechaEnd) => {
         console.error(error);
     }
 }
+export const getCiclo = async (machine, fechaStart, fechaEnd)=> {
+    console.log(machine, fechaStart, fechaEnd);
+    try {
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/ciclos/${machine}/${fechaStart}/${fechaEnd}`);
+    } catch (error) {
+        console.error(error);
+    }
+}
+export const getDataComponent = async(component, idCiclo) => {
+    console.log(component, idCiclo);
+    try {
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/data/${component}/${idCiclo}`);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 
 export const getApiJavaHistorico = async () => {

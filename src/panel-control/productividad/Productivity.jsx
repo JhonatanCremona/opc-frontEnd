@@ -178,19 +178,16 @@ export const Productivity = () => {
                             </div>
                         </article>
                     </article>    
-
                     <div className={Style.value_container}>
                         <span className={Style.item_value}>{`0%`}</span> 
                         <span className={`${Style.item_label}`}></span>
                     </div>
                 </article>
-
                 <hr />
-
                 <article className={ Style.list_receta_container}>
                     <h3 className={Style.sub_title}>% PRODUCTOS REALIZADOS</h3>
-                    <article className={Style.box_list_receta}>
-                        <div className={Style.list_recetas}>
+                    <article className={ ` ${Style.box_list_receta }`}>
+                        <div className={ ` ${Style.list_recetas} `}>
                             {dataJson.recetas.map((receta, index)=> {
                                 totalProductos+= receta.valor;
                                 if (receta.valor > 0 ) 

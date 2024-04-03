@@ -1,6 +1,8 @@
 import Style from "./SensorNoneChart.module.css";
+import { useParams } from "react-router-dom";
 
 export const SensorSinGrafico = ({ nSensor, value, tipo, estado, img }) => {
+    let { equipo } = useParams();
 
     function transformDato(value) {
         if (value == "NULL"){
@@ -14,6 +16,27 @@ export const SensorSinGrafico = ({ nSensor, value, tipo, estado, img }) => {
         if (parseFloat(parseFloat(value).toFixed(2)) > 0){
             return true;
         } else { return false; }
+    }
+    function filtrarTiempo(tiempo) {
+        let partes = tiempo.split(':');
+        let horas = parseInt(partes[0]);
+        let minutos = parseInt(partes[1]);
+        let tiempoFiltrado = horas.toString().padStart(2, '0') + ':' + minutos.toString().padStart(2, '0');
+        return tiempoFiltrado;
+    }
+
+    const valueResponse = (value, nSensor) => {
+        if (value == "0" && nSensor =="Tiempo Transcurrido") {
+            return "00:00"
+        }
+        if (nSensor == "Tiempo Transcurrido" && value !== undefined) {
+            console.log(filtrarTiempo(value));
+            return filtrarTiempo(value);
+        }
+        if (!isNaN(parseFloat(parseFloat(value).toFixed(2)))) {
+            return parseFloat(parseFloat(value).toFixed(2))
+        }
+        return value;
     }
 
     return (
@@ -29,9 +52,9 @@ export const SensorSinGrafico = ({ nSensor, value, tipo, estado, img }) => {
                         transformDato(value) ? 
                         Style.valorDato + " " + Style.ValorDatoActive :
                         Style.valorDato + " " + Style.ValorDatoInactive }>
-                    {  !isNaN(parseFloat(parseFloat(value).toFixed(2))) ? parseFloat(parseFloat(value).toFixed(2)) : value }
+                    {  valueResponse( value, nSensor ) }
                     <span className={Style.tipoData}> { value !== "NULL" && tipo }</span>
-             </p>      
+             </p>      ?
         </section>
     )
 }

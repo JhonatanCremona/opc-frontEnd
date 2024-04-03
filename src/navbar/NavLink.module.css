@@ -14,11 +14,6 @@
         animation-timeline: scroll(root block);
         animation-range: 0 200px;
     }
-    
-   
-    
-
-
 .options:before {
     content: "";
   width: 100%;

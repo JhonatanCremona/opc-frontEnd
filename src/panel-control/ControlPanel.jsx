@@ -1,18 +1,20 @@
 //Depending
 import { useEffect, useState} from "react";
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Style from "./PanelControl.module.css"
 import ReporteCocina from "../JSON/Reporte.json"
 import ReporteEnfriador from "../JSON/ReporteEnfriador.json";
 import { getReportMachine, valueStateMachine } from "../service/client";
+import { Link } from "react-router-dom"
 
 //Components
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Title } from "../charts/title/Title";
 import { SensorSinGrafico } from "../Components/sensores/SensoresSinGrafico";
-import { Productividad } from "./productividad/Productividad";
 import { CardComponentChart } from "./cardsComponent/CardComponentChart";
+import { Card } from "../panel-graficos/cardsCharts/Card";
 
+//Image Component
 import ImgValvula from "../Icon/valvulaActive.png";
 import ImgValvulaInactive from "../Icon/valvulaInactive.png";
 import ImgPasos from "../Icon/pasos.png";
@@ -22,6 +24,8 @@ import ImgRelojInactive from "../Icon/relojInactive.png";
 import ImgReceta from "../Icon/recetas.png";
 import ImgRecetaInactive from "../Icon/recetasInactive.png";
 import ImgSensorAguar from "../Icon/el-ciclo-del-agua.png";
+import { Productivity } from "./productividad/Productivity";
+import { ArrowButton } from "../Icon/Icon";
 
 export const ControlPanel = () => {
     const [datos, setDatos] = useState({})
@@ -43,14 +47,16 @@ export const ControlPanel = () => {
                 } finally {
                     isFetching = false;
                 }
-                await new Promise((resolve) => setTimeout(resolve,100000));
+                await new Promise((resolve) => setTimeout(resolve,10000));
             }
             fetchDataReporter();
         }
         fetchDataReporter();
     },[]);
 
-    
+    if (equipo != "Cocina1" && equipo != "Enfriador1") {
+        return <Navigate to="/" />;
+    }
 
     return (
         <>
@@ -59,8 +65,16 @@ export const ControlPanel = () => {
                 <Title title={ equipo } properties={"RECETA"} description={ datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA } report={true} />
                 
                 <section className={Style.boxDataTime}>
+                    < Card controlpanel={true} value={ datos?.componentes?.ESTADO }/>
+
                     <article className={Style.card_component_electrique}>
-                        <h2 className={Style.titleElement}>Estado Equipo</h2>
+                        <div className={Style.flex_person}>
+                            <h2 className={Style.titleElement}>Estado Equipo</h2>
+                            <Link 
+                                to={`/panel-graficos/${equipo.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
+                                className={Style.card_button}>Ver graficos <ArrowButton />
+                            </Link>
+                        </div>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         
                         <section className={Style.ElementSensor}>
@@ -76,7 +90,13 @@ export const ControlPanel = () => {
                     </article>
 
                     <section className={Style.dataTime}>
+                    <div className={Style.flex_person}>
                         <h2 className={Style.titleElement}>Ciclo activo</h2>
+                            <Link 
+                                to={`/panel-graficos/${equipo.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
+                                className={Style.card_button} >Ver graficos <ArrowButton />
+                            </Link>
+                        </div>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor +" "+Style.ElementSecond}>
                             <SensorSinGrafico value={ datos.TIEMPO_TRANSCURRIDO } tipo={"hs"}  nSensor={"Tiempo Transcurrido"} 
@@ -84,21 +104,33 @@ export const ControlPanel = () => {
                             <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
                             <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgReceta : ImgRecetaInactive }/>
                             <SensorSinGrafico value={ "1"} nSensor={"N° Torres"} img={ImgSensorAguar}/>
+                            <SensorSinGrafico value={ datos.LOTE } nSensor={"N° de Lote"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
                         </section>
                     </section>
 
-                    <section className={Style.dataTime}>
+                    <section className={`${Style.dataTime} ${Style.dateTimeSectorIO}` }>
+                        <div className={Style.flex_person}>
                         <h2 className={Style.titleElement}>Sector IO</h2>
+                            <Link 
+                                to={`/panel-graficos/${equipo.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`}
+                                className={Style.card_button}>Ver graficos <ArrowButton />
+                            </Link>
+                        </div>
                         <h3 className={`${StyleMachine}`}>{(datos?.componentes?.ESTADO)}</h3>
                         <section className={Style.ElementSensor}>
-                            <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Activo" : "Inactivo"} nSensor={"Vapor Serpentina"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive}/>
-                            <SensorSinGrafico value={ datos?.componentes?.VAPOR_VIVO ? "Activo" : "Inactivo" } nSensor={"Vapor Vivo"} img={datos?.componentes?.VAPOR_VIVO ? ImgValvula : ImgValvulaInactive}/>
+                            { equipo == "Enfriador1" ? 
+                                <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Abierta" : "Cerrada"} nSensor={"Válvula Amoníaco"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive} /> :
+                              equipo == "Cocina1" ?  
+                              <>
+                              <SensorSinGrafico value={datos?.componentes?.VAPOR_SERPENTINA ? "Abierta" : "Cerrada"} nSensor={"Vapor Serpentina"} img={datos?.componentes?.VAPOR_SERPENTINA ? ImgValvula : ImgValvulaInactive}/>
+                              <SensorSinGrafico value={datos?.componentes?.VAPOR_VIVO ? "Abierta" : "Cerrada"} nSensor={"Vapor Vivo"} img={datos?.componentes?.VAPOR_VIVO ? ImgValvula : ImgValvulaInactive}/>
+                              </> :
+                                {}
+                            }
                         </section>
                     </section>
-
-
                 </section>
-                <Productividad />
+                <Productivity />
             </main>
         </>
     )

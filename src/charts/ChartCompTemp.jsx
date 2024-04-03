@@ -4,7 +4,7 @@ import { createChart } from "lightweight-charts"
 import {  getApiJavaHistoricoPrueba, getHistory } from "../service/client.js";
 //Component
 
-export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
+export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
   const [chart, setChart] = useState(null);
 
   const machine = "Cocina1";
@@ -28,10 +28,13 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
     container.appendChild(toolTip);
     // Crear el gráfico
     const chartInstance = createChart(container, {
-      height: 300,
+      height: panel ? 300 : 400,
       layout: {
           textColor: '#d1d4dc',
-          background: '#000000',
+          background: {
+            type: "solid",
+            color: panel ? "#131313" : "#000000" 
+          }
       },
       rightPriceScale: {
       scaleMargins: {
@@ -217,7 +220,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent }, ref) => {
           series2.current.setData([]);
         }
       }
-      const interval = setInterval(updateData, 2000);
+      const interval = setInterval(updateData, 5000);
       return () => {
         clearInterval(interval);
       };

@@ -9,17 +9,13 @@
     animation: enhance-header linear both;
     animation-timeline: scroll(root block);
     animation-range: 0 150px;
-
 }
 @keyframes enhance-header {
     to {
         background: #131313;
         backdrop-filter: blur(5px);
-
     }
 }
-
-
 .navbar {
     display: flex;
     width: 100%;
@@ -27,7 +23,6 @@
     justify-content: space-between;
     height: 50px;
 }
-
 .listaIconos {
     display: flex;
     justify-content: space-between;

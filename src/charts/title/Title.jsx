@@ -6,6 +6,12 @@ import { useEffect } from "react";
 export const Title = (props) => {
     const { title, report, chart, properties, description } = props;
 
+    let StyleMachine = description == "Cocina1" ? `${Style.CocinaTitle}` : 
+    description == "Enfriador1" ? `${Style.EnfriadorTitle}` : `${Style.machine}`
+
+    let data = description.replace(/(\D)(\d+)/, "$1 $2");
+    let titlePanel = title.replace(/(\D)(\d+)/, "$1 $2");
+
     function animationTitle(className) {
         var textWrapper = document.querySelector(`.${className} .letters`);
         textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
@@ -17,6 +23,8 @@ export const Title = (props) => {
             delay: (el, i) => 45 * i
         });
     }
+    
+
     
     useEffect(() => {
         animationTitle("ml10-first");
@@ -32,7 +40,7 @@ export const Title = (props) => {
                 `${Style.Enfriador} ml10 ml10-first` 
                 }> 
                     <span className="text-wrapper">
-                        <span className="letters">{ title.toUpperCase() }</span>
+                        <span className="letters">{ titlePanel.toUpperCase() }</span>
                     </span>
                 </h2>
                 <h3 className={`${Style.title} ${Style.RecetaPanel} ml10 ml10-second`}>
@@ -52,7 +60,7 @@ export const Title = (props) => {
                  </h2>
                 <h3 className={Style.title + " " + Style.CocinaTitle + " ml10 ml10-second"}>
                     <span className="text-wrapper">
-                        <span className="letters">{ properties + ": " + description }</span>
+                        <span className={`letters ${StyleMachine}`}>{ properties + ": " + data.toUpperCase() }</span>
                     </span>
                 </h3>
                 </>

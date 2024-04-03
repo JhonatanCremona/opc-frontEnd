@@ -32,6 +32,7 @@
     padding-left: 116px;
     padding-right: 116px;
     */
+    min-height: 400px;
     display: grid;
     grid-template-columns: repeat(
         auto-fit,

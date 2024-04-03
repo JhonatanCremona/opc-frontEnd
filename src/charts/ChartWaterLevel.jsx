@@ -5,7 +5,8 @@ import { getHistory } from "../service/client";
 //Component
 import { PanelContext } from "../context/PanelContext";
 
-export const ChartWaterLavel = forwardRef(({ chartName, load, url }, ref) => {
+export const ChartWaterLavel = forwardRef(({ chartName, load, url,idCiclo }, ref) => {
+    console.log(idCiclo);
 
     const seriesRef = useRef(null);
     const { StyleTooltip } = useContext(PanelContext);

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
+
 .icn {
   width: 20px;
   height: 20px;
@@ -36,4 +37,29 @@ body {
 }
 li {
   text-wrap: nowrap;
+}
+
+tool-tip {
+  position: absolute;
+  background-color: #D9D9D9;
+  color: #000;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+
+  box-shadow: 0 0 10px #D9D9D9;
+  padding: .5rem 1rem;
+  font-size: .9rem;
+  font-family: "Roboto",'Arial Narrow Bold', sans-serif;
+  font-weight: 500;
+  border-radius: 8px;
+
+  top: 1005;
+  left: 12.5%;
+
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+:has(> tool-tip):hover tool-tip {
+  opacity: 1;
 }

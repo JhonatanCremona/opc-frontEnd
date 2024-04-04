@@ -30,9 +30,8 @@ export const PanelContextProvider = ({ children }) => {
         }
     }
 
-    const ChartLayoutOptions = () => {
-        return {
-            height:300,
+    const ChartLayoutOptions =  {
+            height:350,
             layout: {
                 textColor: '#d1d4dc',
                 background: '#000000',
@@ -42,6 +41,7 @@ export const PanelContextProvider = ({ children }) => {
               top: 0.3,
               bottom: 0.25,
             },
+            
             },
             crosshair: {
               vertLine: {
@@ -63,19 +63,26 @@ export const PanelContextProvider = ({ children }) => {
               },
             }
         }
-    }
     const StyleSeriesBase = {
         baseValue: { type: 'price', price: 40 }, 
 
-            topLineColor: 'rgba( 38, 166, 154, 1)', 
-            topFillColor1: 'rgba( 38, 166, 154, 0.28)', 
-            topFillColor2: 'rgba( 38, 166, 154, 0.05)', 
+            topLineColor: 'rgba( 221, 132, 30, 1)', 
+            topFillColor1: 'rgba( 221, 132, 30, 0.28)', 
+            topFillColor2: 'rgba( 221, 132, 30, 0.05)', 
 
-            bottomLineColor: 'rgba( 239, 83, 80, 1)', 
-            bottomFillColor1: 'rgba( 239, 83, 80, 0.05)', 
-            bottomFillColor2: 'rgba( 239, 83, 80, 0.28)'
+            bottomLineColor: 'rgba( 221, 132, 30, 1)', 
+            bottomFillColor1: 'rgba( 221, 132, 30, 0.05)', 
+            bottomFillColor2: 'rgba( 221, 132, 30, 0.28)'
     }
-
+    const watermarkStyle = {
+      visible: true,
+      fontSize: 54,
+      fontFamily:"Roboto",
+      horzAlign: 'center',
+      vertAlign: 'center',
+      color: 'rgba(232, 42, 49, 0.3)',
+      text: 'Creminox',
+  }
     return (
         <PanelContext.Provider value={ 
             {   
@@ -85,6 +92,7 @@ export const PanelContextProvider = ({ children }) => {
                 ciclo, setCiclo,
                 StyleSeriesBase,
                 ChartLayoutOptions,
+                watermarkStyle
             }
         }>
             {children}

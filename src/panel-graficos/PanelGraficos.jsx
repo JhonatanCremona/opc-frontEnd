@@ -12,8 +12,8 @@ import { CardWater } from "./cardsCharts/CardWater";
 import { Title } from "../charts/title/Title";
 import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Modals } from "../Modals/Modals";
-import { ChartWaterLavel } from "../charts/ChartWaterLevel";
 import { PanelContext } from "../context/PanelContext";
+import { ChartHistorico } from "../charts/ChartHistorico";
 
 
 export const PanelGraficos = () => {
@@ -230,10 +230,10 @@ export const PanelGraficos = () => {
                         </Modals>
                 </section>
                 <section className={`${Style.c_chart_component}`}>
-                    < CardWater component= {"Temp. Producto"} chartName={ "container-otro2" } urlComponent={"TEMP_PRODUCTO"} numeroCiclo={cicloId} />
-                    < CardWater component= {"Temp. Agua"} chartName={ "container-otro3" } urlComponent={"TEMP_AGUA"} numeroCiclo={cicloId} />
-                    < CardWater component= {"Nivel de Agua "} chartName={ "container-otro4" } urlComponent={"NIVEL_AGUA"} numeroCiclo={cicloId} />
+                    < ChartHistorico />
+                    < CardWater component= {"Nivel de Agua - Registro histórico"} chartName={ "container-otro4" } urlComponent={"NIVEL_AGUA"}  />
                 </section>
+
             </div>
         </div>
     )

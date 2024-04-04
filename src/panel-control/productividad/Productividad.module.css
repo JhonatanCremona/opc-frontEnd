@@ -84,6 +84,12 @@
     border-radius: 4px;
     transition: width 100ms ease;
 }
+.test {
+    color: rgba(221, 132, 30, 1);
+    color: rgba( 239, 83, 80, 1);
+    color: rgba( 239, 83, 80, 0.05);
+    color: rgba( 239, 83, 80, 0.28);
+}
 
 .list_recetas {
     height: 1.3rem;

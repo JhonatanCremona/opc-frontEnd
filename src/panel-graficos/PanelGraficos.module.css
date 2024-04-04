@@ -5,7 +5,7 @@
 .container_chart {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 50px;
 }
 .c_chart_header {
     display: flex;
@@ -22,11 +22,15 @@
 }
 
 .c_chart {
-    border: 1px solid #434651;
+    border: 2px solid #434651;
     background-color: black;
     border-radius: 16px;
     padding: 32px 40px;
-    max-height: 360px;
+    max-height: 420px;
+}
+.c_chartSeries {
+    height: 350px;
+    position: relative;
 }
 .c_chart_width {
     height: 510px;
@@ -39,8 +43,8 @@
 }
 .c_chart_component {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 50px;
 }
 .c_container_model {
     display: grid;
@@ -140,10 +144,7 @@
     font-size: 16px;
 }
 
-.c_chartSeries {
-    height: 300px;
-    position: relative;
-}
+
 /*Component CHART unit*/
 .list_option_component {
     border-radius: 6px;
@@ -309,4 +310,16 @@
     display: flex;
     flex-direction: row-reverse;
     gap: 8px;
+}
+
+.component_point_series {
+    width: 6px;
+    height: 14px;
+    border-radius: 3px;
+}
+.component_name {
+    color: #D9D9D9;
+    font-family: "Roboto";
+    font-weight: 400;
+
 }

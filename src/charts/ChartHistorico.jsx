@@ -7,8 +7,12 @@ import Style from "../panel-graficos/PanelGraficos.module.css"
 
 
 export const ChartHistorico = forwardRef(({}, ref) => {
-    
-    const { ChartLayoutOptions, StyleSeriesBase, StyleTooltip, ciclo,watermarkStyle } = useContext(PanelContext);
+    const [components, setComponents] = useState([
+      {name: "Temp. de Producto", color: "rgba(239, 83, 80, 1)", minValue: "0", maxValue:"0" },
+        {name: "Temp. de Agua", color: "#33A7FD", minValue: "0", maxValue:"0" },
+        {name: "Temp. de Ingreso", color: "#3c8a64", minValue: "0", maxValue:"0" }
+    ])
+    const { ChartLayoutOptions, ciclo, watermarkStyle, leyendaCiclo } = useContext(PanelContext);
 
     const seriesOne = useRef(null);
     const seriesTwo = useRef(null);
@@ -16,38 +20,12 @@ export const ChartHistorico = forwardRef(({}, ref) => {
 
     const [maxValue, setMaxValue] = useState("");
     const [minValue, setMinValue] = useState("");
-    const toolTip = document.createElement("div");
 
-    toolTip.style = StyleTooltip.sensor_water_level.sw_initial;
-    toolTip.style.background = StyleTooltip.sw_bcakgraund;
-    toolTip.style.color = StyleTooltip.sw_color;
-    toolTip.style.borderColor = StyleTooltip.sw_border;
 
-    let minPriceLine = {
-        price: minValue,
-        color: '#be1238',
-        lineWidth: 2,
-        lineStyle: 3,
-        axisLabelVisible: true,
-        title: 'Minimo Valor',
-   };
-   let maxPriceLine = {
-      price: maxValue,
-      color: '#be1238',
-      lineWidth: 2,
-      lineStyle: 3,
-      axisLabelVisible: true,
-      title: 'Maximo valor',
-  };
-
-    console.log(ChartLayoutOptions);
-    console.log(StyleSeriesBase);
-
-    
+  
 
     useLayoutEffect(() => {
         const container = document.getElementById("chart-container-register-historico");
-        container.appendChild(toolTip);
         const chartInstance = createChart(container, {
             ...ChartLayoutOptions,
             width: container.clientWidth
@@ -71,7 +49,6 @@ export const ChartHistorico = forwardRef(({}, ref) => {
         chartInstance.applyOptions({
             watermark: watermarkStyle,
         });
-        
         // add line Price series to chart (TEMP_PRODUCTO, TEMP_AGUA, TEMP_INGRESO):
         const series = chartInstance.addLineSeries({
             color: "rgba(239, 83, 80, 1)", lineWidth: 2
@@ -108,7 +85,14 @@ export const ChartHistorico = forwardRef(({}, ref) => {
                 value: parseFloat(item[0])
             }});
             console.log(formatter);
-
+            setComponents(prevComponents => [
+              {
+                ...prevComponents[0], // Copiar el objeto existente en el índice uno
+                minValue: apiData.data.min,
+                maxValue: apiData.data.max
+              },
+              ...prevComponents.slice(1) // Mantener los últimos objetos sin cambios
+            ]);
             return seriesOne.current.setData(formatter);
           } catch (error) {
             console.log(error);
@@ -130,14 +114,21 @@ export const ChartHistorico = forwardRef(({}, ref) => {
                 time: new Date(item[1]).getTime(),
                 value: parseFloat(item[0])
             }});
+            setComponents(prevComponents => [
+              ...prevComponents.slice(0, 1), // Mantener los primeros objetos sin cambios
+              {
+                ...prevComponents[1], // Copiar el objeto existente en el índice uno
+                minValue: apiData.data.min,
+                maxValue: apiData.data.max
+              },
+              ...prevComponents.slice(2) // Mantener los últimos objetos sin cambios
+            ]);
             return seriesTwo.current.setData(formatter);
           } catch (error) {
             console.log(error);
           }
         }
         fetchDataHistorico();
-        //seriesOne.current.createPriceLine(maxPriceLine);
-        //seriesOne.current.createPriceLine(minPriceLine);
 
       }, [ciclo])
       useEffect(()=> {
@@ -151,22 +142,26 @@ export const ChartHistorico = forwardRef(({}, ref) => {
                 time: new Date(item[1]).getTime(),
                 value: parseFloat(item[0])
             }});
+            setComponents(prevComponents => [
+              ...prevComponents.slice(0, 2), // Mantener los primeros objetos sin cambios
+              {
+                ...prevComponents[2], // Copiar el objeto existente en el índice dos
+                minValue: apiData.data.min,
+                maxValue: apiData.data.max
+              }
+            ]);
             return seriesThree.current.setData(formatter);
           } catch (error) {
             console.log(error);
           }
         }
         fetchDataHistorico();
+        console.log(components);
         //seriesOne.current.createPriceLine(maxPriceLine);
         //seriesOne.current.createPriceLine(minPriceLine);
 
       }, [ciclo])
-      const components = [
-        {name: "Temp. de Producto", color: "rgba(239, 83, 80, 1)"},
-        {name: "Temp. de Agua", color: "#33A7FD"},
-        {name: "Temp. de Ingreso", color: "#3c8a64"}
-      ]
-
+    
 
     return ( 
         <section className={Style.c_chart}>
@@ -174,9 +169,16 @@ export const ChartHistorico = forwardRef(({}, ref) => {
                             <section style={{display: "flex",alignItems: "center",gap:"10px" }}>
                                 {components.map((component, index) => {
                                     return (
-                                            <>
-                                            <div className={Style.component_point_series} style={{background: component.color, }}></div><h3 className={Style.component_name} style={{margin:"0px"}}>{component.name}</h3>
-                                            </>
+                                            <div key={index} style={{display:"flex", flexDirection:"column", gap:"10px", padding:"10px", border:"1px solid #3D3D3D", borderRadius:"5px", minWidth:"175px"}}>
+                                              <div style={{display: "flex",alignItems: "center",gap:"10px" }}>
+                                                <div className={Style.component_point_series} style={{background: component.color, }}></div>
+                                                <h3 className={Style.component_name} style={{margin:"0px"}}>{component.name}</h3>
+                                              </div>
+                                              <div style={{display:"flex", flexDirection:"column", gap:"10px", marginLeft:"20px" }}>
+                                                <span style={{color:"#fff"}}>Max: {component.maxValue}</span>
+                                                <span style={{color:"#fff"}}>Min: {component.minValue}</span>
+                                              </div>
+                                            </div>
                                     )
                                 })}
                             </section>

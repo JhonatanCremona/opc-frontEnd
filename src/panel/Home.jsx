@@ -17,8 +17,9 @@ import { PanelContext } from "../context/PanelContext";
 import "../charts/title/testing.css"
 
 export const Home = () => {
-    const [machines , setMachines] = useState([])
-    let { setUrlPanel } = useContext(PanelContext);
+    //const [machines , setMachines] = useState([])
+    const [dataReport, setDataReport] = useState([]);
+    let { setUrlPanel,  } = useContext(PanelContext);
     
     function animationTitle(className) {
         var textWrapper = document.querySelector(`.${className} .letters`);
@@ -37,8 +38,8 @@ export const Home = () => {
         animationTitle("ml10-second");
     }, []);
     
-
-
+    
+    /*
     useEffect(() => {
         const fetchData = async () => { setMachines(await transformDataMachine())};
         console.log(machines)
@@ -46,6 +47,7 @@ export const Home = () => {
         const intervalId = setInterval(fetchData, 5000);
         return () => clearInterval(intervalId);
       }, []);
+    */
 
     return (
         <>
@@ -64,7 +66,7 @@ export const Home = () => {
 
             
             <section className={Style.equipos}>
-            {machines.map ((machine) =>{
+            {dataReport.map ((machine) =>{
                 return (
                     <div className={Style.card} key={machine.ID}>
                         <section className={Style.imagen}>

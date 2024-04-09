@@ -23,7 +23,7 @@ export const PanelGraficos = () => {
     const [dataCiclos, setListDataCiclos] = useState([{}]);
     const [ cicloId, setIdCiclo ] = useState(0);
 
-    let { setCiclo } = useContext(PanelContext);
+    let { setCiclo, setLeyectaCiclo } = useContext(PanelContext);
     let { equipo } = useParams();
     if (equipo != "Cocina1" && equipo != "Enfriador1") { return <Navigate to="/" />;}
 
@@ -35,8 +35,12 @@ export const PanelGraficos = () => {
         setEstadoModalOne(false);
         setIdCiclo(idCiclo);
         setCiclo(idCiclo);
-        console.log(idCiclo);
-        console.log(await getDataComponent("TEMP_AGUA", idCiclo));
+
+        setLeyectaCiclo(
+            dataCiclos.filter((listCiclo) => {
+                return idCiclo === listCiclo.id_cliclo;
+            })
+        )
     }
 
     const handleSubmit = async(event) => {
@@ -46,19 +50,25 @@ export const PanelGraficos = () => {
         if ( startDate !== null && endDate !== null ) {
             try {
                 //const response = getCiclo(machine, startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
-                const response = await getCiclo(machine, "2024-01-01", "2024-04-01");
+                const response = await getCiclo(machine, "2024-04-05", "2024-04-10");
                 console.log( response.data.ciclos);
                 setListDataCiclos(response.data.ciclos)
+
             } catch (error) {
                 console.error(error);
             }
         }
     };
-    
+    function formatearFecha(fechaStr) {
+        var fecha = new Date(fechaStr);
+        return fecha.getDate() + " " + fecha.toLocaleString('default', { month: 'short' }) + " " + fecha.getFullYear() + " : " + fecha.getHours() + ":" + (fecha.getMinutes() < 10 ? '0' : '') + fecha.getMinutes() + " hs";
+    }
 
     return (
+        <>
+            <NavEquipos url={"graficos"}/>
         <div className={Style.container}>
-            <NavEquipos />
+            
             < Title title={"GRÁFICOS"} properties={"MAQUINA"} description={ equipo } chart={true} />
             <div className={Style.container_chart}>
                 < Card />
@@ -214,6 +224,7 @@ export const PanelGraficos = () => {
                             </div>
 
                             {dataCiclos.map((ciclo)=> {
+                                console.log(ciclo);
                                 return (
                                     <>
                                         <button key={ciclo.id_cliclo} 
@@ -222,7 +233,7 @@ export const PanelGraficos = () => {
                                             <section><p>{ciclo.id_cliclo}</p></section>
                                             <section><p>{ciclo.Lote}</p></section>
                                             <section> <p>{ciclo.Receta}</p></section>
-                                            <section><p>{ciclo.fecha_inicio}</p></section>
+                                            <section><p>{formatearFecha(ciclo.fecha_inicio)}</p></section>
                                         </button>
                                     </>
                                 )
@@ -236,5 +247,8 @@ export const PanelGraficos = () => {
 
             </div>
         </div>
+        
+        </>
+        
     )
 }

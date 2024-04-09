@@ -1,4 +1,4 @@
-import { createContext,useState, useContext } from "react";
+import { createContext,useState, useContext,  } from "react";
 
 export const PanelContext = createContext();
 export const useAuth = () => {
@@ -10,9 +10,10 @@ export const PanelContextProvider = ({ children }) => {
     const [urlPanel, setUrlPanel] = useState("/panel-control/Cocina1");
     const [urlPanelChart, setUrlPanelChart] = useState("/panel-graficos/Cocina1");
     const [ciclo, setCiclo] = useState(0);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
+    const [ leyendaCiclo, setLeyectaCiclo] = useState({});
 
+    //const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
 
     const StyleTooltip = {
         sensor_temperature: {
@@ -29,7 +30,6 @@ export const PanelContextProvider = ({ children }) => {
             sw_width: "96px"
         }
     }
-
     const ChartLayoutOptions =  {
             height:350,
             layout: {
@@ -62,7 +62,7 @@ export const PanelContextProvider = ({ children }) => {
                 color: 'rgba(42, 46, 57, 0)',
               },
             }
-        }
+    }
     const StyleSeriesBase = {
         baseValue: { type: 'price', price: 40 }, 
 
@@ -82,7 +82,8 @@ export const PanelContextProvider = ({ children }) => {
       vertAlign: 'center',
       color: 'rgba(232, 42, 49, 0.3)',
       text: 'Creminox',
-  }
+    }
+
     return (
         <PanelContext.Provider value={ 
             {   
@@ -90,9 +91,11 @@ export const PanelContextProvider = ({ children }) => {
                 urlPanel, setUrlPanel,
                 urlPanelChart,setUrlPanelChart,
                 ciclo, setCiclo,
+                leyendaCiclo, setLeyectaCiclo,
                 StyleSeriesBase,
                 ChartLayoutOptions,
-                watermarkStyle
+                watermarkStyle,
+              
             }
         }>
             {children}

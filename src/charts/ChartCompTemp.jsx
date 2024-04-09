@@ -174,6 +174,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
           time: new Date(item.time).getTime(),
           value: parseFloat(item.value)
         }));
+        console.log(formattedData);
         series1.current.setData(formattedData);
         //getApiJavaHistoricoPrueba(series1, 0)
       }
@@ -193,7 +194,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
           const response = await getHistory(sensorsComponent[2].api, machine);
           const formattedData = response.data.results.map((item) => ({
             time: new Date(item.time).getTime(),
-            value: parseFloat(item.value) + 40
+            value: parseFloat(item.value)
           }));
           series3.current.setData(formattedData);
         } else {

@@ -60,7 +60,7 @@ export const ControlPanel = () => {
 
     return (
         <>
-            <NavEquipos/>
+            <NavEquipos url= {"control"}/>
             <main className={Style.CabeceraPanelControl}>
                 <Title title={ equipo } properties={"RECETA"} description={ datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA } report={true} />
                 

@@ -11,7 +11,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 //Component
 import { Toaster, toast } from 'sonner';
-import { data } from "autoprefixer";
 
 export const Productivity = () => {
     const [startDate, setStartDate] = useState(new Date());
@@ -28,9 +27,8 @@ export const Productivity = () => {
     const years = Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
     const months = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",];
 
-    let totalProductos = 0;
     let promedio = 0;
-    
+    let totalProductos = 0;
     //const acumular = (acomulador, numero) =>  acomulador + numero;
     const convertirDecimalAHoraMinutos =(decimal)=> {
         let horas = Math.floor(decimal);

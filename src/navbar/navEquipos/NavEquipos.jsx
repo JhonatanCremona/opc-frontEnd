@@ -10,13 +10,15 @@ import Enfriador from "../../IMG/Enfriador/ENTM-09-0001-rev01.png"
 //Context
 import { PanelContext } from "../../context/PanelContext";
 
-export const NavEquipos = () => {
+export const NavEquipos = ({url}) => {
     let { equipo } = useParams();
+
+
 
     return (
         <nav className={Style.equipoNav}>
             <article className={Style.ComponentImagen}>
-                <a href= {`/panel-control/Cocina1`} className={Style.boxImagen}
+                <a href= {`/panel-${url}/Cocina1`} className={Style.boxImagen}
                 >
                     <img className={Style.Imagen} src={Cocina} alt="Imagen Cocina" />    
                 </a>
@@ -25,7 +27,7 @@ export const NavEquipos = () => {
             
             <article>
             <a 
-                href= {`/panel-control/Enfriador1`} 
+                href= {`/panel-${url}/Enfriador1`} 
                 className={Style.boxImagen}>
                 <img className={Style.Imagen} src={Enfriador} alt="Imagen Enfriador" /> 
             </a> 

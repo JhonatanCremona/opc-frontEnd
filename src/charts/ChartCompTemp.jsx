@@ -1,11 +1,13 @@
 //Depending 
-import { useState, useEffect, forwardRef, useLayoutEffect,useRef } from "react"
+import { useState, useEffect, forwardRef, useLayoutEffect,useRef, useContext } from "react"
 import { createChart } from "lightweight-charts"
 import {  getApiJavaHistoricoPrueba, getHistory } from "../service/client.js";
+import { PanelContext } from "../context/PanelContext.jsx";
 //Component
 
 export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
   const [chart, setChart] = useState(null);
+  const { watermarkStyle } = useContext(PanelContext)
 
   const machine = "Cocina1";
 
@@ -65,7 +67,6 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
         vertTouchDrag: false,
       },
     });
-
     chartInstance.timeScale().applyOptions({
       timeVisible: false,
       secondsVisible: false,
@@ -229,6 +230,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
 
 
     return (
+        <>
         <div id="chart-container" style={
             {
               position: "absolute",
@@ -238,6 +240,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
             }
         }>
         </div>
+        </>
     );
   });
   

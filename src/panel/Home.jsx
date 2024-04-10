@@ -6,8 +6,10 @@ import { transformDataMachine } from "../service/client";
 import anime from "animejs";
 
 //Images
-import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
-import Enfriador from "../IMG/Enfriador/ENTM-09-0001-rev01.png"
+//import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
+//import Enfriador from "../IMG/Enfriador/ENTM-09-0001-rev01.png"
+import Cocina from "../IMG/Cocina/COTM-10-0001-r01.png"
+import EnfriadorPF from "../IMG/Enfriador/ENTM-10-0001enfriador.png"
 import { Arrow } from "../Icon/Icon";
 
 //Context
@@ -17,7 +19,7 @@ import { PanelContext } from "../context/PanelContext";
 import "../charts/title/testing.css"
 
 export const Home = () => {
-    //const [machines , setMachines] = useState([])
+    const [machines , setMachines] = useState([])
     const [dataReport, setDataReport] = useState([]);
     let { setUrlPanel,  } = useContext(PanelContext);
     
@@ -39,7 +41,7 @@ export const Home = () => {
     }, []);
     
     
-    /*
+    
     useEffect(() => {
         const fetchData = async () => { setMachines(await transformDataMachine())};
         console.log(machines)
@@ -47,7 +49,7 @@ export const Home = () => {
         const intervalId = setInterval(fetchData, 5000);
         return () => clearInterval(intervalId);
       }, []);
-    */
+    
 
     return (
         <>
@@ -66,12 +68,12 @@ export const Home = () => {
 
             
             <section className={Style.equipos}>
-            {dataReport.map ((machine) =>{
+            {machines.map ((machine) =>{
                 return (
                     <div className={Style.card} key={machine.ID}>
                         <section className={Style.imagen}>
                             <img className={Style.imgEquipo}
-                            src={machine.NOMBRE_EQUIPO == "Cocina" ? Cocina : Enfriador} alt="ImagenEquipo" />
+                            src={machine.NOMBRE_EQUIPO == "Cocina" ? Cocina : EnfriadorPF} alt="ImagenEquipo" />
                         </section>
 
                         <section className={ machine.ESTADO != "OPERATIVO" ? Style.tagsContainer : Style.tagsContainerOperativo }>

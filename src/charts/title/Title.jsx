@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 export const Title = (props) => {
     const { title, report, chart, properties, description } = props;
+    console.log(description);
 
     let StyleMachine = description == "Cocina1" ? `${Style.CocinaTitle}` : 
     description == "Enfriador1" ? `${Style.EnfriadorTitle}` : `${Style.machine}`

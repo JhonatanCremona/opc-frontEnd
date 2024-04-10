@@ -160,9 +160,6 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, re
               return formattedDate;
             },
           });
-        chartInstance.applyOptions({
-            watermark: watermarkStyle,
-        });
         const series = chartInstance.addBaselineSeries({ StylesSeries })
 
         series.setData([]);

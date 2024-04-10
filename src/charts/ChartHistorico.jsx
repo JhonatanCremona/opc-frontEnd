@@ -3,6 +3,8 @@ import { forwardRef, useEffect, useLayoutEffect, useRef,useContext, useState } f
 import { PanelContext } from "../context/PanelContext";
 import { getDataComponent } from "../service/client";
 
+import Logo from "../IMG/Logo/MARCA-AGUA-CREMINOX.png";
+
 import Style from "../panel-graficos/PanelGraficos.module.css"
 
 
@@ -20,9 +22,6 @@ export const ChartHistorico = forwardRef(({}, ref) => {
 
     const [maxValue, setMaxValue] = useState("");
     const [minValue, setMinValue] = useState("");
-
-
-  
 
     useLayoutEffect(() => {
         const container = document.getElementById("chart-container-register-historico");
@@ -46,9 +45,6 @@ export const ChartHistorico = forwardRef(({}, ref) => {
               return formattedDate;
             },
           });
-        chartInstance.applyOptions({
-            watermark: watermarkStyle,
-        });
         // add line Price series to chart (TEMP_PRODUCTO, TEMP_AGUA, TEMP_INGRESO):
         const series = chartInstance.addLineSeries({
             color: "rgba(239, 83, 80, 1)", lineWidth: 2
@@ -193,6 +189,9 @@ export const ChartHistorico = forwardRef(({}, ref) => {
                     }>
 
                     </div>
+                    <img src={ Logo } alt="" style={{
+                        position:"absolute", zIndex:"100", width:"320px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.5",   
+                    }}/>
                 </section>
         </section>
     )

@@ -41,6 +41,7 @@ export const ControlPanel = () => {
                     const response = await getReportMachine(equipo);
                     response.data.componentes.ESTADO = valueStateMachine(response.data.componentes.ESTADO);
                     setDatos(response.data || {});
+                    console.log(datos.componentes.ESTADO == "INACTIVO");
                 } catch (error) {
                     console.error("MENSAJE ERROR READAPI REPORT: ", error);
                     setDatos(equipo === "Cocina1" ? ReporteCocina : equipo === "Enfriador1" ? ReporteEnfriador : {});
@@ -57,12 +58,12 @@ export const ControlPanel = () => {
     if (equipo != "Cocina1" && equipo != "Enfriador1") {
         return <Navigate to="/" />;
     }
-
+    
     return (
         <>
             <NavEquipos url= {"control"}/>
             <main className={Style.CabeceraPanelControl}>
-                <Title title={ equipo } properties={"RECETA"} description={ datos.NRO_RECETA + " - " +  datos.NOMBRE_RECETA } report={true} />
+                <Title title={ equipo } properties={"RECETA"} description={ `${ datos?.componentes?.ESTADO == "INACTIVO" ? "": datos.NRO_RECETA +" - "+datos.NOMBRE_RECETA }` } report={true} />
                 
                 <section className={Style.boxDataTime}>
                     < Card controlpanel={true} value={ datos?.componentes?.ESTADO }/>

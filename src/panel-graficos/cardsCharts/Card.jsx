@@ -4,12 +4,11 @@ import { useRef, useState } from "react";
 //Component
 import { ChartCompTemp } from "../../charts/ChartCompTemp"
 import { useParams } from "react-router-dom";
+import Logo from "../../IMG/logo/MARCA-AGUA-CREMINOX.png"
 
 export const Card = ({ controlpanel, value }) => {
     let {equipo} = useParams();
-    console.log(equipo);
     let cpanel = controlpanel;
-
     const [ sensors, setSensors ] = useState([
         {
             id: 1,
@@ -58,6 +57,9 @@ export const Card = ({ controlpanel, value }) => {
                 </nav>
                 
                 <section className={Style.c_chartSeries}>
+                    <img src={ Logo } alt="" style={{
+                        position:"absolute", zIndex:"10000", alignItems:"center", width:"300px", left:"150px", top:"80px", opacity:"0.5",   
+                    }}/>
                     < ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors } panel={ cpanel } ref={childRef}/>
                 </section>
             </section>
@@ -82,6 +84,9 @@ export const Card = ({ controlpanel, value }) => {
                 </nav>
                 <section className={Style.c_chartSeries}>
                     < ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors }  ref={childRef} />
+                    <img src={ Logo } alt="" style={{
+                        position:"absolute", zIndex:"100", width:"320px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.5",   
+                    }}/>
                 </section>
             </section>
     )

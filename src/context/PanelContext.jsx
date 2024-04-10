@@ -1,4 +1,5 @@
 import { createContext,useState, useContext,  } from "react";
+import Logo from "../IMG/logo/MARCA-AGUA-CREMINOX.png"
 
 export const PanelContext = createContext();
 export const useAuth = () => {
@@ -11,7 +12,7 @@ export const PanelContextProvider = ({ children }) => {
     const [urlPanelChart, setUrlPanelChart] = useState("/panel-graficos/Cocina1");
     const [ciclo, setCiclo] = useState(0);
     const [ leyendaCiclo, setLeyectaCiclo] = useState({});
-
+    console.log(Logo);
     //const [isAuthenticated, setIsAuthenticated] = useState(false);
     
 

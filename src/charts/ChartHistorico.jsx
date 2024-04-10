@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useLayoutEffect, useRef,useContext, useState } f
 import { PanelContext } from "../context/PanelContext";
 import { getDataComponent } from "../service/client";
 
-import Logo from "../IMG/Logo/MARCA-AGUA-CREMINOX.png";
+import Logo from "../IMG/logo/MARCA-AGUA-CREMINOX.png";
 
 import Style from "../panel-graficos/PanelGraficos.module.css"
 

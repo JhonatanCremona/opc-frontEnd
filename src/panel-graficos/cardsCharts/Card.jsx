@@ -58,7 +58,7 @@ export const Card = ({ controlpanel, value }) => {
                 
                 <section className={Style.c_chartSeries}>
                     <img src={ Logo } alt="" style={{
-                        position:"absolute", zIndex:"10000", alignItems:"center", width:"300px", left:"150px", top:"80px", opacity:"0.5",   
+                        position:"absolute", zIndex:"10000", alignItems:"center", width:"300px", left:"150px", top:"80px", opacity:"0.3",   
                     }}/>
                     < ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors } panel={ cpanel } ref={childRef}/>
                 </section>
@@ -85,7 +85,7 @@ export const Card = ({ controlpanel, value }) => {
                 <section className={Style.c_chartSeries}>
                     < ChartCompTemp sensorsComponent = { sensors } updateSensorsComponent ={ setSensors }  ref={childRef} />
                     <img src={ Logo } alt="" style={{
-                        position:"absolute", zIndex:"100", width:"320px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.5",   
+                        position:"absolute", zIndex:"100", width:"320px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.3",   
                     }}/>
                 </section>
             </section>

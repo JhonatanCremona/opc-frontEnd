@@ -5,11 +5,8 @@ import { useState,  useEffect, useContext } from "react";
 import { transformDataMachine } from "../service/client";
 import anime from "animejs";
 
-//Images
-//import Cocina from "../IMG/Cocina/COTM-09-0001-r01.png"
-//import Enfriador from "../IMG/Enfriador/ENTM-09-0001-rev01.png"
-import Cocina from "../IMG/Cocina/COTM-10-0001-r01.png"
-import EnfriadorPF from "../IMG/Enfriador/ENTM-10-0001enfriador.png"
+import Cocina from "../IMG/cocina/COTM-10-0001-r01.png"
+import EnfriadorPF from "../IMG/enfriador/ENTM-10-0001enfriador.png"
 import { Arrow } from "../Icon/Icon";
 
 //Context

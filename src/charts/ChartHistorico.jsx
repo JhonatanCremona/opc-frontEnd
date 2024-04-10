@@ -190,7 +190,7 @@ export const ChartHistorico = forwardRef(({}, ref) => {
 
                     </div>
                     <img src={ Logo } alt="" style={{
-                        position:"absolute", zIndex:"100", width:"320px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.5",   
+                        position:"absolute", zIndex:"100", width:"320px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.3",   
                     }}/>
                 </section>
         </section>

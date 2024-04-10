@@ -15,7 +15,7 @@ export const CardWater  = ({ chartName, component, urlComponent, numeroCiclo }) 
                     </ul>
                 <section className={Style.c_chartSeries}>
                     <img src={ Logo } alt="" style={{
-                        position:"absolute", zIndex:"10000", width:"300px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.5",   
+                        position:"absolute", zIndex:"10000", width:"300px", left:"0", right:"0", bottom:"0", top:"0", margin: "auto",  opacity:"0.3",   
                     }}/>
                     < ChartWaterLavel load = { started } chartName={ chartName } url={urlComponent} idCiclo={numeroCiclo}/>
                 </section>

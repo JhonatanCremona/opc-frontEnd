@@ -171,8 +171,8 @@ export const ChartHistorico = forwardRef(({}, ref) => {
                                                 <h3 className={Style.component_name} style={{margin:"0px"}}>{component.name}</h3>
                                               </div>
                                               <div style={{display:"flex", flexDirection:"column", gap:"10px", marginLeft:"20px" }}>
-                                                <span style={{color:"#fff"}}>Max: {component.maxValue}</span>
-                                                <span style={{color:"#fff"}}>Min: {component.minValue}</span>
+                                                <span className={Style.component_title_value} style={{color:"#fff"}}>Max: {component.maxValue} °C</span>
+                                                <span className={Style.component_title_value} style={{color:"#fff"}}>Min: {component.minValue} °C</span>
                                               </div>
                                             </div>
                                     )

@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { SearchIcon,DownloadReportIcon } from "../Icon/Icon";
-import { getCiclo,getDataComponent } from "../service/client";
+import { getCiclo,getDataComponent, getDownloadFile } from "../service/client";
 //Component
 import { Card } from "./cardsCharts/Card";
 import { CardWater } from "./cardsCharts/CardWater";
@@ -14,7 +14,9 @@ import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Modals } from "../Modals/Modals";
 import { PanelContext } from "../context/PanelContext";
 import { ChartHistorico } from "../charts/ChartHistorico";
-
+import { saveAs } from 'file-saver';
+import { data } from "autoprefixer";
+import axios from "axios";
 
 export const PanelGraficos = () => {
     const [startDate, setStartDate] = useState(new Date());
@@ -31,6 +33,8 @@ export const PanelGraficos = () => {
     const currentYear = new Date().getFullYear();
     const years = Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
     const months = [ "Enero", "Febrero","Marzo", "Abril", "Mayo", "Junio","Julio",  "Agosto","Septiembre","Octubre","Noviembre", "Diciembre",];
+    const components = ["TEMP_AGUA", "TEMP_INGRESO", "TEMP_PRODUCTO", "NIVEL_AGUA"]
+
     const handleSubmitCiclo = async (idCiclo)=>{
         setEstadoModalOne(false);
         setIdCiclo(idCiclo);
@@ -49,11 +53,11 @@ export const PanelGraficos = () => {
 
         if ( startDate !== null && endDate !== null ) {
             try {
-                //const response = getCiclo(machine, startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
-                const response = await getCiclo(machine, "2024-04-05", "2024-04-10");
+                const response = await getCiclo(machine, startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
+                //const response = await getCiclo(machine, "2024-04-05", "2024-04-10");
                 console.log( response.data.ciclos);
                 setListDataCiclos(response.data.ciclos)
-
+                console.log(dataCiclos);
             } catch (error) {
                 console.error(error);
             }
@@ -63,6 +67,32 @@ export const PanelGraficos = () => {
         var fecha = new Date(fechaStr);
         return fecha.getDate() + " " + fecha.toLocaleString('default', { month: 'short' }) + " " + fecha.getFullYear() + " : " + fecha.getHours() + ":" + (fecha.getMinutes() < 10 ? '0' : '') + fecha.getMinutes() + " hs";
     }
+
+    const handleDownload = async () => {
+        let machine = equipo === "Cocina1" ? "1" : "2";
+        console.log(machine);
+        for (const component of components) {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/descarga/${machine}/${startDate.toISOString().slice(0, 10)}/${endDate.toISOString().slice(0, 10)}/${component}`, {
+                    responseType: 'blob' 
+                });
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `resultado_${startDate.toISOString().slice(0, 10)}_${endDate.toISOString().slice(0, 10)}_${component}.xls`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Libera la URL del objeto Blob
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error(`Error al descargar el archivo para el componente ${component}:`, error);
+            }
+        }
+    };
+    
+    
 
     return (
         <>
@@ -212,7 +242,7 @@ export const PanelGraficos = () => {
                                 onClick={()=> setEstadoModalOne(!estadoModalOne)}
                                 > 
                                 <SearchIcon/> Buscar</button>
-                                <button className={ Style.button_component}> <DownloadReportIcon/> Descargar</button>
+                                <button onClick={handleDownload} className={ Style.button_component}> <DownloadReportIcon/> Descargar</button>
                             </section>
                         </form>
                         <Modals estado={estadoModalOne} switchEstado={setEstadoModalOne}>

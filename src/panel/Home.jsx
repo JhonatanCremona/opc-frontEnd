@@ -5,8 +5,11 @@ import { useState,  useEffect, useContext } from "react";
 import { transformDataMachine } from "../service/client";
 import anime from "animejs";
 
-import Cocina from "../IMG/cocina/COTM-10-0001-r01.png"
-import EnfriadorPF from "../IMG/enfriador/ENTM-10-0001enfriador.png"
+//import Cocina from "../IMG/cocina/E1_icono.png"
+//import Enfriador from "../IMG/enfriador/E2_icono.png"
+import Cocina from "../IMG/cocina/E1_sinfondo.png";
+import Enfriador from "../IMG/enfriador/E2_sinfondo.png";
+
 import { Arrow } from "../Icon/Icon";
 
 //Context
@@ -20,6 +23,8 @@ export const Home = () => {
     const [dataReport, setDataReport] = useState([]);
     let { setUrlPanel,  } = useContext(PanelContext);
     
+    console.log(Enfriador);
+
     function animationTitle(className) {
         var textWrapper = document.querySelector(`.${className} .letters`);
         textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
@@ -70,7 +75,7 @@ export const Home = () => {
                     <div className={Style.card} key={machine.ID}>
                         <section className={Style.imagen}>
                             <img className={Style.imgEquipo}
-                            src={machine.NOMBRE_EQUIPO == "Cocina" ? Cocina : EnfriadorPF} alt="ImagenEquipo" />
+                            src={machine.NOMBRE_EQUIPO == "Cocina" ? Cocina : Enfriador } alt="ImagenEquipo" />
                         </section>
 
                         <section className={ machine.ESTADO != "OPERATIVO" ? Style.tagsContainer : Style.tagsContainerOperativo }>

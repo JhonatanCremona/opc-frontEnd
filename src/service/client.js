@@ -141,6 +141,14 @@ export const getDataComponent = async(component, idCiclo) => {
     }
 }
 
+export const getDownloadFile = async(machine, dateStart, dateEnd, component ) => {
+    try {
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/descarga/${machine}/${dateStart}/${dateEnd}/${component}`)
+    } catch (e) {
+        console.error(e);
+        return "Error al hacer una consulta a la BASE DE DATOS";
+    }
+}
 
 export const getApiJavaHistorico = async () => {
     try {

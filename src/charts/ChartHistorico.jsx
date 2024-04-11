@@ -12,9 +12,11 @@ export const ChartHistorico = forwardRef(({}, ref) => {
     const [components, setComponents] = useState([
       {name: "Temp. de Producto", color: "rgba(239, 83, 80, 1)", minValue: "0", maxValue:"0" },
         {name: "Temp. de Agua", color: "#33A7FD", minValue: "0", maxValue:"0" },
-        {name: "Temp. de Ingreso", color: "#3c8a64", minValue: "0", maxValue:"0" }
+        {name: "Temp. de Ingreso", color: "orange", minValue: "0", maxValue:"0" }
     ])
-    const { ChartLayoutOptions, ciclo, watermarkStyle, leyendaCiclo } = useContext(PanelContext);
+    const { ChartLayoutOptions, ciclo, leyendaCiclo } = useContext(PanelContext);
+    const [chart, setChart] = useState(null);
+    console.log(leyendaCiclo);
 
     const seriesOne = useRef(null);
     const seriesTwo = useRef(null);
@@ -22,6 +24,16 @@ export const ChartHistorico = forwardRef(({}, ref) => {
 
     const [maxValue, setMaxValue] = useState("");
     const [minValue, setMinValue] = useState("");
+    const [leyenda, setLeyenda] = useState({
+      Receta: "",
+      Lote: "",
+      FechaInicio: ""
+    })
+
+    function formatearFecha(fechaStr) {
+      var fecha = new Date(fechaStr);
+      return fecha.getDate() + " " + fecha.toLocaleString('default', { month: 'short' }) + " " + fecha.getFullYear() + " : " + fecha.getHours() + ":" + (fecha.getMinutes() < 10 ? '0' : '') + fecha.getMinutes() + " hs";
+  }
 
     useLayoutEffect(() => {
         const container = document.getElementById("chart-container-register-historico");
@@ -31,17 +43,20 @@ export const ChartHistorico = forwardRef(({}, ref) => {
         });
 
         chartInstance.timeScale().fitContent();
+        
         chartInstance.timeScale().applyOptions({
             timeVisible: false,
             secondsVisible: false,
             tickMarkFormatter: (time, tickMarkType, locale) => {
-              const date = new Date(time); 
+              const date = new Date(time * 1000); 
+              console.log("HORA DEL CICLO !!!!!!:", date.getHours());
               const formattedDate = date.toLocaleDateString(locale, {
-                month: 'numeric',
+                month:"numeric",
                 hour: 'numeric',
                 minute: 'numeric',
                 second: 'numeric',
               });
+              console.log(formattedDate);
               return formattedDate;
             },
           });
@@ -54,12 +69,13 @@ export const ChartHistorico = forwardRef(({}, ref) => {
         const secondSeries = chartInstance.addLineSeries( { priceScaleId: "right", color: "#33A7FD"});
         secondSeries.setData([]);
 
-        const thirdSeries = chartInstance.addLineSeries( { priceScaleId:"right", color: "#3c8a64"});
+        const thirdSeries = chartInstance.addLineSeries( { priceScaleId:"right", color: "orange"});
         thirdSeries.setData([]);
 
         seriesOne.current = series;
         seriesTwo.current = secondSeries;
         seriesThree.current = thirdSeries;
+        setChart(chartInstance);
 
         return () => {
             if(chartInstance) {
@@ -77,10 +93,12 @@ export const ChartHistorico = forwardRef(({}, ref) => {
             const formatter = apiData.data.data.map((item)=> {
               console.log(item);
               return {
-                time: new Date(item[1]).getTime(),
+                time: item[1],
                 value: parseFloat(item[0])
             }});
             console.log(formatter);
+
+            
             setComponents(prevComponents => [
               {
                 ...prevComponents[0], // Copiar el objeto existente en el índice uno
@@ -95,6 +113,17 @@ export const ChartHistorico = forwardRef(({}, ref) => {
           }
         }
         fetchDataHistorico();
+        console.log(leyendaCiclo.length);
+        console.log(leyendaCiclo[0]);
+        if (leyendaCiclo.length > 0) {
+          console.log("llegue");
+          setLeyenda({
+            Receta: leyendaCiclo[0].Receta,
+            Lote: leyendaCiclo[0].Lote,
+            FechaInicio: formatearFecha(leyendaCiclo[0].fecha_inicio)
+          })
+        }
+        console.log(leyenda);
         //seriesOne.current.createPriceLine(maxPriceLine);
         //seriesOne.current.createPriceLine(minPriceLine);
 
@@ -107,9 +136,10 @@ export const ChartHistorico = forwardRef(({}, ref) => {
             const formatter = apiData.data.data.map((item)=> {
               console.log(item);
               return {
-                time: new Date(item[1]).getTime(),
+                time: item[1],
                 value: parseFloat(item[0])
             }});
+            console.log(formatter);
             setComponents(prevComponents => [
               ...prevComponents.slice(0, 1), // Mantener los primeros objetos sin cambios
               {
@@ -135,7 +165,7 @@ export const ChartHistorico = forwardRef(({}, ref) => {
             console.log(apiData.data.data);
             const formatter = apiData.data.data.map((item)=> {
               return {
-                time: new Date(item[1]).getTime(),
+                time: item[1],
                 value: parseFloat(item[0])
             }});
             setComponents(prevComponents => [
@@ -157,7 +187,7 @@ export const ChartHistorico = forwardRef(({}, ref) => {
         //seriesOne.current.createPriceLine(minPriceLine);
 
       }, [ciclo])
-    
+      
 
     return ( 
         <section className={Style.c_chart}>
@@ -177,6 +207,11 @@ export const ChartHistorico = forwardRef(({}, ref) => {
                                             </div>
                                     )
                                 })}
+                            </section>
+                            <section className={Style.component_leyenda_ciclo}>
+                                <h3 className={Style.component_leyenda_title }>Receta: {` ${leyenda.Receta}`}</h3>
+                                <h3 className={Style.component_leyenda_title }>Lote:  {` ${leyenda.Lote}`}</h3>
+                                <h3 className={Style.component_leyenda_title }>Fecha Incio: {`${leyenda.FechaInicio}`}</h3>
                             </section>
                     </ul>
                 <section className={Style.c_chartSeries}>

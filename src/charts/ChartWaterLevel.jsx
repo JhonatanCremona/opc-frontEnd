@@ -150,7 +150,7 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, re
             timeVisible: false,
             secondsVisible: false,
             tickMarkFormatter: (time, tickMarkType, locale) => {
-              const date = new Date(time); 
+              const date = new Date(time * 1000); 
               const formattedDate = date.toLocaleDateString(locale, {
                 month: 'numeric',
                 hour: 'numeric',

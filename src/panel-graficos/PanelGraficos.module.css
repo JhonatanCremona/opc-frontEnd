@@ -150,11 +150,28 @@
     border-radius: 6px;
     padding: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
     width: 100%;
     margin: 0;
 }
+.component_leyenda_ciclo {
+    color: #D9D9D9;
+    border: 1px solid rgb(61, 61, 61);
+    border-radius: 5px;
+    max-height: 81px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+.component_leyenda_title {
+    font-family: "Roboto";
+    margin: 0px;
+}
+
 /*Component FORM NATIVE
 .form_date {
     display: grid;
@@ -327,5 +344,5 @@
 .component_title_value {
     font-family: "Roboto";
     font-weight: 400;
-    
+
 }

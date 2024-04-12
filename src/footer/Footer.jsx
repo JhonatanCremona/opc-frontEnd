@@ -19,7 +19,7 @@ export const Footer=() => {
                     <h2 className={Style.title + " " + Style.n1}>Contacto</h2>
                     <p className={Style.text}>
                         <span className={Style.iconLista}><TELEFONO/>Tel: +54 11 4918 3944</span>
-                        <span className={Style.iconLista}><EMAIL/>Email:</span> 
+                        <span className={Style.iconLista}><EMAIL/>Email: soporte@creminox.com</span> 
                     </p>
                 </article>
                 <article className={Style.lista}>

@@ -1,7 +1,5 @@
 import { useParams } from "react-router"
-import { Link } from "react-router-dom"
 import Style from "./NavEquipos.module.css"
-import { useContext } from "react"
 
 //Imagenes
 import Cocina from "../../IMG/cocina/E1_icono.png";
@@ -10,7 +8,6 @@ import Enfriador from "../../IMG/sinfondo/E2_icono.png";
 //Context
 
 export const NavEquipos = ({url}) => {
-    console.log(Enfriador);
     let { equipo } = useParams();
     return (
         <nav className={Style.equipoNav}>

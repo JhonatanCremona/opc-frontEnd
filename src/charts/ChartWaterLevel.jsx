@@ -6,13 +6,8 @@ import { getHistory,getDataComponent } from "../service/client";
 import { PanelContext } from "../context/PanelContext";
 
 export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, ref) => {
-    console.log(idCiclo);
-    console.log(url);
-
     const seriesRef = useRef(null);
-    const { StyleTooltip, ciclo, watermarkStyle } = useContext(PanelContext);
-
-    console.log("Acceder al id Ciclo desde un context: ", ciclo);
+    const { StyleTooltip, ciclo } = useContext(PanelContext);
 
     const machine ="Cocina1";
     const [maxValue, setMaxValue] = useState("");
@@ -97,7 +92,7 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, re
       ) {
         toolTip.style.display = 'block';
       } else {
-        const dateStr = new Date(param.time).toLocaleString();
+        const dateStr = new Date(param.time * 1000).toLocaleString();
         toolTip.style.display = 'block';
         const data = param.seriesData.get(series);
         const price = data.value !== undefined ? data.value : data.close;
@@ -123,16 +118,6 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, re
         toolTip.style.left = left + 'px';
         toolTip.style.top = 0 + 'px';
       }
-    }
-    function setSeriesPriceLine(value) {
-          seriesRef.current.createPriceLine({
-            price: parseFloat(value),
-            color: '#be1238',
-            lineWidth: 2,
-            lineStyle: 3,
-            axisLabelVisible: true,
-            title: 'Máximo',
-          });
     }
     
 
@@ -164,9 +149,6 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, re
 
         series.setData([]);
         seriesRef.current = series;
-
-        //series.createPriceLine(minPriceLine);
-        //series.createPriceLine(maxPriceLine);
         
         chartInstance.subscribeCrosshairMove(param => {
           subScribeToolTip(param, container, seriesRef.current, StyleTooltip.sensor_water_level.sw_width, chartInstance);
@@ -179,18 +161,14 @@ export const ChartWaterLavel = forwardRef(({ chartName, load, url, idCiclo }, re
 
     },[])
     useEffect(()=> {
-      console.log("ME EJECUTE DESDE EL PANEL " + ciclo);
       const fetchDataHistorico = async() => {
         try {
           const apiData = await getDataComponent(url, ciclo);
-          console.log(apiData.data.data);
           const formatter = apiData.data.data.map((item)=> {
-            console.log(item);
             return {
               time: new Date(item[1]).getTime(),
               value: parseFloat(item[0])
           }});
-          console.log(formatter);
           return seriesRef.current.setData(formatter);
         } catch (error) {
           console.log(error);

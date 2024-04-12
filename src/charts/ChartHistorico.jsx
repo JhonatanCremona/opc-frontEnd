@@ -16,14 +16,10 @@ export const ChartHistorico = forwardRef(({}, ref) => {
     ])
     const { ChartLayoutOptions, ciclo, leyendaCiclo } = useContext(PanelContext);
     const [chart, setChart] = useState(null);
-    console.log(leyendaCiclo);
 
     const seriesOne = useRef(null);
     const seriesTwo = useRef(null);
     const seriesThree = useRef(null);
-
-    const [maxValue, setMaxValue] = useState("");
-    const [minValue, setMinValue] = useState("");
     const [leyenda, setLeyenda] = useState({
       Receta: "",
       Lote: "",
@@ -49,14 +45,13 @@ export const ChartHistorico = forwardRef(({}, ref) => {
             secondsVisible: false,
             tickMarkFormatter: (time, tickMarkType, locale) => {
               const date = new Date(time * 1000); 
-              console.log("HORA DEL CICLO !!!!!!:", date.getHours(), "VALOR DEL TIEMSTAPPP:" , time);
+              
               const formattedDate = date.toLocaleDateString(locale, {
                 month:"numeric",
                 hour: 'numeric',
                 minute: 'numeric',
                 second: 'numeric',
               });
-              console.log(formattedDate);
               return formattedDate;
             },
           });
@@ -85,18 +80,14 @@ export const ChartHistorico = forwardRef(({}, ref) => {
     }, []);
 
     useEffect(()=> {
-        console.log("ME EJECUTE DESDE EL PANEL " + ciclo);
         const fetchDataHistorico = async() => {
           try {
             const apiData = await getDataComponent("TEMP_PRODUCTO", ciclo);
-            console.log(apiData.data.data);
             const formatter = apiData.data.data.map((item)=> {
-              console.log(item);
               return {
                 time: item[1],
                 value: parseFloat(item[0])
             }});
-            console.log(formatter);
 
             
             setComponents(prevComponents => [
@@ -113,33 +104,24 @@ export const ChartHistorico = forwardRef(({}, ref) => {
           }
         }
         fetchDataHistorico();
-        console.log(leyendaCiclo.length);
-        console.log(leyendaCiclo[0]);
         if (leyendaCiclo.length > 0) {
-          console.log("llegue");
           setLeyenda({
             Receta: leyendaCiclo[0].Receta,
             Lote: leyendaCiclo[0].Lote,
             FechaInicio: formatearFecha(leyendaCiclo[0].fecha_inicio)
           })
         }
-        console.log(leyenda);
-        //seriesOne.current.createPriceLine(maxPriceLine);
-        //seriesOne.current.createPriceLine(minPriceLine);
 
       }, [ciclo])
       useEffect(()=> {
         const fetchDataHistorico = async() => {
           try {
             const apiData = await getDataComponent("TEMP_AGUA", ciclo);
-            console.log(apiData.data.data);
             const formatter = apiData.data.data.map((item)=> {
-              console.log(item);
               return {
                 time: item[1],
                 value: parseFloat(item[0])
             }});
-            console.log(formatter);
             setComponents(prevComponents => [
               ...prevComponents.slice(0, 1), // Mantener los primeros objetos sin cambios
               {
@@ -158,11 +140,9 @@ export const ChartHistorico = forwardRef(({}, ref) => {
 
       }, [ciclo])
       useEffect(()=> {
-        console.log("ME EJECUTE DESDE EL PANEL " + ciclo);
         const fetchDataHistorico = async() => {
           try {
             const apiData = await getDataComponent("TEMP_INGRESO", ciclo);
-            console.log(apiData.data.data);
             const formatter = apiData.data.data.map((item)=> {
               return {
                 time: item[1],
@@ -182,15 +162,12 @@ export const ChartHistorico = forwardRef(({}, ref) => {
           }
         }
         fetchDataHistorico();
-        console.log(components);
-        //seriesOne.current.createPriceLine(maxPriceLine);
-        //seriesOne.current.createPriceLine(minPriceLine);
 
       }, [ciclo])
       
 
     return ( 
-        <section className={Style.c_chart}>
+        <section className={Style.c_chart} style={{maxHeight:"460px"}}>
                     <ul className={Style.list_option_component}>
                             <section style={{display: "flex",alignItems: "center",gap:"10px" }}>
                                 {components.map((component, index) => {

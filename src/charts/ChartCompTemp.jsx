@@ -1,15 +1,15 @@
 //Depending 
-import { useState, useEffect, forwardRef, useLayoutEffect,useRef, useContext } from "react"
+import { useState, useEffect, forwardRef, useLayoutEffect,useRef } from "react"
 import { createChart } from "lightweight-charts"
-import {  getApiJavaHistoricoPrueba, getHistory } from "../service/client.js";
-import { PanelContext } from "../context/PanelContext.jsx";
+import {  getHistory } from "../service/client.js";
+import { useParams } from "react-router";
 //Component
 
 export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
   const [chart, setChart] = useState(null);
-  const { watermarkStyle } = useContext(PanelContext)
+  let { equipo } = useParams();
 
-  const machine = "Cocina1";
+  
 
   const series1 = useRef(null);
   const series2 = useRef(null);
@@ -121,13 +121,11 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
       ) {
         toolTip.style.display = 'none';
       } else {
-        const dateStr = new Date(param.time).toLocaleString() ;
-        console.log(dateStr);
+        const dateStr = new Date(param.time * 1000).toLocaleString() ;
         toolTip.style.display = 'block';
         const data = param.seriesData.get(series1.current) || 
                       param.seriesData.get(series2.current) || 
                       param.seriesData.get(series3.current);
-        console.log(data);
         let nameSensor = "";
 
         if (param.seriesData.has(series2.current)) nameSensor = sensorsComponent[1].name;
@@ -158,9 +156,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
     }
   })
 
-
     return () => {
-      // Limpiar recursos cuando el componente se desmonta
       if (chartInstance) {
         chartInstance.remove();
       }
@@ -170,18 +166,17 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
   useEffect(() => {
     const updateData = async () => {
       if (sensorsComponent[0].estado) {
-        const response = await getHistory(sensorsComponent[0].api, machine)
+        const response = await getHistory(sensorsComponent[0].api, equipo)
         const formattedData = response.data.results.map((item) => ({
           time: new Date(item.time).getTime(),
           value: parseFloat(item.value)
         }));
-        console.log(formattedData);
         series1.current.setData(formattedData);
         //getApiJavaHistoricoPrueba(series1, 0)
       }
     }
     //getApiJavaHistoricoPrueba(series1, 0);
-    getHistory(sensorsComponent[0].api, machine);
+    getHistory(sensorsComponent[0].api, equipo);
     const interval = setInterval(updateData, 2000);
     return () => {
       clearInterval(interval);
@@ -191,8 +186,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
   useEffect(() => {
       const updateData = async () => {
         if (sensorsComponent[2].estado) {
-          //getApiJavaHistoricoPrueba(series3, 80)
-          const response = await getHistory(sensorsComponent[2].api, machine);
+          const response = await getHistory(sensorsComponent[2].api, equipo);
           const formattedData = response.data.results.map((item) => ({
             time: new Date(item.time).getTime(),
             value: parseFloat(item.value)
@@ -212,7 +206,7 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
       const updateData = async () => {
         if (sensorsComponent[1].estado) {
           //getApiJavaHistoricoPrueba(series2, 40)
-          const response = await getHistory(sensorsComponent[1].api, machine);
+          const response = await getHistory(sensorsComponent[1].api, equipo);
           const formattedData = response.data.results.map((item) => ({
             time: new Date(item.time).getTime(),
             value: parseFloat(item.value)
@@ -227,7 +221,6 @@ export const ChartCompTemp = forwardRef(({ sensorsComponent, panel }, ref) => {
         clearInterval(interval);
       };
     }, [sensorsComponent[1].estado])
-
 
     return (
         <>

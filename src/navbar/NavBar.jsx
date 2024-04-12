@@ -38,16 +38,16 @@ export const NavBar = () => {
             <nav className={Style.navbar}>
                 {/* ---------------Iconos----------------*/}
                 <ul className={Style.listaIconos}>
-                    <li>
-                            <Link to={"/usuario"}>
+                    <li style={{cursor:"none"}}>
+                            <a to={"/usuario"}>
                                 <User/>
-                            </Link>
+                            </a>
                     </li>
 
-                    <li>
-                            <Link to={"/notification"}>
+                    <li style={{cursor:"none"}}>
+                            <a to={"/notification"}>
                                 <Notification/>
-                            </Link>
+                            </a>
                     </li>
                 </ul>
                 <ul className={Style.lista}>
@@ -61,7 +61,7 @@ export const NavBar = () => {
                         })
                     }  
                     <div className={Style.logoNav}>
-                    <Link className={Style.logo} to="/" > 
+                    <Link className={Style.logo} to="https://www.creminox.com/" target="_blank" rel="noopener noreferrer" > 
                         <img className={Style.logoImagen} src={creminoxLogo} alt="" />
                     </Link>
                 </div>

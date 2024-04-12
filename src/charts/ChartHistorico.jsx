@@ -32,7 +32,7 @@ export const ChartHistorico = forwardRef(({}, ref) => {
 
     function formatearFecha(fechaStr) {
       var fecha = new Date(fechaStr);
-      return fecha.getDate() + " " + fecha.toLocaleString('default', { month: 'short' }) + " " + fecha.getFullYear() + " : " + fecha.getHours() + ":" + (fecha.getMinutes() < 10 ? '0' : '') + fecha.getMinutes() + " hs";
+      return fecha.getUTCDate() + " " + fecha.toLocaleString('default', { month: 'long' }) + " " + fecha.getUTCFullYear() + " : " + fecha.getUTCHours() + ":" + fecha.getUTCMinutes() + " hs";
   }
 
     useLayoutEffect(() => {
@@ -49,7 +49,7 @@ export const ChartHistorico = forwardRef(({}, ref) => {
             secondsVisible: false,
             tickMarkFormatter: (time, tickMarkType, locale) => {
               const date = new Date(time * 1000); 
-              console.log("HORA DEL CICLO !!!!!!:", date.getHours());
+              console.log("HORA DEL CICLO !!!!!!:", date.getHours(), "VALOR DEL TIEMSTAPPP:" , time);
               const formattedDate = date.toLocaleDateString(locale, {
                 month:"numeric",
                 hour: 'numeric',

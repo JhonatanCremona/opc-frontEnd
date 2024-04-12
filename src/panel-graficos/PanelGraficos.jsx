@@ -14,8 +14,6 @@ import { NavEquipos } from "../navbar/navEquipos/NavEquipos";
 import { Modals } from "../Modals/Modals";
 import { PanelContext } from "../context/PanelContext";
 import { ChartHistorico } from "../charts/ChartHistorico";
-import { saveAs } from 'file-saver';
-import { data } from "autoprefixer";
 import axios from "axios";
 
 export const PanelGraficos = () => {
@@ -65,7 +63,7 @@ export const PanelGraficos = () => {
     };
     function formatearFecha(fechaStr) {
         var fecha = new Date(fechaStr);
-        return fecha.getDate() + " " + fecha.toLocaleString('default', { month: 'short' }) + " " + fecha.getFullYear() + " : " + fecha.getHours() + ":" + (fecha.getMinutes() < 10 ? '0' : '') + fecha.getMinutes() + " hs";
+        return fecha.getUTCDate() + " " + fecha.toLocaleString('default', { month: 'long' }) + " " + fecha.getUTCFullYear() + " : " + fecha.getUTCHours() + ":" + fecha.getUTCMinutes() + " hs";
     }
 
     const handleDownload = async () => {

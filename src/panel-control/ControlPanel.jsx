@@ -107,7 +107,7 @@ export const ControlPanel = () => {
                             <SensorSinGrafico value={ datos.NRO_PASOS }  nSensor={"N° Pasos"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
                             <SensorSinGrafico value={ datos.NRO_RECETA } nSensor={"N° Receta"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgReceta : ImgRecetaInactive }/>
                             <SensorSinGrafico value={ "1"} nSensor={"N° Torres"} img={ImgSensorAguar}/>
-                            <SensorSinGrafico value={ datos.LOTEPESO } nSensor={"N° de Lote"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
+                            <SensorSinGrafico value={ datos.LOTEPESO } nSensor={"N° de Lote actual"} img={ datos?.componentes?.ESTADO == 2 || datos?.componentes?.ESTADO == "OPERACIONAL" ? ImgPasos : ImgPasosInactive }/>
                         </section>
                     </section>
 

@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { SearchIcon,DownloadReportIcon } from "../Icon/Icon";
-import { getCiclo,getDataComponent, getDownloadFile } from "../service/client";
+import { getCiclo } from "../service/client";
 //Component
 import { Card } from "./cardsCharts/Card";
 import { CardWater } from "./cardsCharts/CardWater";
@@ -52,10 +52,7 @@ export const PanelGraficos = () => {
         if ( startDate !== null && endDate !== null ) {
             try {
                 const response = await getCiclo(machine, startDate.toISOString().slice(0,10), endDate.toISOString().slice(0,10));
-                //const response = await getCiclo(machine, "2024-04-05", "2024-04-10");
-                console.log( response.data.ciclos);
                 setListDataCiclos(response.data.ciclos)
-                console.log(dataCiclos);
             } catch (error) {
                 console.error(error);
             }
@@ -68,7 +65,6 @@ export const PanelGraficos = () => {
 
     const handleDownload = async () => {
         let machine = equipo === "Cocina1" ? "1" : "2";
-        console.log(machine);
         for (const component of components) {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT_PRODUCTIVITY}/descarga/${machine}/${startDate.toISOString().slice(0, 10)}/${endDate.toISOString().slice(0, 10)}/${component}`, {
@@ -252,7 +248,6 @@ export const PanelGraficos = () => {
                             </div>
 
                             {dataCiclos.map((ciclo)=> {
-                                console.log(ciclo);
                                 return (
                                     <>
                                         <button key={ciclo.id_cliclo} 

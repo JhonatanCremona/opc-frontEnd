@@ -41,10 +41,6 @@ export const Productivity = () => {
         items.forEach((item)=> {
             var progressBar = item.querySelector(`.${Style.progress}`);
             var itemValue = progressBar.dataset.progress;
-            console.log("Data Progress 1: " + (data.uso_equipo_op + data.uso_equipo_pre));
-            console.log("Data Progress 2: " + (data.ciclos_correctos / data.ciclos_totales * 100) );
-
-            console.log(itemValue);
             var i = 0;
             var value = item;
     
@@ -126,7 +122,6 @@ export const Productivity = () => {
         }
         
         if (startDate == null && endDate == null) {
-            console.log("Debes de completar el formulario");
             toast.info('Debes de completar el formulario', {
                 style: {
                     background: "#131313",

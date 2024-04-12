@@ -40,7 +40,6 @@ export const ControlPanel = () => {
                 isFetching = true;
                 try {
                     response = await getReportMachine(equipo);
-                    console.log(response);
                     response.data.componentes.ESTADO = valueStateMachine(response.data.componentes.ESTADO);
                     setDatos(response.data || {});
                 } catch (error) {
@@ -52,7 +51,6 @@ export const ControlPanel = () => {
                 await new Promise((resolve) => setTimeout(resolve,5000));
             }
             fetchDataReporter();
-            console.log(datos);
         }
         fetchDataReporter();
     },[]);

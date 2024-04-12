@@ -20,10 +20,7 @@ import "../charts/title/testing.css"
 
 export const Home = () => {
     const [machines , setMachines] = useState([])
-    const [dataReport, setDataReport] = useState([]);
     let { setUrlPanel,  } = useContext(PanelContext);
-    
-    console.log(Enfriador);
 
     function animationTitle(className) {
         var textWrapper = document.querySelector(`.${className} .letters`);
@@ -46,7 +43,6 @@ export const Home = () => {
     
     useEffect(() => {
         const fetchData = async () => { setMachines(await transformDataMachine())};
-        console.log(machines)
         fetchData();
         const intervalId = setInterval(fetchData, 5000);
         return () => clearInterval(intervalId);

@@ -86,7 +86,7 @@ export const Home = () => {
                                 <h2 className={Style.titleEstado}> { machine.ESTADO }</h2>
 
                                 <p className={Style.textTiempoTrans}>
-                                    <span>Tiempo transcurrido: { machine.TIEMPO_TRANSCURRIDO == "0 hs" ? "00:00 hs" : machine.TIEMPO_TRANSCURRIDO.split(".")[0] }</span> 
+                                    <span>Tiempo transcurrido: { machine.TIEMPO_TRANSCURRIDO == "0 hs" ? "00:00 hs" : machine.TIEMPO_TRANSCURRIDO.split(".")[0] + "hs" }</span> 
                                     
                                     { machine.ESTADO == "OPERATIVO" && <span className={Style.textReceta}> { `RECETA: ${machine.RECETA}` } </span>}
                                     <span className={Style.textReceta}>{`N° Torres: ${ machine.NRO_TORRES }`}</span>

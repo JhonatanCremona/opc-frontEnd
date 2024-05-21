@@ -27,8 +27,7 @@ main {
 
 .CabeceraPanelControl {
     background-color: #1F1F1F; 
-    padding-left: 116px;
-    padding-right: 116px;
+    padding: 20px 116px;
     
 }
 

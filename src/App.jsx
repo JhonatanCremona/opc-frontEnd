@@ -12,8 +12,6 @@ import { NotFoundPage } from "./not-found/404"
 
 function App() {
 
-
-
   return (
     <PanelContextProvider>
       <Routes>

@@ -5,8 +5,6 @@ import { useState,  useEffect, useContext } from "react";
 import { transformDataMachine } from "../service/client";
 import anime from "animejs";
 
-//import Cocina from "../IMG/cocina/E1_icono.png"
-//import Enfriador from "../IMG/enfriador/E2_icono.png"
 import Cocina from "../IMG/cocina/E1_sinfondo.png";
 import Enfriador from "../IMG/enfriador/E2_sinfondo.png";
 
@@ -58,10 +56,10 @@ export const Home = () => {
                     </span>
                 </h2>
                 <h3 className={Style.title + " " + Style.n2 + " ml10 ml10-second"}>
-                <span className="text-wrapper">
+                    <span className="text-wrapper">
                         <span className="letters">COCINAS & ENFRIADORES</span>
                     </span>
-                    </h3>
+                </h3>
             </div>
 
             

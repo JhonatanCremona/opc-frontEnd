@@ -25,8 +25,6 @@ export const Title = (props) => {
         });
     }
     
-
-    
     useEffect(() => {
         animationTitle("ml10-first");
         animationTitle("ml10-second");
